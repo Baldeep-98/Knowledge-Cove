@@ -1,0 +1,249 @@
+/* Membership container styling */
+.membershipcontainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+}
+.content-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.content {
+  width: 60%;
+  padding: 20px;
+}
+
+.content h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.content h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: var(--secondary-accent-color);
+}
+
+.content h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #060908;
+}
+
+.content p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #7f8c8d;
+}
+
+.content button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  background-color: #075674;
+  color: white;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.content button:hover {
+  background-color: #1976D2;
+  transform: scale(1.05);
+}
+
+.contentimg {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contentimg img {
+  height: 280px;
+  max-width: 100%;
+  border-radius: 10px;
+}
+.benefits {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.benefits-content {
+  width: 60%;
+}
+
+.benefits img {
+  width: 300px;
+  height: 400px;
+  border-radius: 10px;
+  margin-right: 20px;
+  margin-left: 90px;
+}
+
+.benefits h3 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.benefits ul {
+  list-style: none;
+  padding: 0;
+}
+
+.benefits ul li {
+  font-size: 1.1em;
+  color: #7f8c8d;
+  margin-bottom: 5px;
+}
+.options {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.optioncard {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  justify-content: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.optioncard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.optioncard h3 {
+  font-size: 1.8em;
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.optioncard p {
+  font-size: 1.1em;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+}
+
+.optioncard ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.optioncard ul li {
+  margin-bottom: 5px;
+  font-size: 1.1em;
+  color: #7f8c8d;
+}
+
+#service {
+  background-color: #075674;
+}
+
+.services-options {
+  text-align: center;
+}
+
+.membership-options-heading {
+  text-align: center;
+  font-size: 2em;
+  margin: 40px 0 20px;
+  color: var(--secondary-accent-color);
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #075674;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+  background-color: #1976D2;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .membershipcontainer {
+      padding: 10px;
+  }
+  .content-row {
+      flex-direction: column;
+      padding: 10px;
+  }
+  .content {
+      width: 100%;
+      padding: 10px;
+  }
+  .contentimg img {
+      width: 100%;
+      height: auto;
+  }
+  .benefits {
+      flex-direction: column;
+      padding: 10px;
+  }
+  .benefits-content {
+      width: 100%;
+  }
+  .benefits img {
+      width: 100%;
+      height: auto;
+      margin-top: 10px;
+  }
+  .options {
+      display: grid;
+      grid-template-columns: 1fr;
+  }
+  .optioncard {
+      padding: 10px;
+  }
+  .optioncard h3 {
+      font-size: 1.5em;
+  }
+  .membership-options-heading {
+      text-align: center;
+      font-size: 2em;
+      margin: 40px 0 20px;
+      color: var(--secondary-accent-color);
+  }
+  .optioncard p,
+  .optioncard ul li {
+      font-size: 1em;
+      width: 100%;
+  }
+  button {
+      font-size: 14px;
+      padding: 8px 16px;
+  }
+}
