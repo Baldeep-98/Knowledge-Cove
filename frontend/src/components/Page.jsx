@@ -1,14 +1,15 @@
 import React from "react";
-import NavOptions from "./NavOptions";
+import Navbar from "./Navbar";
 import Content from "./Content";
+import Footer from "./Footer";
 
 function Page() {
-  return (
-    <div>
-      <NavOptions menuStyle="menu-options-list" menuItemstyle="menu-options-list-item" />
-      <Content />
-    </div>
-  );
+    return (
+        <>
+            <Navbar />
+            <Content />
+            <Footer/>
+        </>
+    );
 }
-
 export default Page;

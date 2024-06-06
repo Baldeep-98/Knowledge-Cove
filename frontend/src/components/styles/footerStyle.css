@@ -1,0 +1,143 @@
+/* Footer style */
+
+footer{
+    padding-inline: 60px;
+    padding-block: 30px;
+    display: flex;
+    width: 100wv;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    color: white;
+    background-color: var(--primary-accent-color);
+}
+
+#sub-foot1, #sub-foot2, #sub-foot3, #sub-foot4 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#foot-logo img {
+    width: 110px;
+}
+
+#logo-line {
+    margin-top: 20px;
+    line-height: 1.5rem;
+}
+
+#logo-line label {
+    font-weight: 600;
+}
+
+#social-network-links{
+    margin-top: 20px;
+    line-height: 1.5rem;
+}
+#social-network-links p {
+    margin-bottom: 10px;
+}
+
+
+#social-network-links div{
+    display: flex;
+    gap: 15px;
+}
+
+#social-network-links div img {
+    width: 40px;
+}
+
+#social-network-links div img:hover{
+    background-color: var(--secondary-accent-color);
+    cursor: pointer;
+    border-radius: 100%;
+    transition-duration: 400ms;
+}
+
+#sub-foot2 h3, #sub-foot3 h3 {
+    font-size: 1.7rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+#sub-foot2 ul {
+    list-style: none;
+}
+
+#sub-foot2 ul li {
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+#sub-foot2 ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+#sub-foot2 ul li a:hover {
+    font-weight: 500;
+    transform: scale(1.05);
+    transition-duration: 200ms;
+    color: var(--secondary-accent-color);
+}
+
+#sub-foot3{
+    width: 23%;
+}
+
+#sub-foot4 h3{
+    font-size: 1.7rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+#sub-foot4 p, #sub-foot3 p {
+    padding-bottom: 25px;
+    line-height: 1.7rem;
+    font-weight: 300;
+}
+
+#sub-foot4 p label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+#sub-foot4 p img{
+    width: 20px;
+}
+
+
+#copyright{
+    padding-top: 25px;
+    width: 100%;
+    text-align: center;
+}
+
+
+/* Footer style */
+
+
+@media (max-width: 768px) {
+
+    footer{
+        flex-direction: column;
+        gap: 55px;
+        align-items: center;
+    }
+    
+    #sub-foot3{
+        width: 82%;
+    }
+    
+    #copyright{
+        padding-top: 0px;
+    }
+
+}
+

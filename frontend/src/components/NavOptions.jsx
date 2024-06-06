@@ -1,34 +1,66 @@
-import React from 'react';
-import {Outlet, Link } from 'react-router-dom';
+import React from 'react'
+import { Outlet, Link } from 'react-router-dom';
 
 function NavOptions(props) {
-  const navOptions = [
-    { id: 1, option: "Home", path: "/" },
-    { id: 2, option: "About" },
-    { id: 3, option: "Catalogues", path: "/catalogue" },
-    { id: 4, option: "Rooms" },
-    { id: 5, option: "Services", path: "/services" },
-    { id: 6, option: "Cart" }
-  ];
 
-  return (
-    <ul className={props.menuStyle}>
-      {navOptions.map((l) => (
-        <li key={l.id} className={props.menuItemstyle}>
-          {l.path ? (
-            <Link to={l.path}>{l.option}</Link>
-          ) : (
-            l.option
-          )}
-        </li>
-      ))}
-      {props.resp && (
-        <li key="login" className={props.menuItemstyle}>
-          <Link to="/login">Login</Link>
-        </li>
-      )}
-    </ul>
-  );
+    const navOptions = [{
+            id: 1,
+            option: "Home",
+            to: "/Home"
+        },
+        {
+            id: 2,
+            option: "About",
+            to: "/About"
+        },
+        {
+            id: 3,
+            option: "Catalogues",
+            to: "/Catalogues"
+        },
+        {
+            id: 4,
+            option: "Rooms",
+            to: "/Rooms"
+        },
+        {
+            id: 5,
+            option: "Services",
+            to: "/Services"
+        },
+        {
+            id: 6,
+            option: "Cart",
+            to: "/Cart"
+        }
+    ];
+
+
+    return (
+        <>
+            <ul className={props.menuStyle}>
+            { navOptions.map( (l) => (
+                <li
+                key={l.id}
+                className={props.menuItemstyle}
+                >
+                <Link onClick={props.clickFun} to={l.to}>{l.option}</Link>
+                </li>
+            ))}
+            
+
+            {props.isNavResp && (
+                <li
+                key="7"
+                className={props.menuItemstyle}
+                >
+                <Link onClick={props.clickFun} to="/Login">Login</Link>
+                </li>
+            )}
+            </ul> 
+            <Outlet/>
+        </>
+    )
 }
 
-export default NavOptions;
+export default NavOptions

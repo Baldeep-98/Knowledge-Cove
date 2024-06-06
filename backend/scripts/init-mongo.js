@@ -28,6 +28,7 @@ const MongoScript = async () => {
     await collections['usersInfo'].createIndex({phone: 1});
     await collections['usersInfo'].createIndex({address: 1});
     await collections['usersInfo'].createIndex({dob: 1});
+    await collections['usersInfo'].createIndex({email: 1});
 
     await collections['books'].createIndex({book_id: 1});
     await collections['books'].createIndex({book_name: 1});
