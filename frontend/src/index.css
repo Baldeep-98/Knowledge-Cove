@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
 
-
 *{
     margin: 0;
     padding: 0;
@@ -27,3 +26,8 @@ body{
 @import url('./components/styles/Catalogue.css');
 @import url('./components/styles/Services.css');
 @import url('./components/styles/Allbooks.css');
+
+
+
+@import url('./components/styles/homeStyle.css');
+@import url('./components/styles/AboutUsStyle.css');
