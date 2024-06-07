@@ -1,15 +1,12 @@
-import React from 'react';
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Content from "./components/Content.jsx";
+import React from "react";
+import Page from "./components/Page";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <Navbar />
-      <Content />
-      <Footer />
-    </div>
+      <BrowserRouter>
+            <Page />
+      </BrowserRouter>
   );
 }
 

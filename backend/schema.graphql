@@ -1,0 +1,42 @@
+
+
+type User {
+    _id: ID!
+    user_id: String!
+    name: String!
+    phone: String!
+    address: String!
+    dob: GraphQLDate!
+
+    email: String!
+    username: String!
+    membership_num:  String!
+    password: String!
+}
+
+scalar GraphQLDate
+
+type Query {
+    getUser(userCred: UserCredInput!): User
+}
+
+input UserInputs {
+    name: String!
+    phone: String!
+    address: String!
+    dob: GraphQLDate!
+
+    email: String!
+    password: String!
+    cnfPassword: String!
+}
+
+input UserCredInput{
+    username: String!
+    password: String!
+}
+
+
+type Mutation {
+    userAdd(user: UserInputs!): User!
+}

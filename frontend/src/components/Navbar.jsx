@@ -3,10 +3,15 @@ import logo from '../assets/images/logo.png';
 import MenuIcon from '../assets/images/menu.svg';
 import CloseIcon from '../assets/images/cross.svg';
 import NavOptions from './NavOptions';
+import { Outlet, Link } from 'react-router-dom';
 
 const Navbar = () => {
 
   const [isNav, setIsNav] = React.useState(false)
+
+  const handleClick = () => {
+    setIsNav(!isNav)
+  };
 
   return (
 
@@ -16,14 +21,15 @@ const Navbar = () => {
       
         <div className='logo-section margin-rg'>
           <img className='logo' src={logo} alt="logo" />
-          <label clasasName='logo-text'>K<span>.</span>C</label>
+          <label className='logo-text'>K<span>.</span>C</label>
         </div>
         
-        <NavOptions menuStyle='menu-options-list' menuItemstyle='menu-options-list-item'/>
+        <NavOptions menuStyle='menu-options-list' menuItemstyle='menu-options-list-item' />
 
         <div className='login-subscribe'>
-          <label>login</label>
-          <button>Subscribe</button>
+          <label><Link to="/Login">Login</Link></label>
+          <Outlet/>
+          <Link to="/Services"><button>Subscribe</button></Link>
         </div>
 
 
@@ -34,7 +40,7 @@ const Navbar = () => {
 
         {isNav && (
           
-          <NavOptions menuStyle='menu-list' menuItemstyle='menu-list-item' resp='true' />
+          <NavOptions clickFun={handleClick} menuStyle='menu-list' menuItemstyle='menu-list-item' isNavResp="true" />
 
         )}
       </div>
