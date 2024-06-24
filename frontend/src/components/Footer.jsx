@@ -1,12 +1,12 @@
 import React from 'react'
-import logo from '../assets/images/logo.png';
-import fb from '../assets/images/foot_fb.svg';
-import tw from '../assets/images/foot_tw.svg';
-import ig from '../assets/images/foot_ig.svg';
-import yt from '../assets/images/foot_yt.svg';
-import call from '../assets/images/call_icon.svg';
-import mail from '../assets/images/mail_icon.svg';
-import loc from '../assets/images/loc_icon.svg';
+import logo from '../assets/Images/logo.png';
+import fb from '../assets/Images/foot_fb.svg';
+import tw from '../assets/Images/foot_tw.svg';
+import ig from '../assets/Images/foot_ig.svg';
+import yt from '../assets/Images/foot_yt.svg';
+import call from '../assets/Images/call_icon.svg';
+import mail from '../assets/Images/mail_icon.svg';
+import loc from '../assets/Images/loc_icon.svg';
 import NavOptions from './NavOptions';
 
 

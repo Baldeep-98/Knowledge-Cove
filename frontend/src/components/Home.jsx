@@ -1,17 +1,17 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import LibraryHome from '../assets/images/home.jpg';
-import HomeBanner from '../assets/images/Library-home.png';
-import SlideImage1 from '../assets/images/slide1.jpg';
-import SlideImage2 from '../assets/images/slide2.jpg';
-import SlideImage3 from '../assets/images/slide3.jpg';
-import SlideImage4 from '../assets/images/slide4.jpg';
-import SlideImage5 from '../assets/images/slide5.jpg';
-import SlideImage6 from '../assets/images/slide6.jpg';
-import SlideImage7 from '../assets/images/slide7.jpg';
-import SlideImage8 from '../assets/images/slide8.jpg';
-import SlideImage9 from '../assets/images/slide9.jpg';
-import SlideImage10 from '../assets/images/slide10.jpg';
+import LibraryHome from '../assets/Images/home.jpg';
+import HomeBanner from '../assets/Images/Library-home.png';
+import SlideImage1 from '../assets/Images/slide1.jpg';
+import SlideImage2 from '../assets/Images/slide2.jpg';
+import SlideImage3 from '../assets/Images/slide3.jpg';
+import SlideImage4 from '../assets/Images/slide4.jpg';
+import SlideImage5 from '../assets/Images/slide5.jpg';
+import SlideImage6 from '../assets/Images/slide6.jpg';
+import SlideImage7 from '../assets/Images/slide7.jpg';
+import SlideImage8 from '../assets/Images/slide8.jpg';
+import SlideImage9 from '../assets/Images/slide9.jpg';
+import SlideImage10 from '../assets/Images/slide10.jpg';
 
 
 
