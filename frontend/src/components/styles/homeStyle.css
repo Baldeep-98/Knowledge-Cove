@@ -1,0 +1,313 @@
+.hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    padding: 0;
+    background-color: #def6ff;
+    width: 100%;
+    margin: 0;
+}
+
+.hero .hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.hero .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+.hero .hero-text {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(226, 226, 226, 0.8);
+    border-radius: 15px;
+}
+
+.hero .hero-text h1 {
+    margin: 0;
+    font-size: 2.5em;
+    color: #000000;
+}
+
+.hero .hero-text button {
+    background-color: var(--primary-accent-color);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+}
+
+.hero .hero-text button:hover {
+    background-color: #3e8e41;
+}
+.reviews {
+    padding: 40px 20px;
+    background-color: whitesmoke;
+    text-align: center;
+}
+
+.reviews h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.review-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.review-card {
+    flex: 1 1 100%;
+    max-width: 400px;
+    margin: 10px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.review-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #4CAF50;
+}
+
+.review-card p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+
+.services {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 40px 20px;
+    background-color: whitesmoke;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.services h2 {
+    width: 100%;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.service-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    background-color: #def6ff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.service-item h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.service-item p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.service-item button {
+    background-color: var(--primary-accent-color);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.service-item button:hover {
+    background-color: #3e8e41;
+}
+.service-item .accordion {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.service-item .learn-more:hover + .accordion {
+    max-height: 100px;
+}
+
+.service-item .learn-more {
+    cursor: pointer;
+}
+
+.accordion {
+    margin-top: 20px;
+}
+
+
+.motivation {
+    padding: 40px 20px;
+    background-color: #def6ff;
+    text-align: center;
+}
+
+.motivation h2 {
+    font-size: 4em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.motivation .motivation-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    flex-wrap: wrap;
+}
+
+.motivation .floating-image {
+    width: 40%;
+    animation: floating 3s ease-in-out infinite;
+    margin-right: 20px;
+    border-radius: 10px;
+}
+
+.motivation .motivation-text {
+    max-width: 50%;
+    flex: 1;
+}
+
+.motivation p {
+    font-size: 2em;
+    color: #666;
+    max-width: 800px;
+}
+
+/* Slideshow CSS */
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #def6ff;
+    margin: 20px 0;
+}
+
+.slideshow {
+    display: flex;
+    width: calc(200% + 80px);
+    animation: slide 20s linear infinite;
+}
+
+@keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.slideshow img {
+    width: calc(25% - 20px); 
+    margin: 0 10px; 
+}
+
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .hero .hero-image, .hero .hero-text {
+        flex: 1;
+    }
+
+    .hero .hero-text h1 {
+        font-size: 1.8em;
+    }
+
+    .services h2 {
+        font-size: 1.5em;
+    }
+
+    .service-item {
+        width: 100%;
+    }
+
+    .motivation h2 {
+        font-size: 1.5em;
+    }
+
+    .motivation .motivation-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .motivation .floating-image {
+        width: 80%;
+        margin-bottom: 20px;
+        margin-right: 0;
+    }
+
+    .motivation .motivation-text {
+        max-width: 100%;
+    }
+
+    .motivation p {
+        font-size: 1.2em;
+    }
+
+    .review-card {
+        flex: 1 1 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .hero .hero-image, .hero .hero-text {
+        flex: 1;
+    }
+
+    .service-item {
+        width: 30%;
+    }
+
+    .review-card {
+        flex: 1 1 45%;
+    }
+}
