@@ -1,0 +1,144 @@
+.catalog-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .catalogue-heading {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .catalogue-sheading {
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #777;
+  }
+  
+  .filter-bar {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  #genre-filter {
+    padding: 5px;
+    font-size: 1em;
+  }
+  
+  .catalog-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .catalog-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    width: calc(25% - 40px);
+    box-sizing: border-box;
+    text-align: center;
+    transition: transform 0.2s;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .catalog-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .book-image {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  .book-details {
+    text-align: left;
+  }
+  
+  .book-details h3 {
+    font-size: 1.2em;
+    margin: 0 0 10px 0;
+    color: #333;
+  }
+  
+  .book-details p {
+    margin: 5px 0;
+    color: #666;
+  }
+  
+  .book-shortDescription {
+    font-weight: bold;
+  }
+  
+  .book-longDescription {
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+  .button-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  #cataloguebutton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  #cataloguebutton:hover {
+    background-color: #0056b3;
+  }
+  
+  .no-books {
+    text-align: center;
+    font-size: 1.2em;
+    color: #999;
+  }
+  .catalog-item p{
+    margin: 5px;
+    margin-top: 10px;
+  }
+  /* Media Queries */
+  @media (max-width: 1024px) {
+    .catalog-item {
+      width: calc(33.333% - 40px);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .catalog-item {
+      width: calc(50% - 40px); 
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .catalog-item {
+      width: calc(100% - 40px); 
+      margin: 0 auto;
+    }
+  
+    .catalogue-heading {
+      font-size: 2em;
+    }
+  
+    .catalogue-sheading {
+      font-size: 1.2em;
+    }
+  }

@@ -28,8 +28,8 @@ const CatalogPage = () => {
     return null;
   }
 
-  const books = data.BookList || [];
-  const showMoreBooks = () => setVisibleBooks(prev => prev + 4);  //show 4 books when page load initially
+  const books = data?.BookList || [];
+  const showMoreBooks = () => setVisibleBooks(prev => prev + 4);  //show 4 books when page load
 
   return (
     <div className="catalog-page">
@@ -44,9 +44,9 @@ const CatalogPage = () => {
           <option value="fantasy">Fantasy</option>
         </select>
       </div>
-      {books.length === 0  (
+      {books.length === 0 ? (
         <p className="no-books">No books available</p>
-      )  (
+      ) : (
         <div className="catalog-grid">
           {books.slice(0, visibleBooks).map(book => (
             <CatalogItem key={book.book_id} book={book} />

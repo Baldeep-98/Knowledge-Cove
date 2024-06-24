@@ -41,7 +41,7 @@ await counterCollection.deleteMany({_id: 'books'}); // delete all documents with
         book_shortDescription: "A summer romance that changes everything.",
         book_longDescription:
           "In This Summer Will Be Different,Jane Smith weaves a tale of love, growth, and self-discovery. Follow the journey of a young woman as she navigates the complexities of relationships and finds herself in the process. This summer, love isn't just a fleeting affair; it's a transformative experience.",
-          book_image_url: "/Images/book(1).jpg",  
+          book_image_url:'/Images/book.jpg',
         
         },
       {
