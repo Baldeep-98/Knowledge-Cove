@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import toast from 'react-hot-toast';
 import CatalogItem from './CatalogItem';
+import BookFilter from './BookFilter';
 
 const GET_BOOK_LIST = gql`
   query GetBooks {
@@ -37,12 +38,7 @@ const CatalogPage = () => {
       <h2 className="catalogue-sheading">Embark on a Literary Journey</h2>
       <div className="filter-bar">
         <label htmlFor="genre-filter">Filter by Genre:</label>
-        <select id="genre-filter">
-          <option value="all">All Genres</option>
-          <option value="fiction">Fiction</option>
-          <option value="nonfiction">Non-Fiction</option>
-          <option value="fantasy">Fantasy</option>
-        </select>
+      <BookFilter searchName={"books"}/>
       </div>
       {books.length === 0 ? (
         <p className="no-books">No books available</p>
