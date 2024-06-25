@@ -20,7 +20,8 @@ const GET_BOOK_LIST = gql`
 
 const CatalogPage = () => {
   const { loading, error, data } = useQuery(GET_BOOK_LIST);
-  const [visibleBooks, setVisibleBooks] = useState(4); 
+  const [visibleBooks, setVisibleBooks] = useState(4);
+  const [selectedGenre, setSelectedGenre] = useState('all');
 
   if (loading) return <p>Loading the books...</p>;
   if (error) {
@@ -30,27 +31,28 @@ const CatalogPage = () => {
   }
 
   const books = data?.BookList || [];
-  const showMoreBooks = () => setVisibleBooks(prev => prev + 4);  //show 4 books when page load
+  const filteredBooks = selectedGenre === 'all' ? books : books.filter(book => book.book_genre.toLowerCase() === selectedGenre.toLowerCase());
+  const showMoreBooks = () => setVisibleBooks(prev => prev + 4);  // Show 4 books when page load
 
   return (
     <div className="catalog-page">
       <h1 className="catalogue-heading">Discover Our Collection</h1>
       <h2 className="catalogue-sheading">Embark on a Literary Journey</h2>
       <div className="filter-bar">
-        <label htmlFor="genre-filter">Filter by Genre:</label>
-      <BookFilter searchName={"books"}/>
+        <label for="genre-filter">Filter Books:</label>
+        <BookFilter onGenreChange={setSelectedGenre} />
       </div>
-      {books.length === 0 ? (
+      {filteredBooks.length === 0 ? (
         <p className="no-books">No books available</p>
       ) : (
         <div className="catalog-grid">
-          {books.slice(0, visibleBooks).map(book => (
+          {filteredBooks.slice(0, visibleBooks).map(book => (
             <CatalogItem key={book.book_id} book={book} />
           ))}
         </div>
       )}
 
-      {visibleBooks < books.length && (
+      {visibleBooks < filteredBooks.length && (
         <div className="button-container">
           <button id="cataloguebutton" type="button" onClick={showMoreBooks}>
             Explore More Books

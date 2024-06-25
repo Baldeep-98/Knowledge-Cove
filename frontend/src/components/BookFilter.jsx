@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-function BookFilter() {
+function BookFilter({ onGenreChange }) {
   const navigate = useNavigate();
   const location = useLocation();
 
   const onChangeStatus = (e) => {
-    const { value: genre } = e.target; 
+    const { value: genre } = e.target;
+    onGenreChange(genre);  // Pass the selected genre to the parent component
     navigate({
       pathname: location.pathname === '/books' ? '/books' : location.pathname,
       search: genre ? `?genre=${genre}` : ''
@@ -16,14 +17,14 @@ function BookFilter() {
   return (
     <div>
       <select onChange={onChangeStatus}>
-      <option value="all">All Genres</option>
-          <option value="fiction">Fiction</option>
-          <option value="romance">Romance</option>
-          <option value="biography">Biography</option>
-          <option value="mystry">Mystry</option>
-          <option value="thriller">Thriller</option>
-          <option value="self-help">self Help</option>
-          <option value="fantasy">Fantasy</option>
+        <option value="all">All </option>
+        <option value="fiction">Fiction</option>
+        <option value="romance">Romance</option>
+        <option value="biography">Biography</option>
+        <option value="mystery">Mystery</option>
+        <option value="thriller">Thriller</option>
+        <option value="self-help">Self Help</option>
+        <option value="fantasy">Fantasy</option>
       </select>
     </div>
   );
