@@ -176,7 +176,7 @@
   color: var(--secondary-accent-color);
 }
 
-button {
+.optioncard button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -188,7 +188,7 @@ button {
   transition: background-color 0.3s, transform 0.3s;
 }
 
-button:hover {
+.optioncard button:hover {
   background-color: #1976D2;
   transform: scale(1.05);
 }

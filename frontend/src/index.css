@@ -21,12 +21,12 @@ body{
 @import url("./components/styles/navbarStyle.css");
 @import url("./components/styles/footerStyle.css");
 @import url("./components/styles/loginSignupStyle.css");
+@import url("./components/styles/roomsStyle.css");
 
 
 @import url('./components/styles/Catalogue.css');
 @import url('./components/styles/Services.css');
 @import url('./components/styles/Allbooks.css');
-
 
 
 @import url('./components/styles/homeStyle.css');
