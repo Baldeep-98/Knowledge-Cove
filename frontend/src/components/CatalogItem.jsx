@@ -15,12 +15,12 @@ const CatalogItem = ({ book }) => (
 
 CatalogItem.propTypes = {
   book: PropTypes.shape({
-    book_image_url: PropTypes.string.isRequired,
-    book_name: PropTypes.string.isRequired,
-    book_author: PropTypes.string.isRequired,
-    book_genre: PropTypes.string.isRequired,
-    book_shortDescription: PropTypes.string.isRequired,
-    book_longDescription: PropTypes.string.isRequired,
+    book_image_url: PropTypes.isRequired,
+    book_name: PropTypes.isRequired,
+    book_author: PropTypes.isRequired,
+    book_genre: PropTypes.isRequired,
+    book_shortDescription: PropTypes.isRequired,
+    book_longDescription: PropTypes.isRequired,
   }).isRequired,
 };
 

@@ -7,7 +7,7 @@ function BookFilter({ onGenreChange }) {
 
   const onChangeStatus = (e) => {
     const { value: genre } = e.target;
-    onGenreChange(genre);  // Pass the selected genre to the parent component
+    onGenreChange(genre);  
     navigate({
       pathname: location.pathname === '/books' ? '/books' : location.pathname,
       search: genre ? `?genre=${genre}` : ''

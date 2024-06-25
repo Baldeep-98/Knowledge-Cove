@@ -31,7 +31,7 @@ const CatalogPage = () => {
   }
 
   const books = data?.BookList || [];
-  const filteredBooks = selectedGenre === 'all' ? books : books.filter(book => book.book_genre.toLowerCase() === selectedGenre.toLowerCase());
+  const filteredBooks = selectedGenre === 'all' ? books : books.filter(book => book.book_genre.toLowerCase() === selectedGenre.toLowerCase()); // to get the value from dropdown
   const showMoreBooks = () => setVisibleBooks(prev => prev + 4);  // Show 4 books when page load
 
   return (
