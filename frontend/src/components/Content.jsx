@@ -14,6 +14,7 @@ const NotFound = () => <h1>Page Not Found</h1>;
 function Content() {
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route exact path="/Home" element={<Home />} />
       <Route path="/catalogues" element={<CatalogPage />} />
       <Route path="/services" element={<ServicesPage />} />

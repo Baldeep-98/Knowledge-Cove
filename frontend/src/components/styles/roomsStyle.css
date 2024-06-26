@@ -16,7 +16,8 @@
     justify-content: center;
     margin-block: 40px;
     margin-inline: 80px;
-    border: 2px solid var(--secondary-accent-color);
+    border: 1.4px solid var(--secondary-accent-color);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
     padding: 30px;
 }
 
@@ -32,6 +33,7 @@
 .rooms-section-1-subs-1 p ul {
     margin-left: 40px;
     margin-block: 15px;
+    line-height: 1.6rem;
 }
 
 .rooms-section-1-subs-1 p{
@@ -60,6 +62,135 @@
 
 .rooms-section-1-subs-2 img{
     box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    z-index: -2;
+}
+
+.rooms-section-2 {
+    padding-inline: 80px;
+    padding-block: 30px;
+}
+
+.room-booking-area{
+    margin-inline: 80px;
+    background-color: #e7e7e7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 40px;
+    gap:30px;
+    border-radius: 20px;
+}
+
+.room-booking-area h2 {
+    text-align: center;
+    width: 100%;
+    font-weight: 600;
+    font-size: 1.9rem;
+    color: var(--primary-accent-color);
+}
+
+.room-booking-area-sec1 {
+    width: 15%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 19px;
+}
+
+.room-booking-area-sec2 {
+    width: 60%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap:35px;
+    grid-column-gap: 20px;
+}
+
+.room-booking-dates{
+    width: 95%;
+    height: 60px;
+    border: .5px solid var(--primary-accent-color);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    font-weight: 500;
+}
+
+.room-booking-dates:hover {
+    background-color: var(--primary-accent-color);
+    cursor: pointer;
+    color: var(--secondary-accent-color);
+    transition-duration: 200ms;
+}
+
+
+.room-booking-time {
+    width:90%;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    border-radius: 5px;
+    gap: 15px;
+    padding-block: 5px;
+    padding-inline: 9px;
+    background-color: var(--primary-accentbg-color);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.room-booking-time-area{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.room-booking-time-btn {
+    width: 35%;
+    height: 60%;
+    border-radius: 8px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    border:0;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    color: var(--primary-accent-color );
+    font-weight: 500;
+}
+
+.room-booking-time-btn:hover{
+    background-color: var(--primary-accent-color);
+    cursor: pointer;
+    color: var(--primary-background-color);
+    transition-duration: 200ms;
+    
+}
+
+.selected-date{
+    background-color: var(--primary-accent-color);
+    color: var(--secondary-accent-color);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    transform: scale(1.1);
+}
+
+.vertical-line{
+    width: 0px;
+    border-right: .25px solid var(--primary-accent-color);
+    height: 75vh;
+    border-radius: 1px;
+    margin-right: 17px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.horizontal-line{
+    display: none;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -81,4 +212,52 @@
         font-size: 1.3rem;
     }
 
+    .rooms-section-2 {
+        padding-inline: 30px;
+        padding-block: 30px;
+    }
+    
+    .room-booking-area{
+        margin-inline: 0px;
+        padding-block: 50px;
+        padding-inline: 25px;
+        gap:20px;
+        flex-direction: column;
+    }
+    
+    .room-booking-area h2 {
+        font-size: 2.2rem;
+    }
+
+    .room-booking-area-sec1 {
+        flex-direction: row;
+        width: 85%;
+    }
+
+    .room-booking-dates{
+        flex-direction: row;
+        font-size: 1.4rem;
+    }
+
+    .room-booking-area-sec2{
+        width: 95%;
+        grid-template-columns: 1fr;
+        margin-top: 15px;
+    }
+
+    .room-booking-time {
+        font-size: 1.3rem;
+    }
+
+    .room-booking-time-btn {
+        font-size: 1.3rem;
+    }
+
+    .vertical-line{
+        display: none;
+    }
+
+    .horizontal-line{
+        display: inline;
+    }
 }
