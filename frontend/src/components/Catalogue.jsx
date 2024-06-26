@@ -3,6 +3,7 @@ import { useQuery, gql } from '@apollo/client';
 import toast from 'react-hot-toast';
 import CatalogItem from './CatalogItem';
 import BookFilter from './BookFilter';
+import { Route } from 'react-router-dom';
 
 const GET_BOOK_LIST = gql`
   query GetBooks {
@@ -32,7 +33,7 @@ const CatalogPage = () => {
 
   const books = data?.BookList || [];
   const filteredBooks = selectedGenre === 'all' ? books : books.filter(book => book.book_genre.toLowerCase() === selectedGenre.toLowerCase()); // to get the value from dropdown
-  const showMoreBooks = () => setVisibleBooks(prev => prev + 4);  // Show 4 books when page load
+  const showMoreBooks = () => setVisibleBooks(prev => prev + 8);  // Show 4 books when page load
 
   return (
     <div className="catalog-page">
@@ -49,6 +50,7 @@ const CatalogPage = () => {
           {filteredBooks.slice(0, visibleBooks).map(book => (
             <CatalogItem key={book.book_id} book={book} />
           ))}
+          <Route path="/books/:id" Component={BookDetail}/>
         </div>
       )}
 
