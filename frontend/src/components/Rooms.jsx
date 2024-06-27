@@ -11,7 +11,6 @@ function Rooms() {
                         <b>Seasonal Note: </b>
                         <span>
                             As finals approach, we anticipate a high demand for our private study rooms. To accommodate as many students as possible, please be mindful of the following:
-
                                 <ul>
                                     <li>Book Early: Reserve your room well in advance.</li>
                                     <li>Fair Use: Limit bookings to essential study sessions to allow others to benefit.</li>
@@ -30,7 +29,7 @@ function Rooms() {
                     <img src={studyRoomImg} alt="Login banner" />
                 </div>
             </div>
-
+            
             <div className='rooms-section-2'>
                 <div className='room-booking-area'>
                     <h2>Select Date and Time</h2>
@@ -105,8 +104,19 @@ function Rooms() {
                 </div>
             </div>
 
-            <div className='room-section-3'>
-
+            <div className='rooms-section-3'>
+                <h3>Study Room Reservation Instructions & Policies </h3>
+                <div>
+                Please follow these guidelines when using our private study rooms:
+                    <ul>
+                        <li>Booking Limit: Each user may reserve up to 3 hours per day.</li>
+                        <li>No-show Policy: Reservations will be canceled if the room is not occupied within 15 minutes of the scheduled time.</li>
+                        <li>Cleanliness: Leave the room clean and tidy for the next user.</li>
+                        <li>Noise Level: Keep noise to a minimum to maintain a quiet environment for everyone.</li>
+                        <li>Booking Hours: 9:30 AM - 4:30 PM, Monday to Saturday <br/> Duration: 1 hours per booking</li>
+                    </ul>
+                Booking Rooms must be booked at least 24 hours in advance. A valid library card is required for booking. 
+                </div>
             </div>
         </>
     )

@@ -65,6 +65,40 @@
     z-index: -2;
 }
 
+.rooms-section-3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    margin-inline:90px;
+    padding-inline: 80px;
+    background-color: var(--primary-accentbg-color);
+    padding-block: 70px;
+    flex-direction: column;
+    border-radius: 87% 13% 88% 12% / 25% 78% 22% 75% ;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+}
+
+.rooms-section-3 h3 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: var(--primary-accent-color);
+}
+
+.rooms-section-3 div ul {
+    margin-left: 40px;
+    margin-block: 15px;
+    line-height: 1.6rem;
+}
+
+.rooms-section-3 div{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+
 .rooms-section-2 {
     padding-inline: 80px;
     padding-block: 30px;
@@ -140,7 +174,9 @@
     gap: 15px;
     padding-block: 5px;
     padding-inline: 9px;
-    background-color: var(--primary-accentbg-color);
+    background-color: #0c96ca;
+    color: var(--primary-background-color);
+    font-weight: 400;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 }
 
@@ -259,5 +295,32 @@
 
     .horizontal-line{
         display: inline;
+    }
+
+    .rooms-section-3{
+        margin-top: 40px;
+        margin-bottom: 0px;
+        margin-inline:0px;
+        padding-inline: 60px;
+        border-radius: 0;
+        box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+    }
+    
+    .rooms-section-3 h3 {
+        text-align: center;
+        font-size: 2rem;
+    }
+    
+    .rooms-section-3 div ul {
+        margin-left: 30px;
+        margin-block: 15px;
+        line-height: 1.6rem;
+    }
+    
+    .rooms-section-3 div{
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        font-size: 1.3rem;
     }
 }
