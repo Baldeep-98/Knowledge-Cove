@@ -30,3 +30,4 @@ body{
 @import url('./components/styles/AboutUsStyle.css');
 @import url('./components/styles/Catalogue.css');
 @import url('./components/styles/CatalogueItem.css');
+@import url('./components/styles/BookDetail.css');

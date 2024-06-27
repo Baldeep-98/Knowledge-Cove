@@ -40,19 +40,19 @@ const BookDetail = () => {
       }
     }
   }, [data]);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  if (!book) return <p>Book not found</p>;
-
+  if (!book) return <p>Book not found</p>; 
   return (
     <div className="book-detail">
-      <h1>{book.book_name}</h1>
-      <img src={book.book_image_url} alt={book.book_name} />
-      <p>Author: {book.book_author}</p>
-      <p>Genre: {book.book_genre}</p>
-      <p>Short Description: {book.book_shortDescription}</p>
-      <p>Long Description: {book.book_longDescription}</p>
+      <div className="book-info">
+        <h1>{book.book_name}</h1>
+        <p>Author: {book.book_author}</p>
+        <p>Genre: {book.book_genre}</p>
+        <p>Short Description: {book.book_shortDescription}</p>
+        <p>Long Description: {book.book_longDescription}</p>
+      </div>
+      <div className="book-image-container">
+        <img src={book.book_image_url} alt={book.book_name} className="book-image" />
+      </div>
     </div>
   );
 };
