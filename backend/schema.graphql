@@ -19,6 +19,7 @@ scalar GraphQLDate
 type Query {
     getUser(userCred: UserCredInput!): User
 BookList: [Book]
+ getBook(book_id: Int!): Book
 }
 
 input UserInputs {

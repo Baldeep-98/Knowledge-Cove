@@ -3,7 +3,8 @@ import { useQuery, gql } from '@apollo/client';
 import toast from 'react-hot-toast';
 import CatalogItem from './CatalogItem';
 import BookFilter from './BookFilter';
-import { Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import BookDetail from './BookDetail';
 
 const GET_BOOK_LIST = gql`
   query GetBooks {
@@ -21,7 +22,7 @@ const GET_BOOK_LIST = gql`
 
 const CatalogPage = () => {
   const { loading, error, data } = useQuery(GET_BOOK_LIST);
-  const [visibleBooks, setVisibleBooks] = useState(4);
+  const [visibleBooks, setVisibleBooks] = useState(8);
   const [selectedGenre, setSelectedGenre] = useState('all');
 
   if (loading) return <p>Loading the books...</p>;
@@ -32,15 +33,15 @@ const CatalogPage = () => {
   }
 
   const books = data?.BookList || [];
-  const filteredBooks = selectedGenre === 'all' ? books : books.filter(book => book.book_genre.toLowerCase() === selectedGenre.toLowerCase()); // to get the value from dropdown
-  const showMoreBooks = () => setVisibleBooks(prev => prev + 8);  // Show 4 books when page load
+  const filteredBooks = selectedGenre === 'all' ? books : books.filter(book => book.book_genre.toLowerCase() === selectedGenre.toLowerCase());
+  const showMoreBooks = () => setVisibleBooks(prev => prev + 8);
 
   return (
     <div className="catalog-page">
       <h1 className="catalogue-heading">Discover Our Collection</h1>
       <h2 className="catalogue-sheading">Embark on a Literary Journey</h2>
       <div className="filter-bar">
-        <label for="genre-filter">Filter Books:</label>
+        <label htmlFor="genre-filter">Filter Books:</label>
         <BookFilter onGenreChange={setSelectedGenre} />
       </div>
       {filteredBooks.length === 0 ? (
@@ -50,10 +51,8 @@ const CatalogPage = () => {
           {filteredBooks.slice(0, visibleBooks).map(book => (
             <CatalogItem key={book.book_id} book={book} />
           ))}
-          <Route path="/books/:id" Component={BookDetail}/>
         </div>
       )}
-
       {visibleBooks < filteredBooks.length && (
         <div className="button-container">
           <button id="cataloguebutton" type="button" onClick={showMoreBooks}>

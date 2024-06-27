@@ -1,27 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+const CatalogItem = ({ book }) => {
+  const navigate = useNavigate();
 
+  const handleClick = () => {
+    navigate(`/detail/${book.book_id}`); 
+  };
 
-const CatalogItem = ({ book }) => (
-  <div className="catalog-item">
-    <img src={book.book_image_url} alt={book.book_name} className="book-image" />
-    <h3>{book.book_name}</h3>
-    <p>{book.book_author}</p>
-    <p>{book.book_genre}</p>
-    <p>{book.book_shortDescription}</p>
-   <button>Add to Cart</button>
-  </div>
-);
-
-CatalogItem.propTypes = {
-  book: PropTypes.shape({
-    book_image_url: PropTypes.isRequired,
-    book_name: PropTypes.isRequired,
-    book_author: PropTypes.isRequired,
-    book_genre: PropTypes.isRequired,
-    book_shortDescription: PropTypes.isRequired,
-    book_longDescription: PropTypes.isRequired,
-  }).isRequired,
+  return (
+    <div className="catalog-item" onClick={handleClick}>
+      <img src={book.book_image_url} alt={book.book_name} className="book-image" />
+      <h3>{book.book_name}</h3>
+      <p>{book.book_author}</p>
+      <p>{book.book_genre}</p>
+      <p>{book.book_shortDescription}</p>
+      <Link to={`/detail/${book.book_id}`}></Link>
+      <button>Add to Cart</button>
+    </div>
+  );
 };
 
 export default CatalogItem;

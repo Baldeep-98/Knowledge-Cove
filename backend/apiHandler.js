@@ -8,6 +8,7 @@ const resolvers = {
     Query: {
         getUser: user.getUser,
         BookList: book.list,
+        getBook:book.getBook,
     },
     Mutation: {
         userAdd: user.userAdd,
