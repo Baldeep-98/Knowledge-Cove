@@ -45,8 +45,7 @@ const CatalogPage = () => {
         <BookFilter onGenreChange={setSelectedGenre} />
       </div>
       {filteredBooks.length === 0 ? (
-        <p className="no-books">No books available</p>
-      ) : (
+        <p className="no-books">No books available</p>  ) : (
         <div className="catalog-grid">
           {filteredBooks.slice(0, visibleBooks).map(book => (
             <CatalogItem key={book.book_id} book={book} />
