@@ -1,14 +1,17 @@
 const GraphQLDate = require('./graphqlDate')
 const user = require('./users')
+const rTime = require('./roomTime')
 const { ApolloServer } = require('apollo-server');
 const fs = require('fs');
 
 const resolvers = {
     Query: {
         getUser: user.getUser,
+        getBookedRoomInfo: rTime.getBookedRoom,
     },
     Mutation: {
         userAdd: user.userAdd,
+        timeAdd: rTime.timeAdd,
     },
     
     GraphQLDate,

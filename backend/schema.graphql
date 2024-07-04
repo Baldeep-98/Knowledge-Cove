@@ -14,11 +14,15 @@ type User {
     password: String!
 }
 
-scalar GraphQLDate
-
-type Query {
-    getUser(userCred: UserCredInput!): User
+type Time{
+    _id: ID!
+    room_num: String
+    booking_date_time: String
+    room_booked: Boolean
+    booked_by: String
 }
+
+scalar GraphQLDate
 
 input UserInputs {
     name: String!
@@ -31,12 +35,29 @@ input UserInputs {
     cnfPassword: String!
 }
 
+input TimeSlotInputs {
+    room_num: String
+    booking_date_time: String
+    room_booked: Boolean
+    booked_by: String
+}
+
 input UserCredInput{
     username: String!
     password: String!
 }
 
+input BookedRoomInput{
+    booking_date: String!
+    booked_by: String!
+}
+
+type Query {
+    getUser(userCred: UserCredInput!): User
+    getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
+}
 
 type Mutation {
     userAdd(user: UserInputs!): User!
+    timeAdd(timeSlot: TimeSlotInputs!): Time!
 }

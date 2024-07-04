@@ -1,7 +1,67 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import studyRoomImg from '../assets/images/study_room.jpeg';
+import RoomBookingTime from './RoomBookingTime'
+import {useLazyQuery, gql} from '@apollo/client';
 
-function Rooms() {
+
+const GET_BOOKED_ROOM = gql`
+        query getBookedRoomInfo($booked_room_var: BookedRoomInput!){
+        getBookedRoomInfo(bookedRoom: $booked_room_var){
+            room_num
+            booking_date_time
+            room_booked
+            booked_by
+    }
+}`
+
+
+function Rooms(props) {
+    const navigate = useNavigate();
+    const [selectedDate, setSelectedDate] = useState("");
+    const [bookedRoomInfo, setBookedRoomInfo] = useState([]);
+
+    const weekDays = [1, 2, 3, 4, 5, 6, 7];
+    const date = new Date();
+
+    const [getBookedRoomInfo] = useLazyQuery(GET_BOOKED_ROOM, {
+        onCompleted: () => {
+            console.log("room time info fetched Successfully!");
+        },
+        onError: () => {
+            console.log("room time info fetched failed!");
+        }
+    });
+
+    const weekDates = weekDays.map(d => {
+        let result = new Date(date);
+        result.setDate(date.getDate() + d);
+        return result.toString().substring(0, 10).replace(' ', ', ');
+    })
+    .filter(dateString => !dateString.includes("Sun"));
+
+    const selectDate = async (k) => {
+        
+        setSelectedDate(k);
+        let key = k.replace(', ', '-').replace(' ', '-');        
+        console.log(key);
+        navigate({
+            pathname:'/Rooms',
+            search: key ? `?date=${key}` : ''
+        });
+
+        try {
+            const result = await getBookedRoomInfo({ variables: { booked_room_var: {booking_date: k, booked_by: "Roman"} } });
+            const roomInfo = result.data.getBookedRoomInfo;
+            console.log(roomInfo);
+            setBookedRoomInfo(roomInfo);
+        } catch (error) {
+            console.error("Error adding user:", error);
+        }
+
+    };
+
+
     return (
         <>
             <h1 className='rooms-heading'> Private Study Room Reservation </h1>
@@ -11,6 +71,7 @@ function Rooms() {
                         <b>Seasonal Note: </b>
                         <span>
                             As finals approach, we anticipate a high demand for our private study rooms. To accommodate as many students as possible, please be mindful of the following:
+
                                 <ul>
                                     <li>Book Early: Reserve your room well in advance.</li>
                                     <li>Fair Use: Limit bookings to essential study sessions to allow others to benefit.</li>
@@ -26,85 +87,38 @@ function Rooms() {
                     </p>
                 </div>
                 <div className='rooms-section-1-subs-2'>
-                    <img src={studyRoomImg} alt="Login banner" />
+                    <img src={studyRoomImg} alt="Study room" />
                 </div>
             </div>
             
+
             <div className='rooms-section-2'>
+
                 <div className='room-booking-area'>
                     <h2>Select Date and Time</h2>
+
                     <div className='room-booking-area-sec1'>
-                        <div className='room-booking-dates selected-date'>
-                            MON, JUN 10
-                        </div>   
-                        <div className='room-booking-dates'>
-                            TUE, JUN 11
-                        </div>
-                        <div className='room-booking-dates'>
-                            WED, JUN 12
-                        </div> 
-                        <div className='room-booking-dates'>
-                            THU, JUN 13
-                        </div> 
-                        <div className='room-booking-dates'>
-                            FRI, JUN 14
-                        </div> 
-                        <div className='room-booking-dates'>
-                            SAT, JUN 15
-                        </div>
+                    { 
+                        weekDates.map((dates) => 
+                        <button key={dates} className= {dates === selectedDate ? 'room-booking-dates selected-date': 'room-booking-dates'} onClick={(e) => selectDate(e.target.textContent)}>
+                            {dates}
+                        </button> ) 
+                    }
                     </div>
 
                     <div className='vertical-line'></div>
                     <hr className='horizontal-line'/>                   
 
-                    <div className='room-booking-area-sec2'>   
-                        <div className='room-booking-time'>
-                            <div className='room-booking-time-area'>
-                                <p>9:30 AM - 10:30 AM</p>
-                                <p>Room Available</p>
-                            </div>
-                            <button className='room-booking-time-btn'>Book <br/> Now</button>
-                        </div>
-                        <div className='room-booking-time'>
-                            <div className='room-booking-time-area'>
-                                <p>10:30 AM - 11:30 AM</p>
-                                <p>Room Available</p>
-                            </div>
-                            <button className='room-booking-time-btn'>Book <br/> Now</button>
-                        </div>
-                        <div className='room-booking-time'>
-                            <div className='room-booking-time-area'>
-                                <p>11:30 AM - 12:30 PM</p>
-                                <p>Room Available</p>
-                            </div>
-                            <button className='room-booking-time-btn'>Book <br/> Now</button>
-                        </div>
-                        <div className='room-booking-time'>
-                            <div className='room-booking-time-area'>
-                                <p>12:30 PM - 01:30 PM</p>
-                                <p>Room Available</p>
-                            </div>
-                            <button className='room-booking-time-btn'>Book <br/> Now</button>
-                        </div>
-                        <div className='room-booking-time'>
-                            <div className='room-booking-time-area'>
-                                <p>02:30 PM - 03:30 PM</p>
-                                <p>Room Available</p>
-                            </div>
-                            <button className='room-booking-time-btn'>Book <br/> Now</button>
-                        </div>
-                        <div className='room-booking-time'>
-                            <div className='room-booking-time-area'>
-                                <p>03:30 PM - 04:30 PM</p>
-                                <p>Room Unavailable</p>
-                            </div>
-                            <button className='room-booking-time-btn'>All <br/> Booked</button>
-                        </div>
+                    <div className='room-booking-area-sec2'> 
+                        <RoomBookingTime dateof={selectedDate} bookedRooms = {bookedRoomInfo} selectedDateProp = {selectDate} />
                     </div>
+
                 </div>
+
             </div>
 
             <div className='rooms-section-3'>
+
                 <h3>Study Room Reservation Instructions & Policies </h3>
                 <div>
                 Please follow these guidelines when using our private study rooms:
