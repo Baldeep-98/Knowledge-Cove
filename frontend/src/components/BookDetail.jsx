@@ -18,18 +18,18 @@ const GET_BOOK_DETAIL = gql`
 `;
 
 const BookDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams();//fetch id 
   const bookId = parseInt(id);
 
   console.log(`Fetching details for book ID: ${bookId}`);
 
-  const { loading, error, data } = useQuery(GET_BOOK_DETAIL, {
+  const { loading, error, data } = useQuery(GET_BOOK_DETAIL, { //fetch book details
     variables: { book_id: bookId },
   });
 
-  const [book, setBook] = useState(null);
+  const [book, setBook] = useState(null); //useState to store book detail
 
-  useEffect(() => {
+  useEffect(() => { //when book received update the book state
     if (data) {
       console.log("book received", data);
       if (data.getBook) {

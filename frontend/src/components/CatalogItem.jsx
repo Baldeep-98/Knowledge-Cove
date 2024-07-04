@@ -6,7 +6,7 @@ const CatalogItem = ({ book }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/detail/${book.book_id}`);
+    navigate(`/detail/${book.book_id}`);//navigate to bookdetail page when click
   };
 
   return (

@@ -1,12 +1,11 @@
-/* General Container Styles */
+
 .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     overflow: hidden;
   }
-  
-  /* Headings Styles */
+
   .books-heading {
     text-align: center;
     font-size: 3em;
@@ -20,8 +19,7 @@
     margin: 10px 0 40px;
     color: var(--secondary-accent-color);
   }
-  
-  /* Book Item Styles */
+
   .product-item {
     background-color: white;
     border: 1px solid #ddd;

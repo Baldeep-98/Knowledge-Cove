@@ -33,7 +33,7 @@
   .book-detail p {
     margin: 1px 0;
     font-size: 20px;
-    padding: 0; /* remove padding */
+    padding: 0px; 
   }
   
   .book-image-container {

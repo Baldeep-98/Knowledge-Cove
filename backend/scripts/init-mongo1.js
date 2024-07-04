@@ -136,6 +136,36 @@ await counterCollection.deleteMany({_id: 'books'}); // delete all documents with
           "Fourth Wing by Rebecca Yarros is a captivating fantasy novel that tells the story of a young hero destined for greatness. Set in a world where mythical creatures and powerful magic reign supreme, the protagonist must navigate a path filled with danger and destiny. Yarros's imaginative world-building and dynamic characters make this an enthralling read for fantasy lovers.",
           book_image_url: "/Images/book9.jpg",  
         },
+        {
+          book_id: 10,
+          book_name: "Shattered Memories",
+          book_author: "Nicole Snow",
+          book_genre: "Romantic",
+          book_shortDescription: "A love story entangled with suspense and danger.",
+          book_longDescription:
+            "Nicole Snow’s Shattered Memories is a romantic thriller that blends love with suspense. The protagonist grapples with haunting memories and a new romantic interest, leading to a journey filled with danger and passion. Snow’s narrative weaves an intricate tale that keeps readers hooked from start to finish.",
+          book_image_url: "/Images/book10.jpg",
+        },
+        {
+          book_id: 11,
+          book_name: "Echoes of the Past",
+          book_author: "Mark Edwards",
+          book_genre: "Horror",
+          book_shortDescription: "A chilling tale of haunted secrets.",
+          book_longDescription:
+            "Echoes of the Past by Mark Edwards is a horror novel that delves into the terrifying secrets of a small town. The protagonist uncovers hidden truths that should have remained buried, leading to a series of horrifying events. Edwards's eerie storytelling and atmospheric writing make this a spine-chilling read.",
+          book_image_url: "/Images/book11.jpg",
+        },
+        {
+          book_id: 12,
+          book_name: "Rising Tides",
+          book_author: "Katherine Quinn",
+          book_genre: "Fiction",
+          book_shortDescription: "A historical saga of love and resilience.",
+          book_longDescription:
+            "Rising Tides by Katherine Quinn is a historical fiction novel set against the backdrop of World War II. The story follows a courageous woman navigating the challenges of war and love. Quinn’s rich historical detail and compelling characters create an immersive reading experience.",
+          book_image_url: "/Images/book12.jpg",
+        },  
     ];
     await collections["books"].insertMany(bookDB); // Insert books data
     const count = await collections["books"].countDocuments();
