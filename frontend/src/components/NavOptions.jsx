@@ -11,12 +11,12 @@ function NavOptions(props) {
         {
             id: 2,
             option: "About",
-            to: "/About"
+            to: "/AboutUs"
         },
          {
           id: 3,
           option: "Catalogues",
-          to: "/catalogue" 
+            to: "/catalogue"
       },
 
         {
@@ -33,6 +33,11 @@ function NavOptions(props) {
             id: 6,
             option: "Cart",
             to: "/Cart"
+        },
+        {
+            id: 7,
+            option: "Admin",
+            to: "/Admin"
         }
     ];
 
