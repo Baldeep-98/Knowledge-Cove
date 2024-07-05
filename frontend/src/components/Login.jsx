@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useLazyQuery, gql} from '@apollo/client';
 import { Outlet, Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-import loginBanner from '../assets/images/login_banner.png';
+import loginBanner from '../assets/Images/login_banner.png';
 
 
 const GET_USER = gql`

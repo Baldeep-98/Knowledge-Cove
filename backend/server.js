@@ -12,6 +12,3 @@ installHandler(PORT);
     console.log('[Connected to MongoDB] from api server');
     
 })()
-
-
-
