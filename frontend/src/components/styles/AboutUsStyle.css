@@ -9,17 +9,18 @@
 
 .about-head .image {
     flex: 1;
-    height: 90%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: gray;
+    
 }
 
 .about-head .image img {
+   
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    animation: floating 3s ease-in-out infinite;
+    margin-right: 20px;
     border-radius: 10px;
 }
 
@@ -33,9 +34,15 @@
 }
 
 .about-head .text h1 {
-    margin: 0;
+    margin: 0 0 20px 0;
     font-size: 2.5em;
     color: #333;
+}
+
+.about-head .text p {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
 }
 
 header {
@@ -49,7 +56,20 @@ header {
     background-color: #efefef;
     text-align: center;
 }
+.section h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
 
+.section p {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: justify;
+}
 .image img {
     width: 50%;
     height: 60%;
@@ -57,17 +77,20 @@ header {
 }
 
 .aboutUs-section {
-    padding-block: 30px;
+    padding-block: 40px;
+    padding-left: 20%;
 }
 
 .aboutUs-form-section {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .aboutUs-form-section span {
-    width: 50%;
+    width: 100%;
 }
 
 .aboutUs-form-section span input {
@@ -99,15 +122,15 @@ header {
     flex-direction: column;
     align-items: flex-start;
     padding: 20px;
-    width: 70%;
+    width: 100%;
 }
 
 .contact-form form label {
-    font-size: 1.2em; 
-    margin-bottom: 10px; 
-    margin-top: 20px; 
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    margin-top: 20px;
     display: block;
-    width: 90%;
+    width: 100%;
     word-wrap: break-word;
 }
 
@@ -129,7 +152,7 @@ header {
 }
 
 .contact-form form button {
-    width: 101%;
+    width: 100%;
     padding: 8px;
     margin-top: 15px;
     border: 0;

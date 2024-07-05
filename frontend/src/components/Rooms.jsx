@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import studyRoomImg from '../assets/images/study_room.jpeg';
+import studyRoomImg from '../assets/Images/study_room.jpeg';
 import RoomBookingTime from './RoomBookingTime'
 import {useLazyQuery, gql} from '@apollo/client';
 
