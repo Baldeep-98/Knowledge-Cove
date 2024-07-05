@@ -1,5 +1,3 @@
-
-
 type User {
     _id: ID!
     user_id: String!
@@ -14,13 +12,15 @@ type User {
     password: String!
 }
 
-scalar GraphQLDate
-
-type Query {
-    getUser(userCred: UserCredInput!): User
-BookList: [Book]
- getBook(book_id: Int!): Book
+type Time{
+    _id: ID!
+    room_num: String
+    booking_date_time: String
+    room_booked: Boolean
+    booked_by: String
 }
+
+scalar GraphQLDate
 
 input UserInputs {
     name: String!
@@ -33,14 +33,33 @@ input UserInputs {
     cnfPassword: String!
 }
 
+input TimeSlotInputs {
+    room_num: String
+    booking_date_time: String
+    room_booked: Boolean
+    booked_by: String
+}
+
 input UserCredInput{
     username: String!
     password: String!
 }
 
+input BookedRoomInput{
+    booking_date: String!
+    booked_by: String!
+}
+
+type Query {
+    getUser(userCred: UserCredInput!): User
+    getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
+}
 
 type Mutation {
     userAdd(user: UserInputs!): User!
+    timeAdd(timeSlot: TimeSlotInputs!): Time!
+    BookList: [Book]
+ getBook(book_id: Int!): Book
 }
 type Book {
   _id: ID!
@@ -52,3 +71,4 @@ type Book {
   book_longDescription: String
     book_image_url:String
 }
+

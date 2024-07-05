@@ -1,39 +1,22 @@
-const GraphQLDate = require('./graphqlDate')
-const user = require('./users')
-const { ApolloServer } = require('apollo-server');
-const fs = require('fs');
-const book = require('./book');
 
-const resolvers = {
-    Query: {
-        getUser: user.getUser,
-        BookList: book.list,
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
+
+const GraphQLDate = new GraphQLScalarType({
+    name: 'GraphQLDate',
+    description: 'A Date() type in graphQL as a scalar',
+    serialize: (value) => value.toISOString(),
+    parseLiteral: (ast) => {
+        if (ast.kind === Kind.STRING) {
+        const value = new Date(ast.value);
+        return Number.isNaN(value.getTime()) ? undefined : value;
+        }
+        return undefined;
     },
-    Mutation: {
-        userAdd: user.userAdd,
-    },
-    
-    GraphQLDate,
-}
-
-
-const server = new ApolloServer({
-    typeDefs: fs.readFileSync('./schema.graphql', 'utf-8'), // schema
-    resolvers,
-    // just to print error in the console
-    formatError: (error) => {
-        console.log(error);
-        return error;
+    parseValue: (value) => {
+        const value2 = new Date(value);
+        return Number.isNaN(value2.getTime()) ? undefined : value2;
     },
 });
 
-// Start the server
-
-function installHandler(PORT) {
-    server.listen({port: PORT}).then(({ url }) => {
-        console.log(`Server ready at ${url}`);
-    });
-};
-
-
-module.exports = { installHandler };
+module.exports = GraphQLDate;

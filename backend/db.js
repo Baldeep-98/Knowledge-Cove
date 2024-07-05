@@ -20,3 +20,4 @@ async function connectToDb() {
 const getDB = () => db;
 
 module.exports = { connectToDb, getDB,getNextSequence };
+

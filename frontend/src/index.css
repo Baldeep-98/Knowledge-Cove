@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
 
@@ -31,3 +32,4 @@ body{
 @import url('./components/styles/Catalogue.css');
 @import url('./components/styles/CatalogueItem.css');
 @import url('./components/styles/BookDetail.css');
+

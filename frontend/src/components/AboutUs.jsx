@@ -1,4 +1,5 @@
 import React from "react";
+
 import AboutUsImage from '../src/assets/images/AboutUs.png';
 
 function AboutUs() {
