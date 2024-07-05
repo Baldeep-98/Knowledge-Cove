@@ -13,11 +13,12 @@ function NavOptions(props) {
             option: "About",
             to: "/About"
         },
-        {
-            id: 3,
-            option: "Catalogues",
-            to: "/Catalogues"
-        },
+         {
+          id: 3,
+          option: "Catalogues",
+          to: "/catalogue" 
+      },
+
         {
             id: 4,
             option: "Rooms",

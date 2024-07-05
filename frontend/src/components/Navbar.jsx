@@ -1,7 +1,7 @@
 import React from 'react'
-import logo from '../assets/images/logo.png';
-import MenuIcon from '../assets/images/menu.svg';
-import CloseIcon from '../assets/images/cross.svg';
+import logo from '../assets/Images/logo.png';
+import MenuIcon from '../assets/Images/menu.svg';
+import CloseIcon from '../assets/Images/cross.svg';
 import NavOptions from './NavOptions';
 import { Outlet, Link } from 'react-router-dom';
 

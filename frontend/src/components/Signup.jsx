@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import signup_banner from '../assets/images/signup_banner.png';
+import signup_banner from '../assets/Images/signup_banner.png';
 import { useMutation, gql} from '@apollo/client';
 import toast, { Toaster } from 'react-hot-toast';
 
