@@ -53,22 +53,22 @@ input BookedRoomInput{
 type Query {
     getUser(userCred: UserCredInput!): User
     getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
+    BookList: [Book]
+    getBook(book_id: Int!): Book
 }
 
 type Mutation {
     userAdd(user: UserInputs!): User!
     timeAdd(timeSlot: TimeSlotInputs!): Time!
-    BookList: [Book]
- getBook(book_id: Int!): Book
 }
 type Book {
-  _id: ID!
-  book_id: Int
-  book_name: String
-  book_author: String
-  book_genre: String
-  book_shortDescription: String
-  book_longDescription: String
+    _id: ID!
+    book_id: Int
+    book_name: String
+    book_author: String
+    book_genre: String
+    book_shortDescription: String
+    book_longDescription: String
     book_image_url:String
 }
 

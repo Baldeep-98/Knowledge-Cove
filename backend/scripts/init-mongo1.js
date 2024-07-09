@@ -4,7 +4,6 @@ const MongoScript = async () => {
   const uri =
     "mongodb+srv://baldeepsharma:fullstack@cluster0.nw8eqzz.mongodb.net/";
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-   
     
   try {
     await client.connect(); // connect to MongoDB
@@ -33,7 +32,6 @@ await counterCollection.deleteMany({_id: 'books'}); // delete all documents with
     }
     const bookDB = [
       {
-       
         book_id: 1,
         book_name: "This summer will be different",
         book_author: "Jane Smith",

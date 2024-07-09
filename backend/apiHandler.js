@@ -10,9 +10,8 @@ const resolvers = {
     Query: {
         getUser: user.getUser,
         BookList: book.list,
-    getBook: book.getBook,
+        getBook: book.getBook,
         getBookedRoomInfo: rTime.getBookedRoom,
-      
     },
     Mutation: {
         userAdd: user.userAdd,

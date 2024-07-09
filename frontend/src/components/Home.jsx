@@ -71,7 +71,6 @@ function Home() {
             <img src={SlideImage8} alt="Slide 8" />
             <img src={SlideImage9} alt="Slide 9" />
             <img src={SlideImage10} alt="Slide 10" />
-           
           </div>
         </div>
 

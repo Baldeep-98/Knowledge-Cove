@@ -19,20 +19,20 @@ body{
     background-color: var(--primary-background-color);
 }
 
-@import url("./components/styles/navbarStyle.css");
-@import url("./components/styles/footerStyle.css");
-@import url("./components/styles/loginSignupStyle.css");
+@import url("./styles/navbarStyle.css");
+@import url("./styles/footerStyle.css");
+@import url("./styles/loginSignupStyle.css");
 
 
-@import url('./components/styles/Catalogue.css');
-@import url('./components/styles/Services.css');
-@import url('./components/styles/roomsStyle.css');
-@import url('./components/styles/admin.css');
+@import url('./styles/Catalogue.css');
+@import url('./styles/Services.css');
+@import url('./styles/roomsStyle.css');
+@import url('./styles/admin.css');
 
 
-@import url('./components/styles/homeStyle.css');
-@import url('./components/styles/AboutUsStyle.css');
-@import url('./components/styles/Catalogue.css');
-@import url('./components/styles/CatalogueItem.css');
-@import url('./components/styles/BookDetail.css');
+@import url('./styles/homeStyle.css');
+@import url('./styles/AboutUsStyle.css');
+@import url('./styles/Catalogue.css');
+@import url('./styles/CatalogueItem.css');
+@import url('./styles/BookDetail.css');
 

@@ -3,8 +3,6 @@ import { useQuery, gql } from "@apollo/client";
 import toast from "react-hot-toast";
 import CatalogItem from "./CatalogItem";
 import BookFilter from "./BookFilter";
-import { Routes, Route } from "react-router-dom";
-import BookDetail from "./BookDetail";
 
 const GET_BOOK_LIST = gql`
   query GetBooks {
@@ -19,12 +17,13 @@ const GET_BOOK_LIST = gql`
     }
   }
 `;
+
 function CatalogPage() {
   const { error, data } = useQuery(GET_BOOK_LIST); //fetching data
   const [visibleBooks, setVisibleBooks] = useState(8); //set state to show book at initial load
   const [selectedBookType, setselectedBookType] = useState("all"); //to show the all books
   if (error) {
-    toast.error("Failed to fetch books"); // to display errors 
+    toast.error("Failed to fetch books"); // to display errors
     console.error(error);
     return null;
   }
@@ -32,7 +31,7 @@ function CatalogPage() {
   const books = data?.BookList || []; //return data from bookList array
   const filteredBooks =
   selectedBookType === "all" ? books: books.filter((book) =>book.book_genre.toLowerCase() === selectedBookType.toLowerCase() );
-  const showMoreBooks = () => setVisibleBooks((prev) => prev + 8); // to show  more books when click on button 
+  const showMoreBooks = () => setVisibleBooks((prev) => prev + 8); // to show  more books when click on button
 
   return (
     <div className="catalog-page">
@@ -53,13 +52,14 @@ function CatalogPage() {
       )}
       {visibleBooks < filteredBooks.length && (
         <div className="button-container">
-          <button id="cataloguebutton" type="button" onClick={showMoreBooks}>
-            Explore More Books
-          </button>
-        </div>
-      )}
-    </div>
+        <button className="cataloguebutton" type="button" onClick={showMoreBooks}>
+          Explore More Books
+        </button>
+      </div>
+    )}
+      </div>
   );
 }
-
+ 
 export default CatalogPage;
+ 

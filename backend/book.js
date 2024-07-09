@@ -16,4 +16,4 @@ const getBook=async(parent,{book_id})=>{
     return book;
 }
 
-module.exports = { list,getBook };
+module.exports = { list, getBook };

@@ -1,4 +1,6 @@
 import React from "react";
+import ServiceBanner from '../assets/Images/Account.gif';
+import SubscribeBanner from '../assets/Images/Subscriber-pana.png';
 
 function ServicesPage() {
   return (
@@ -18,12 +20,12 @@ function ServicesPage() {
           <button id="service">Get a plan</button>
         </div>
         <div className="contentimg">
-          <img src="/Images/Account.gif" alt="contentImage" />
+          <img src={ServiceBanner} alt="Services banner" />
         </div>
       </div>
 
       <div className="benefits">
-        <img src="/Images/Subscriber-pana.png" alt="contentImage" />
+        <img src={SubscribeBanner} alt="Subscribe Banner" />
         <div className="benefits-content">
           <h3>Our Premium Subscriber Benefits</h3>
           <ul>

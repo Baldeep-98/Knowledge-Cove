@@ -20,7 +20,9 @@ const CatalogItem = ({ book }) => {
         <p>{book.book_genre}</p>
         <p>{book.book_shortDescription}</p>
         <Link to={`/detail/${book.book_id}`}></Link>
-        <button>Add to Cart</button>
+        <div class="container">
+        <button className="itembutton">Add to Cart</button>
+  </div>
       </div>
     </div>
   );
