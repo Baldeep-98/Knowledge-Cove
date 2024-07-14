@@ -19,7 +19,11 @@ type Time{
     room_booked: Boolean
     booked_by: String
 }
-
+type Cart{
+_id:ID!
+book_id:Int
+membership_num:Int
+}
 scalar GraphQLDate
 
 input UserInputs {
@@ -60,6 +64,7 @@ type Query {
 type Mutation {
     userAdd(user: UserInputs!): User!
     timeAdd(timeSlot: TimeSlotInputs!): Time!
+    addToCart(book_id:Int!):Cart!
 }
 type Book {
     _id: ID!

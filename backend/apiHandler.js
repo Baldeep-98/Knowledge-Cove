@@ -5,6 +5,7 @@ const rTime = require('./roomTime')
 const book = require('./book');
 const { ApolloServer } = require('apollo-server');
 const fs = require('fs');
+const  addToCart  = require('./addCart');
 
 const resolvers = {
     Query: {
@@ -16,6 +17,7 @@ const resolvers = {
     Mutation: {
         userAdd: user.userAdd,
         timeAdd: rTime.timeAdd,
+        addToCart:book.addToCart,
     },
     
     GraphQLDate,

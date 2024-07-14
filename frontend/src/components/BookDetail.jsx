@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useMutation } from "@apollo/client";
+import toast, { Toaster } from 'react-hot-toast';
 
 const GET_BOOK_DETAIL = gql`
   query GetBookDetail($book_id: Int!) {
@@ -17,19 +18,30 @@ const GET_BOOK_DETAIL = gql`
   }
 `;
 
+const ADD_TO_CART = gql` 
+  mutation AddToCart($book_id: Int!) {
+    addToCart(book_id: $book_id) {
+      _id
+      book_id
+      membership_num
+    }
+  }
+`;
+
 const BookDetail = () => {
-  const { id } = useParams();//fetch id
+  const { id } = useParams(); // fetch id 
   const bookId = parseInt(id);
 
   console.log(`Fetching details for book ID: ${bookId}`);
 
-  const { data } = useQuery(GET_BOOK_DETAIL, { //fetch book details
+  const { loading, error, data } = useQuery(GET_BOOK_DETAIL, { // fetch book details
     variables: { book_id: bookId },
   });
 
-  const [book, setBook] = useState(null); //useState to store book detail
+  const [book, setBook] = useState(null); // useState to store book detail
+  const [addToCart] = useMutation(ADD_TO_CART);
 
-  useEffect(() => { //when book received update the book state
+  useEffect(() => { // when book received update the book state
     if (data) {
       console.log("book received", data);
       if (data.getBook) {
@@ -41,10 +53,20 @@ const BookDetail = () => {
     }
   }, [data]);
 
+  const handleAddToCart = async () => {
+  
+      const response = await addToCart({ variables: { book_id: bookId } });
+      console.log("Added to cart:", response.data.addToCart);
+      toast.success("Book added to cart successfully");
+   
+  };
+  
   if (!book) return <p>Book not found</p>;
 
   return (
-    <div className="book-detail">
+    <>
+    <Toaster/>
+        <div className="book-detail">
       <div className="book-image-container">
         <img
           src={book.book_image_url}
@@ -66,9 +88,10 @@ const BookDetail = () => {
         <p className="book-long-description">
           <strong>Long Description:</strong> {book.book_longDescription}
         </p>
-        <button className="add-to-cart">Add To Cart</button>
+        <button className="add-to-cart" onClick={handleAddToCart}>Add To Cart</button>
       </div>
     </div>
+    </>
   );
 };
 
