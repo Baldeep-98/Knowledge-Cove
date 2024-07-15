@@ -5,14 +5,15 @@ const rTime = require('./roomTime')
 const book = require('./book');
 const { ApolloServer } = require('apollo-server');
 const fs = require('fs');
-const  addToCart  = require('./addCart');
-
+const getCartBooks=require('./cart')
+const { getCartItems } = require('./cart.js');
 const resolvers = {
     Query: {
         getUser: user.getUser,
         BookList: book.list,
         getBook: book.getBook,
         getBookedRoomInfo: rTime.getBookedRoom,
+        CartItems: getCartItems
     },
     Mutation: {
         userAdd: user.userAdd,

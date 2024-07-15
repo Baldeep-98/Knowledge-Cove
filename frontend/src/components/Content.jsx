@@ -10,7 +10,7 @@ import Rooms from './Rooms';
 import BookDetail from './BookDetail';
 import AboutUs from './AboutUs.jsx'
 import Admin from './Admin'
- 
+import Cart from './Cart.jsx' 
  
 const NotFound = () => <h1>Page Not Found</h1>;
  
@@ -25,6 +25,7 @@ function Content() {
        <Route path="/detail/:id" element={<BookDetail />}/>
       <Route path="/rooms" element={<Rooms/>}/>
       <Route path="/AboutUs" element={<AboutUs />} />
+      <Route path="/Cart"element={<Cart/>}/>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/admin" element={<Admin />} />

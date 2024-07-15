@@ -1,79 +1,84 @@
 type User {
-    _id: ID!
-    user_id: String!
-    name: String!
-    phone: String!
-    address: String!
-    dob: GraphQLDate!
+  _id: ID!
+  user_id: String!
+  name: String!
+  phone: String!
+  address: String!
+  dob: GraphQLDate!
 
-    email: String!
-    username: String!
-    membership_num:  String!
-    password: String!
+  email: String!
+  username: String!
+  membership_num: String!
+  password: String!
 }
 
-type Time{
-    _id: ID!
-    room_num: String
-    booking_date_time: String
-    room_booked: Boolean
-    booked_by: String
+type Time {
+  _id: ID!
+  room_num: String
+  booking_date_time: String
+  room_booked: Boolean
+  booked_by: String
 }
-type Cart{
-_id:ID!
-book_id:Int
-membership_num:Int
+type Cart {
+  _id: ID!
+  book_id: Int
+  membership_num: Int
+}
+type CartItem {
+  _id: ID!
+  book_id: Int
+  membership_num: Int
+  bookDetails: Book
 }
 scalar GraphQLDate
 
 input UserInputs {
-    name: String!
-    phone: String!
-    address: String!
-    dob: GraphQLDate!
+  name: String!
+  phone: String!
+  address: String!
+  dob: GraphQLDate!
 
-    email: String!
-    password: String!
-    cnfPassword: String!
+  email: String!
+  password: String!
+  cnfPassword: String!
 }
 
 input TimeSlotInputs {
-    room_num: String
-    booking_date_time: String
-    room_booked: Boolean
-    booked_by: String
+  room_num: String
+  booking_date_time: String
+  room_booked: Boolean
+  booked_by: String
 }
 
-input UserCredInput{
-    username: String!
-    password: String!
+input UserCredInput {
+  username: String!
+  password: String!
 }
 
-input BookedRoomInput{
-    booking_date: String!
-    booked_by: String!
+input BookedRoomInput {
+  booking_date: String!
+  booked_by: String!
 }
-
 type Query {
-    getUser(userCred: UserCredInput!): User
-    getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
-    BookList: [Book]
-    getBook(book_id: Int!): Book
+  getUser(userCred: UserCredInput!): User
+  getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
+  BookList: [Book]
+  getBook(book_id: Int!): Book
+  CartItems: [CartItem]
 }
 
 type Mutation {
-    userAdd(user: UserInputs!): User!
-    timeAdd(timeSlot: TimeSlotInputs!): Time!
-    addToCart(book_id:Int!):Cart!
+  userAdd(user: UserInputs!): User!
+  timeAdd(timeSlot: TimeSlotInputs!): Time!
+  addToCart(book_id: Int!): Cart!
 }
 type Book {
-    _id: ID!
-    book_id: Int
-    book_name: String
-    book_author: String
-    book_genre: String
-    book_shortDescription: String
-    book_longDescription: String
-    book_image_url:String
+  _id: ID!
+  book_id: Int
+  book_name: String
+  book_author: String
+  book_genre: String
+  book_shortDescription: String
+  book_longDescription: String
+  book_image_url: String
 }
-
