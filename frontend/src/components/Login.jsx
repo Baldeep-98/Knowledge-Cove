@@ -28,8 +28,8 @@ function Login() {
         onCompleted: () => {
             toast.success("User Login Successfully!");
         },
-        onError: () => {
-            toast.error("Incorrect Password or Username!");
+        onError: (err) => {
+            toast.error(err.message);
         }
     }); 
 
@@ -50,10 +50,6 @@ function Login() {
 
         try {
             await getUser({ variables: { user_cred_var: newUserCred } });
-            setUserCred({
-                username: "",
-                password: "",
-            });
         } catch (error) {
             console.error("Error adding user:", error);
         }

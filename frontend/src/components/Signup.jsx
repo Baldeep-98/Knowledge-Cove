@@ -27,9 +27,18 @@ function Signup() {
     const [addUser] = useMutation(ADD_USER, {
         onCompleted: () => {
             toast.success("User Registered Successfully!");
+            setUser({
+                name: "",
+                phone: "",
+                address: "",
+                dob: "",
+                email: "",
+                password: "",
+                cnfPassword: ""
+            });
         },
-        onError: () => {
-            toast.error("User Registration Failed!");
+        onError: (err) => {
+            toast.error(err.message);
         }
     });   
 
@@ -52,15 +61,6 @@ function Signup() {
 
         try {
             await addUser({ variables: { user_var: newUser } });
-            setUser({
-                name: "",
-                phone: "",
-                address: "",
-                dob: "",
-                email: "",
-                password: "",
-                cnfPassword: ""
-            });
         } catch (error) {
             console.error("Error adding user:", error);
         }
