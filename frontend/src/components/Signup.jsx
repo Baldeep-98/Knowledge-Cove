@@ -3,6 +3,7 @@ import { Outlet, Link } from 'react-router-dom';
 import signup_banner from '../assets/Images/signup_banner.png';
 import { useMutation, gql} from '@apollo/client';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 const ADD_USER = gql`
@@ -13,6 +14,8 @@ const ADD_USER = gql`
 }`;
 
 function Signup() {
+
+    const navigate = useNavigate();
 
     const [user, setUser] = useState({
         name: "",
@@ -61,6 +64,7 @@ function Signup() {
 
         try {
             await addUser({ variables: { user_var: newUser } });
+            navigate("/login");
         } catch (error) {
             console.error("Error adding user:", error);
         }

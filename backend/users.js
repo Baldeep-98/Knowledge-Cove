@@ -1,6 +1,7 @@
 const { UserInputError, AuthenticationError} = require('apollo-server');
 const { getDB } = require('./db');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const getJwtToken = require('./getJwtToken');
 
 const userValidate = (user) => {
     var errors = [];
@@ -67,8 +68,10 @@ const getUser = async (_,args) => {
     };
 
     if(user && await comparePasswords(userCred.password, user.password)){
-        console.log(user)
-        return user
+        console.log(user);
+        webToken = getJwtToken(user.user_id);
+        console.log(webToken);
+        return {user, webToken}
     }else {
         throw new AuthenticationError('Invalid username or password');
     }

@@ -1,9 +1,12 @@
 import React from 'react'
+import { useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 
 function NavOptions(props) {
 
-    const navOptions = [{
+    var navOptions = null;
+        
+    const guestNavOptions = [{
             id: 1,
             option: "Home",
             to: "/Home"
@@ -13,33 +16,78 @@ function NavOptions(props) {
             option: "About",
             to: "/AboutUs"
         },
-         {
-          id: 3,
-          option: "Catalogues",
+        {
+            id: 3,
+            option: "Catalogues",
             to: "/catalogue"
-      },
-
+        },
         {
             id: 4,
-            option: "Rooms",
-            to: "/Rooms"
-        },
-        {
-            id: 5,
             option: "Services",
             to: "/Services"
-        },
-        {
-            id: 6,
-            option: "Cart",
-            to: "/Cart"
-        },
-        {
-            id: 7,
-            option: "Admin",
-            to: "/Admin"
         }
     ];
+
+    const loggedInNavOptions = [{
+        id: 1,
+        option: "Home",
+        to: "/Home"
+    },
+    {
+        id: 2,
+        option: "About",
+        to: "/AboutUs"
+    },
+    {
+        id: 3,
+        option: "Catalogues",
+        to: "/catalogue"
+    },
+    {
+        id: 4,
+        option: "Rooms",
+        to: "/Rooms"
+    },
+    {
+        id: 5,
+        option: "Services",
+        to: "/Services"
+    },
+    {
+        id: 6,
+        option: "Cart",
+        to: "/Cart"
+    }
+];
+
+    const adminNavOptions = [{
+        id: 1,
+        option: "Home",
+        to: "/Home"
+    },
+    {
+        id: 2,
+        option: "About",
+        to: "/AboutUs"
+    },
+    {
+        id: 3,
+        option: "Catalogues",
+        to: "/catalogue"
+    },
+    {
+        id: 4,
+        option: "Add Books",
+        to: "/Admin"
+    }
+    ];
+
+    if(localStorage.getItem("userInfo")){
+        navOptions = loggedInNavOptions;
+    }
+    else{
+        navOptions = guestNavOptions;
+    }
 
 
     return (

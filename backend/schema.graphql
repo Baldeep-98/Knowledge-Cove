@@ -12,6 +12,11 @@ type User {
     password: String!
 }
 
+type UserAuthData {
+    user: User
+    webToken: String!
+}
+
 type Time{
     _id: ID!
     room_num: String
@@ -51,7 +56,7 @@ input BookedRoomInput{
 }
 
 type Query {
-    getUser(userCred: UserCredInput!): User
+    getUser(userCred: UserCredInput!): UserAuthData!
     getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
     BookList: [Book]
     getBook(book_id: Int!): Book

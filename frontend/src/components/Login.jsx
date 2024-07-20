@@ -1,28 +1,38 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useLazyQuery, gql} from '@apollo/client';
 import { Outlet, Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 import loginBanner from '../assets/Images/login_banner.png';
 
 
 const GET_USER = gql`
     query getUser($user_cred_var: UserCredInput!){
         getUser(userCred: $user_cred_var){
-            user_id
-            username
-            email
-            membership_num
-            password
+            user {
+                user_id
+                username
+                email
+                membership_num
+            }
+            webToken
         }
     }
 `;
 
 function Login() {
+    const navigate = useNavigate();
 
     const [userCred, setUserCred] = useState({
         username: "",
         password: "",
     });
+
+
+    useEffect(()=>{
+        if(localStorage.getItem('userInfo')){
+            navigate({pathname:'/Home'});
+    }}, [navigate] );
 
     const [getUser] = useLazyQuery(GET_USER, {
         onCompleted: () => {
@@ -49,9 +59,13 @@ function Login() {
         };
 
         try {
-            await getUser({ variables: { user_cred_var: newUserCred } });
+            
+            const userData = await getUser({ variables: { user_cred_var: newUserCred } });
+            localStorage.setItem("userInfo", JSON.stringify(userData.data.getUser))
+            navigate({pathname:'/Home'});
+            
         } catch (error) {
-            console.error("Error adding user:", error);
+            console.error("Error while login:", error);
         }
     };
 

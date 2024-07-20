@@ -4,10 +4,12 @@ import MenuIcon from '../assets/Images/menu.svg';
 import CloseIcon from '../assets/Images/cross.svg';
 import NavOptions from './NavOptions';
 import { Outlet, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
 
   const [isNav, setIsNav] = React.useState(false)
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setIsNav(!isNav)
@@ -27,9 +29,27 @@ const Navbar = () => {
         <NavOptions menuStyle='menu-options-list' menuItemstyle='menu-options-list-item' />
 
         <div className='login-subscribe'>
-          <label><Link to="/Login">Login</Link></label>
-          <Outlet/>
-          <Link to="/Services"><button>Subscribe</button></Link>
+
+        { localStorage.getItem("userInfo") && (
+          <>
+            <label onClick={()=> {
+              localStorage.removeItem("userInfo");
+              navigate("/");
+            }}>
+            <Link>Logout</Link></label>
+            <Outlet/>&nbsp;|&nbsp;
+            <label><Link to="/Services">Profile</Link></label>
+          </>
+        )}
+
+        { !localStorage.getItem("userInfo") && (
+          <>
+            <label><Link to="/Login">Login</Link></label>
+            <Outlet/>
+            <Link to="/Services"><button>Subscribe</button></Link>
+          </>
+        )}
+
         </div>
 
 
