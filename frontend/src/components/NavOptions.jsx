@@ -1,9 +1,10 @@
 import React from 'react'
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet, Link } from 'react-router-dom';
 
 function NavOptions(props) {
 
+    const isValid = useSelector((state) => state.auth.isValid);
     var navOptions = null;
         
     const guestNavOptions = [{
@@ -82,7 +83,7 @@ function NavOptions(props) {
     }
     ];
 
-    if(localStorage.getItem("userInfo")){
+    if(isValid){
         navOptions = loggedInNavOptions;
     }
     else{

@@ -3,6 +3,8 @@ import { Outlet, Link } from 'react-router-dom';
 import signup_banner from '../assets/Images/signup_banner.png';
 import { useMutation, gql} from '@apollo/client';
 import toast, { Toaster } from 'react-hot-toast';
+import { signup } from '../store';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -16,6 +18,7 @@ const ADD_USER = gql`
 function Signup() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [user, setUser] = useState({
         name: "",
@@ -28,7 +31,7 @@ function Signup() {
     });
 
     const [addUser] = useMutation(ADD_USER, {
-        onCompleted: () => {
+        onCompleted: (user) => {
             toast.success("User Registered Successfully!");
             setUser({
                 name: "",
@@ -39,6 +42,8 @@ function Signup() {
                 password: "",
                 cnfPassword: ""
             });
+            dispatch(signup(user));
+            navigate("/login");
         },
         onError: (err) => {
             toast.error(err.message);
@@ -64,7 +69,6 @@ function Signup() {
 
         try {
             await addUser({ variables: { user_var: newUser } });
-            navigate("/login");
         } catch (error) {
             console.error("Error adding user:", error);
         }

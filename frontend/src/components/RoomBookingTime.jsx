@@ -64,6 +64,7 @@ function RoomBookingTime(props) {
 
         try {
             await addTime({ variables: { time_var: timeSlot } });
+            console.log(selectedDateProp)
         } catch (error) {
             console.error("Error adding/Booking time:", error);
         }

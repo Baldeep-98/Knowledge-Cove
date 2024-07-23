@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useLazyQuery, gql} from '@apollo/client';
 import { Outlet, Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { login } from '../store';
 import loginBanner from '../assets/Images/login_banner.png';
 
 
@@ -22,21 +24,18 @@ const GET_USER = gql`
 
 function Login() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [userCred, setUserCred] = useState({
         username: "",
         password: "",
     });
 
-
-    useEffect(()=>{
-        if(localStorage.getItem('userInfo')){
-            navigate({pathname:'/Home'});
-    }}, [navigate] );
-
     const [getUser] = useLazyQuery(GET_USER, {
-        onCompleted: () => {
+        onCompleted: (data) => {
             toast.success("User Login Successfully!");
+            dispatch(login(data.getUser));
+            navigate('/home');
         },
         onError: (err) => {
             toast.error(err.message);
@@ -59,11 +58,7 @@ function Login() {
         };
 
         try {
-            
-            const userData = await getUser({ variables: { user_cred_var: newUserCred } });
-            localStorage.setItem("userInfo", JSON.stringify(userData.data.getUser))
-            navigate({pathname:'/Home'});
-            
+            await getUser({ variables: { user_cred_var: newUserCred } });
         } catch (error) {
             console.error("Error while login:", error);
         }

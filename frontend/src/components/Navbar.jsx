@@ -5,11 +5,15 @@ import CloseIcon from '../assets/Images/cross.svg';
 import NavOptions from './NavOptions';
 import { Outlet, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../store';
 
 const Navbar = () => {
 
   const [isNav, setIsNav] = React.useState(false)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isValid = useSelector((state) => state.auth.isValid);
 
   const handleClick = () => {
     setIsNav(!isNav)
@@ -30,19 +34,17 @@ const Navbar = () => {
 
         <div className='login-subscribe'>
 
-        { localStorage.getItem("userInfo") && (
+        { isValid ? (
           <>
-            <label onClick={()=> {
-              localStorage.removeItem("userInfo");
-              navigate("/");
-            }}>
+            <label onClick={() => {
+              dispatch(logout());
+              navigate('/login');
+              }}>
             <Link>Logout</Link></label>
             <Outlet/>&nbsp;|&nbsp;
             <label><Link to="/Services">Profile</Link></label>
           </>
-        )}
-
-        { !localStorage.getItem("userInfo") && (
+        ) : (
           <>
             <label><Link to="/Login">Login</Link></label>
             <Outlet/>
