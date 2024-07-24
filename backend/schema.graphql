@@ -71,6 +71,8 @@ type Mutation {
   userAdd(user: UserInputs!): User!
   timeAdd(timeSlot: TimeSlotInputs!): Time!
   addToCart(book_id: Int!): Cart!
+  bookDelete(book_id:ID!):Boolean!
+  clearCart:Boolean!
 }
 type Book {
   _id: ID!

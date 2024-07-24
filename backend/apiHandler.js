@@ -1,12 +1,11 @@
-
-const GraphQLDate = require('./graphqlDate')
-const user = require('./users')
-const rTime = require('./roomTime')
+const GraphQLDate = require('./graphqlDate');
+const user = require('./users');
+const rTime = require('./roomTime');
 const book = require('./book');
 const { ApolloServer } = require('apollo-server');
 const fs = require('fs');
-const getCartBooks=require('./cart')
-const { getCartItems } = require('./cart.js');
+const { getCartItems, remove ,clearCart} = require('./cart'); // Fixed import
+
 const resolvers = {
     Query: {
         getUser: user.getUser,
@@ -18,30 +17,26 @@ const resolvers = {
     Mutation: {
         userAdd: user.userAdd,
         timeAdd: rTime.timeAdd,
-        addToCart:book.addToCart,
+        addToCart: book.addToCart,
+        bookDelete: remove,
+        clearCart
     },
-    
     GraphQLDate,
-}
-
+};
 
 const server = new ApolloServer({
     typeDefs: fs.readFileSync('./schema.graphql', 'utf-8'), // schema
     resolvers,
-    // just to print error in the console
     formatError: (error) => {
         console.log(error);
         return error;
     },
 });
 
-// Start the server
-
 function installHandler(PORT) {
-    server.listen({port: PORT}).then(({ url }) => {
+    server.listen({ port: PORT }).then(({ url }) => {
         console.log(`Server ready at ${url}`);
     });
 };
-
 
 module.exports = { installHandler };

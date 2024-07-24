@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useMutation } from "@apollo/client";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import emptyCartImage from "../assets/Images/emptyCartImage.gif";
 
-const GET_CART_Books = gql`
+const GET_CART_BOOKS = gql`
   query GetCartBooks {
     CartItems {
       _id
@@ -19,44 +21,122 @@ const GET_CART_Books = gql`
         book_image_url
       }
     }
-  }`; // query to get cart items with details
+  }
+`;
+
+const REMOVE_BOOK = gql`
+  mutation RemoveBook($book_id: ID!) {
+    bookDelete(book_id: $book_id)
+  }
+`;
+
+const CLEAR_CART = gql`
+  mutation ClearCart {
+    clearCart
+  }
+`;
+
 const Cart = () => {
-  const { data } = useQuery(GET_CART_Books); //useQuery hook to run Get_cart_books query
+  const { data, refetch } = useQuery(GET_CART_BOOKS);
+  const [CartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
+  const [removeBook] = useMutation(REMOVE_BOOK);
+  const [clearCart] = useMutation(CLEAR_CART);
 
-  const [CartItems, setCartItems] = useState([]); // state to hold the items of cart
- const navigate=useNavigate();
-  useEffect(() => {    //to update the state of cart items
-
+  useEffect(() => {
     if (data) {
       setCartItems(data.CartItems);
     }
   }, [data]);
-  const handleClick=(book_id)=>{
-    navigate(`/checkout/${book_id}`);
-    console.log("button clicked");
-  }
+
+  const handleRemoveButton = async (book_id) => {
+    try {
+      const { data } = await removeBook({
+        variables: { book_id: String(book_id) },
+      });
+      if (data.bookDelete) {
+        setCartItems((prevItems) =>
+          prevItems.filter((item) => item.book_id !== book_id)
+        );
+        toast.success("Book removed successfully");
+        await refetch();  // Awaiting refetch
+      } else {
+        toast.error("Error removing the book");
+      }
+    } catch (error) {
+      console.error("Error in removeBook mutation:", error);
+      toast.error("Error removing the book");
+    }
+  };
+
+  const handleClearCart = async () => {
+    try {
+      const { data } = await clearCart();
+      if (data.clearCart) {
+        setCartItems([]);
+        toast.success("Cart cleared successfully");
+        await refetch();  // Awaiting refetch
+      } else {
+        toast.error("Failed to clear the cart");
+      }
+    } catch (error) {
+      console.error("Error in clearCart mutation:", error);
+      toast.error("Error clearing the cart");
+    }
+  };
+
+  const handleCheckoutClick = () => {
+    navigate("/checkout");
+  };
+
   return (
-    <div className="cart" onClick={handleClick}>
+    <div className="cart">
       <h1 className="cartHead">Shopping Cart</h1>
-      {CartItems.map((item) => (
-        <div key={item._id} className="cart-info">
-          <div className="cart-image-container">
-            <img
-              className="cart-detail-image"
-              src={item.bookDetails.book_image_url}
-              alt={item.bookDetails.book_name}
-            />
-          </div>
-          <div className="book-info">
-            <h2>{item.bookDetails.book_name}</h2>
-            <p className="cartdesc">Book Author:{item.bookDetails.book_author}</p>
-            <p className="cartdesc">Book Genre:{item.bookDetails.book_genre}</p>
-            <Link to={`/checkOut/${item.bookDetails.book_id}`}></Link>
-           <button className="btncheckout">Check Out</button>
-           </div>
+      {CartItems.length === 0 ? (
+        <div className="empty-cart">
+          <img src={emptyCartImage} alt="Empty cart" />
         </div>
-      ))}
+      ) : (
+        CartItems.map((item) => (
+          <div key={item._id} className="cart-item">
+            <div className="cart-image-container">
+              <img
+                className="cart-detail-image"
+                src={item.bookDetails.book_image_url}
+                alt={item.bookDetails.book_name}
+              />
+            </div>
+            <div className="cart-info">
+              <h2>{item.bookDetails.book_name}</h2>
+              <p className="cartdesc">
+                Book Author: {item.bookDetails.book_author}
+              </p>
+              <p className="cartdesc">
+                Book Genre: {item.bookDetails.book_genre}
+              </p>
+              <Link to={`/checkout/${item.bookDetails.book_id}`}></Link>
+              <button
+                className="removecheckout"
+                onClick={() => handleRemoveButton(item.book_id)}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        ))
+      )}
+      {CartItems.length > 0 && (
+        <div>
+          <button className="btnEmptyCart" onClick={handleClearCart}>
+            Empty Cart
+          </button>
+          <button className="btncheckout" onClick={handleCheckoutClick}>
+            Proceed to Checkout
+          </button>
+        </div>
+      )}
     </div>
   );
 };
+
 export default Cart;
