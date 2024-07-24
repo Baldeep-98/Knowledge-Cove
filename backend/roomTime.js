@@ -17,13 +17,9 @@ const getBookedRoom = async (_,args) => {
     const {bookedRoom} = args
     const dateTime = bookedRoom.booking_date;
 
-    console.log(dateTime);
-
     const result = await db.collection('rooms').find({booking_date_time: { $regex : dateTime } }).toArray();
-    console.log("checkkk" + result);
 
     return result; 
-
 };
 
 

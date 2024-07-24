@@ -42,7 +42,7 @@ const Navbar = () => {
               }}>
             <Link>Logout</Link></label>
             <Outlet/>&nbsp;|&nbsp;
-            <label><Link to="/Services">Profile</Link></label>
+            <label><Link to="/profile"> My Profile</Link></label>
           </>
         ) : (
           <>

@@ -6,7 +6,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import { signup } from '../store';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 
 const ADD_USER = gql`
         mutation userAdd($user_var: UserInputs!) {
@@ -19,6 +21,8 @@ function Signup() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const isValid = useSelector((state) => state.auth.isValid);
 
     const [user, setUser] = useState({
         name: "",
@@ -48,7 +52,11 @@ function Signup() {
         onError: (err) => {
             toast.error(err.message);
         }
-    });   
+    }); 
+    
+    if (isValid && isWebTokenValid()) {
+        return <Navigate to="/" />;
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;

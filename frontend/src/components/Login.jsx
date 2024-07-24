@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { login } from '../store';
 import loginBanner from '../assets/Images/login_banner.png';
-
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 
 const GET_USER = gql`
     query getUser($user_cred_var: UserCredInput!){
@@ -26,6 +28,8 @@ function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const isValid = useSelector((state) => state.auth.isValid);
+
     const [userCred, setUserCred] = useState({
         username: "",
         password: "",
@@ -41,6 +45,10 @@ function Login() {
             toast.error(err.message);
         }
     }); 
+
+    if (isValid && isWebTokenValid()) {
+        return <Navigate to="/" />;
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;

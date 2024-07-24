@@ -1,7 +1,7 @@
 const { UserInputError, AuthenticationError} = require('apollo-server');
 const { getDB } = require('./db');
 const bcrypt = require('bcrypt');
-const getJwtToken = require('./utils/getJwtToken');
+const getJwtToken = require('./getJwtToken');
 
 const userValidate = (user) => {
     var errors = [];

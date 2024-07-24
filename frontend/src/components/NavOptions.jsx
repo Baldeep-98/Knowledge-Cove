@@ -1,10 +1,15 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
 import { Outlet, Link } from 'react-router-dom';
+import { isWebTokenValid } from '../webTokenVerification';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../store';
 
 function NavOptions(props) {
 
     const isValid = useSelector((state) => state.auth.isValid);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     var navOptions = null;
         
     const guestNavOptions = [{
@@ -61,29 +66,29 @@ function NavOptions(props) {
     }
 ];
 
-    const adminNavOptions = [{
-        id: 1,
-        option: "Home",
-        to: "/Home"
-    },
-    {
-        id: 2,
-        option: "About",
-        to: "/AboutUs"
-    },
-    {
-        id: 3,
-        option: "Catalogues",
-        to: "/catalogue"
-    },
-    {
-        id: 4,
-        option: "Add Books",
-        to: "/Admin"
-    }
-    ];
+    // const adminNavOptions = [{
+    //     id: 1,
+    //     option: "Home",
+    //     to: "/Home"
+    // },
+    // {
+    //     id: 2,
+    //     option: "About",
+    //     to: "/AboutUs"
+    // },
+    // {
+    //     id: 3,
+    //     option: "Catalogues",
+    //     to: "/catalogue"
+    // },
+    // {
+    //     id: 4,
+    //     option: "Add Books",
+    //     to: "/Admin"
+    // }
+    // ];
 
-    if(isValid){
+    if(isValid && isWebTokenValid()){
         navOptions = loggedInNavOptions;
     }
     else{
@@ -105,7 +110,30 @@ function NavOptions(props) {
             
 
             {props.isNavResp && (
+                (isValid && isWebTokenValid()) ?
+                <>
                 <li
+                    key="9"
+                    className={props.menuItemstyle}
+                    >
+                    <Link onClick={() => {
+                        props.clickFun();
+                    } 
+                    } to="/profile" >My Profile</Link>
+                    </li>
+                    <li
+                    key="8"
+                    className={props.menuItemstyle}
+                    >
+                    <Link onClick={() => {
+                        props.clickFun();
+                        dispatch(logout());
+                        navigate('/login');}
+                    }>Logout</Link>
+                    </li>
+                </>
+
+                : <li
                 key="7"
                 className={props.menuItemstyle}
                 >
