@@ -3,7 +3,12 @@ import { Outlet, Link } from 'react-router-dom';
 import signup_banner from '../assets/Images/signup_banner.png';
 import { useMutation, gql} from '@apollo/client';
 import toast, { Toaster } from 'react-hot-toast';
-
+import { signup } from '../store';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 
 const ADD_USER = gql`
         mutation userAdd($user_var: UserInputs!) {
@@ -13,6 +18,11 @@ const ADD_USER = gql`
 }`;
 
 function Signup() {
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const isValid = useSelector((state) => state.auth.isValid);
 
     const [user, setUser] = useState({
         name: "",
@@ -25,13 +35,28 @@ function Signup() {
     });
 
     const [addUser] = useMutation(ADD_USER, {
-        onCompleted: () => {
+        onCompleted: (user) => {
             toast.success("User Registered Successfully!");
+            setUser({
+                name: "",
+                phone: "",
+                address: "",
+                dob: "",
+                email: "",
+                password: "",
+                cnfPassword: ""
+            });
+            dispatch(signup(user));
+            navigate("/login");
         },
-        onError: () => {
-            toast.error("User Registration Failed!");
+        onError: (err) => {
+            toast.error(err.message);
         }
-    });   
+    }); 
+    
+    if (isValid && isWebTokenValid()) {
+        return <Navigate to="/" />;
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -52,15 +77,6 @@ function Signup() {
 
         try {
             await addUser({ variables: { user_var: newUser } });
-            setUser({
-                name: "",
-                phone: "",
-                address: "",
-                dob: "",
-                email: "",
-                password: "",
-                cnfPassword: ""
-            });
         } catch (error) {
             console.error("Error adding user:", error);
         }

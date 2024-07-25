@@ -2,7 +2,10 @@ import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import studyRoomImg from '../assets/Images/study_room.jpeg';
 import RoomBookingTime from './RoomBookingTime'
-import {useLazyQuery, gql} from '@apollo/client';
+import {useQuery, gql} from '@apollo/client';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 
 
 const GET_BOOKED_ROOM = gql`
@@ -21,17 +24,33 @@ function Rooms(props) {
     const [selectedDate, setSelectedDate] = useState("");
     const [bookedRoomInfo, setBookedRoomInfo] = useState([]);
 
+    const isValid = useSelector((state) => state.auth.isValid);
+
     const weekDays = [1, 2, 3, 4, 5, 6, 7];
     const date = new Date();
 
-    const [getBookedRoomInfo] = useLazyQuery(GET_BOOKED_ROOM, {
-        onCompleted: () => {
-            console.log("room time info fetched Successfully!");
+    const { refetch } = useQuery(GET_BOOKED_ROOM, {
+        variables: {
+            booked_room_var: {
+                booking_date: selectedDate,
+                booked_by: JSON.parse(localStorage.getItem("userInfo"))?.membership_num
+            }
         },
-        onError: () => {
-            console.log("room time info fetched failed!");
+        skip: !selectedDate,
+        onCompleted: (data) => {
+            console.log("room time info fetched Successfully!");
+            setBookedRoomInfo(data.getBookedRoomInfo);
+        },
+        onError: (error) => {
+            console.log("room time info fetch failed!", error);
         }
     });
+
+    console.log('isWebTokenValid', isWebTokenValid())
+
+    if (!isValid && !isWebTokenValid()) {
+        return <Navigate to="/login" />;
+    }
 
     const weekDates = weekDays.map(d => {
         let result = new Date(date);
@@ -49,16 +68,7 @@ function Rooms(props) {
             pathname:'/Rooms',
             search: key ? `?date=${key}` : ''
         });
-
-        try {
-            const result = await getBookedRoomInfo({ variables: { booked_room_var: {booking_date: k, booked_by: "Roman"} } });
-            const roomInfo = result.data.getBookedRoomInfo;
-            console.log(roomInfo);
-            setBookedRoomInfo(roomInfo);
-        } catch (error) {
-            console.error("Error adding user:", error);
-        }
-
+        refetch();
     };
 
 
@@ -110,7 +120,7 @@ function Rooms(props) {
                     <hr className='horizontal-line'/>                   
 
                     <div className='room-booking-area-sec2'> 
-                        <RoomBookingTime dateof={selectedDate} bookedRooms = {bookedRoomInfo} selectedDateProp = {selectDate} />
+                        <RoomBookingTime dateof={selectedDate} bookedRooms = {bookedRoomInfo} />
                     </div>
 
                 </div>

@@ -87,13 +87,14 @@ nav>div {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     gap: 0.9rem;
     width: 100%;
     height: 100vh;
     background-color: var(--primary-accent-color);
+    z-index: 20;
 }
 
 .menu-list-item a{
@@ -172,7 +173,7 @@ nav>div {
     .menu-open-option {
         display:inline-block;
         cursor: pointer;
-        z-index: 10;
+        z-index: 100;
     }
 
     .login-subscribe{

@@ -13,8 +13,12 @@ const ADD_TIME = gql`
 `;
 
 function RoomBookingTime(props) {
-    const { dateof: bookingDate, bookedRooms: initialBookedRooms, selectedDateProp } = props;
+    const { dateof: bookingDate, bookedRooms: initialBookedRooms } = props;
     const [bookedRooms, setBookedRooms] = useState(initialBookedRooms);
+    
+    useEffect(() => {
+        setBookedRooms(initialBookedRooms);
+    }, [initialBookedRooms]);
 
     const roomBookTimes = [
         {
@@ -59,7 +63,7 @@ function RoomBookingTime(props) {
             room_num: "1",
             booking_date_time: slot.bookingDate + " "+ date.getFullYear() +" | "+ slot.t.time,
             room_booked: true,
-            booked_by: "Roman"
+            booked_by: JSON.parse(localStorage.getItem("userInfo")).membership_num
         };
 
         try {
@@ -72,10 +76,6 @@ function RoomBookingTime(props) {
     const isRoomBooked = (time) => {
         return bookedRooms.some(room => room.booking_date_time && time === room.booking_date_time.slice(19));
     };
-
-    useEffect(() => {
-        setBookedRooms(initialBookedRooms);
-    }, [initialBookedRooms]);
 
     return (
         <>

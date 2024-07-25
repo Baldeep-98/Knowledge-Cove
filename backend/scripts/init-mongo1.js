@@ -2,7 +2,7 @@ const { MongoClient, Db } = require("mongodb");
 
 const MongoScript = async () => {
   const uri =
-    "mongodb+srv://baldeepsharma:fullstack@cluster0.nw8eqzz.mongodb.net/";
+    "mongodb+srv://harjinder07:sunnysingh123@cluster0.mvfmzda.mongodb.net/";
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     
   try {

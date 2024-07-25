@@ -4,10 +4,16 @@ import MenuIcon from '../assets/Images/menu.svg';
 import CloseIcon from '../assets/Images/cross.svg';
 import NavOptions from './NavOptions';
 import { Outlet, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../store';
 
 const Navbar = () => {
 
   const [isNav, setIsNav] = React.useState(false)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isValid = useSelector((state) => state.auth.isValid);
 
   const handleClick = () => {
     setIsNav(!isNav)
@@ -27,9 +33,25 @@ const Navbar = () => {
         <NavOptions menuStyle='menu-options-list' menuItemstyle='menu-options-list-item' />
 
         <div className='login-subscribe'>
-          <label><Link to="/Login">Login</Link></label>
-          <Outlet/>
-          <Link to="/Services"><button>Subscribe</button></Link>
+
+        { isValid ? (
+          <>
+            <label onClick={() => {
+              dispatch(logout());
+              navigate('/login');
+              }}>
+            <Link>Logout</Link></label>
+            <Outlet/>&nbsp;|&nbsp;
+            <label><Link to="/profile"> My Profile</Link></label>
+          </>
+        ) : (
+          <>
+            <label><Link to="/Login">Login</Link></label>
+            <Outlet/>
+            <Link to="/Services"><button>Subscribe</button></Link>
+          </>
+        )}
+
         </div>
 
 

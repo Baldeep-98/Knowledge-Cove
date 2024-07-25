@@ -2,22 +2,33 @@ import React, {useState} from 'react';
 import {useLazyQuery, gql} from '@apollo/client';
 import { Outlet, Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { login } from '../store';
 import loginBanner from '../assets/Images/login_banner.png';
-
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 
 const GET_USER = gql`
     query getUser($user_cred_var: UserCredInput!){
         getUser(userCred: $user_cred_var){
-            user_id
-            username
-            email
-            membership_num
-            password
+            user {
+                user_id
+                username
+                email
+                membership_num
+            }
+            webToken
         }
     }
 `;
 
 function Login() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const isValid = useSelector((state) => state.auth.isValid);
 
     const [userCred, setUserCred] = useState({
         username: "",
@@ -25,13 +36,19 @@ function Login() {
     });
 
     const [getUser] = useLazyQuery(GET_USER, {
-        onCompleted: () => {
+        onCompleted: (data) => {
             toast.success("User Login Successfully!");
+            dispatch(login(data.getUser));
+            navigate('/home');
         },
-        onError: () => {
-            toast.error("Incorrect Password or Username!");
+        onError: (err) => {
+            toast.error(err.message);
         }
     }); 
+
+    if (isValid && isWebTokenValid()) {
+        return <Navigate to="/" />;
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -50,12 +67,8 @@ function Login() {
 
         try {
             await getUser({ variables: { user_cred_var: newUserCred } });
-            setUserCred({
-                username: "",
-                password: "",
-            });
         } catch (error) {
-            console.error("Error adding user:", error);
+            console.error("Error while login:", error);
         }
     };
 

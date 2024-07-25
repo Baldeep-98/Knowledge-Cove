@@ -1,8 +1,10 @@
 const { UserInputError, AuthenticationError} = require('apollo-server');
 const { getDB } = require('./db');
+const bcrypt = require('bcrypt');
+const getJwtToken = require('./getJwtToken');
 
 const userValidate = (user) => {
-    const errors = [];
+    var errors = [];
 
     var userAge = Math.floor((new Date() - user.dob) / (1000 * 60 * 60 * 24 * 365));
     console.log(userAge)
@@ -12,11 +14,11 @@ const userValidate = (user) => {
     }
 
     if (user.password != user.cnfPassword){
-        errors.push('Password and confirm password do not match!');
+        errors.push(' Password and confirm password do not match!');
     }
 
     if (errors.length > 0) {
-        throw new UserInputError('Invalid input(s)', { errors });
+        throw new UserInputError('Invalid input(s): '+ errors.toString());
     }
 } 
 
@@ -53,10 +55,23 @@ const getUser = async (_,args) => {
             { membership_num: userCred.username }
         ]
     });
-    console.log(user)
 
-    if(user && (user.password === userCred.password)){
-        return user
+    const comparePasswords = async (inputPass, storedpass) => {
+        try {
+            const  matchResult= await bcrypt.compare(inputPass, storedpass);
+            console.log(matchResult)
+            return matchResult;
+        } catch (err) {
+            console.error('Error in password comparison', err);
+            throw err;
+        }
+    };
+
+    if(user && await comparePasswords(userCred.password, user.password)){
+        console.log(user);
+        webToken = getJwtToken(user.user_id);
+        console.log(webToken);
+        return {user, webToken}
     }else {
         throw new AuthenticationError('Invalid username or password');
     }
@@ -67,8 +82,14 @@ const userAdd = async (_, args) => {
     const db = getDB();
     const { user } = args;
 
-    console.log(user);
+    console.log("user check"+ user);
     userValidate(user);
+
+    const userDetail = await db.collection('users').findOne({ email: user.email });
+    if(userDetail){
+        console.log(userDetail)
+        throw new AuthenticationError('User already exists');
+    }
 
     user.user_id = generateUniqueId();
     user.membership_num = generateMembershipNumber();
@@ -82,10 +103,15 @@ const userAdd = async (_, args) => {
         dob:user.dob
     };
 
+    const bcryptPass = async (pass) => { 
+        const bcryptPassResult = await bcrypt.hash(pass, 10)
+        return bcryptPassResult;
+    }
+
     const userCrd = {
         user_id: user.user_id,
         email:user.email,
-        password:user.password,
+        password: await bcryptPass(user.password),
         username:user.username,
         membership_num:user.membership_num
     };
