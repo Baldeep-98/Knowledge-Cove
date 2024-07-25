@@ -32,7 +32,11 @@ function NavOptions(props) {
             option: "Services",
             to: "/Services"
         },
-        
+        {
+            id: 5,
+            option: "AddBook",
+            to: "/AddBook"
+        }
     ];
 
     const loggedInNavOptions = [{
@@ -64,15 +68,30 @@ function NavOptions(props) {
         id: 6,
         option: "Cart",
         to: "/Cart"
-    },
-    {
-        id: 7,
-        option: "AddBook",
-        to: "/AddBook"
     }
 ];
 
-   
+    // const adminNavOptions = [{
+    //     id: 1,
+    //     option: "Home",
+    //     to: "/Home"
+    // },
+    // {
+    //     id: 2,
+    //     option: "About",
+    //     to: "/AboutUs"
+    // },
+    // {
+    //     id: 3,
+    //     option: "Catalogues",
+    //     to: "/catalogue"
+    // },
+    // {
+    //     id: 4,
+    //     option: "Add Books",
+    //     to: "/Admin"
+    // }
+    // ];
 
     if(isValid && isWebTokenValid()){
         navOptions = loggedInNavOptions;

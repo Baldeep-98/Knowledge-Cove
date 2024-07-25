@@ -27,6 +27,7 @@ body{
 @import url('./styles/Catalogue.css');
 @import url('./styles/Services.css');
 @import url('./styles/roomsStyle.css');
+@import url("./styles/ProfileStyle.css");
 @import url('./styles/admin.css');
 @import url('./styles/EditBookPage.css');
 

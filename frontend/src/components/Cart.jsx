@@ -3,6 +3,8 @@ import { useQuery, gql, useMutation } from "@apollo/client";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import emptyCartImage from "../assets/Images/emptyCartImage.gif";
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 
 const GET_CART_BOOKS = gql`
   query GetCartBooks {
@@ -42,6 +44,8 @@ const Cart = () => {
   const navigate = useNavigate();
   const [removeBook] = useMutation(REMOVE_BOOK);
   const [clearCart] = useMutation(CLEAR_CART);
+
+  const isValid = useSelector((state) => state.auth.isValid);
 
   useEffect(() => {
     if (data) {
@@ -88,6 +92,10 @@ const Cart = () => {
   const handleCheckoutClick = () => {
     navigate("/checkout");
   };
+
+  if (!isValid && !isWebTokenValid()) {
+    navigate("/login");
+  }
 
   return (
     <div className="cart">

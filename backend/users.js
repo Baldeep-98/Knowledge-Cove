@@ -20,7 +20,7 @@ const userValidate = (user) => {
     if (errors.length > 0) {
         throw new UserInputError('Invalid input(s): '+ errors.toString());
     }
-} 
+}
 
 function generateUniqueId() {
     const randomNum = Math.floor(Math.random() * 1000000);
@@ -124,5 +124,47 @@ const userAdd = async (_, args) => {
     return savedUserInfo;
 }
 
+const getUserProfile = async (_,args) => {
+    const db = getDB();
+    const {user_id} = args
 
-module.exports = { getUser, userAdd };
+    console.log(user_id)
+
+    const userInfo1 = await db.collection('usersInfo').findOne({user_id: user_id});
+    const userInfo2 = await db.collection('users').findOne({user_id: user_id});
+
+    if (!userInfo1 || !userInfo2) {
+        throw new Error('User profile not found');
+    }
+
+    const userInfo = {
+        user_id: userInfo1.user_id,
+        name: userInfo1.name,
+        phone: userInfo1.phone,
+        address: userInfo1.address,
+        dob: userInfo1.dob,
+        email: userInfo2.email,
+        username: userInfo2.username,
+        membership_num: userInfo2.membership_num
+    }
+
+    return userInfo;
+};
+
+const updateUserProfile = async (_,args) => {
+
+    const db = getDB();
+    const {user_id, updates} = args
+
+    if (updates.name || updates.phone || updates.address) {
+        const user = await db.collection('usersInfo').findOne({ user_id });
+        Object.assign(user, updates);
+    }
+    await db.collection('usersInfo').updateOne({ user_id }, { $set : updates });
+    const savedInfo = await db.collection('usersInfo').findOne({ user_id });
+    console.log(savedInfo)
+    return savedInfo;
+};
+
+
+module.exports = { getUser, userAdd, getUserProfile, updateUserProfile };

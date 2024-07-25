@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useQuery, gql } from "@apollo/client";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 
 const GET_CART_BOOKS = gql`
   query GetCartBooks {
@@ -37,6 +39,8 @@ const CheckoutPage = () => {
     firstName: "",
     LastName: "",
   });
+
+  const isValid = useSelector((state) => state.auth.isValid);
 
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -76,6 +80,12 @@ const CheckoutPage = () => {
       navigate("/catalogue");
     }, 2000);
   };
+
+  if (!isValid && !isWebTokenValid()) {
+    navigate("/login");
+  }
+
+
 
   return (
     <>

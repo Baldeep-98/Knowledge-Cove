@@ -33,18 +33,6 @@ type CartItem {
 scalar GraphQLDate
 scalar Upload
 
-type User {
-  _id: ID!
-  user_id: String!
-  name: String!
-  phone: String!
-  address: String!
-  dob: GraphQLDate!
-  email: String!
-  username: String!
-  membership_num: String!
-  password: String!
-}
 
 type UserAuthData {
   user: User
@@ -58,6 +46,19 @@ type Time {
   room_booked: Boolean
   booked_by: String
 }
+
+type Book {
+    _id: ID!
+    book_id: Int
+    book_name: String
+    book_author: String
+    book_genre: String
+    book_shortDescription: String
+    book_longDescription: String
+    book_image_url:String
+}
+
+scalar GraphQLDate
 
 input UserInputs {
   name: String!
@@ -97,22 +98,27 @@ input BookInput {
   book_image_url: String
 }
 
-type Book {
-  _id: ID!
-  book_id: Int
-  book_name: String
-  book_author: String
-  book_genre: String
-  book_shortDescription: String
-  book_longDescription: String
-  book_image_url: String
+input userUpdateInputs{
+    user_id: String
+    name: String
+    phone: String
+    address: String
+    dob: GraphQLDate
+
+    email: String
+    username: String
+    membership_num:  String
 }
+
+
 type Query {
   getUser(userCred: UserCredInput!): UserAuthData!
   getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
   BookList: [Book]
   getBook(book_id: Int!): Book
   CartItems: [CartItem]
+  getUserProfile(user_id: String!): User!
+
 }
 
 type Mutation {
@@ -120,23 +126,18 @@ type Mutation {
   timeAdd(timeSlot: TimeSlotInputs!): Time!
   addBook(book: BookInput!): Response!
   updateBook(book: BookInput!): Response!
+
+  addToCart(book_id: Int!): Cart!
+  bookDelete(book_id:ID!):Boolean!
+  clearCart:Boolean!
+
+  userProfileUpdate(user_id: String!, updates: userUpdateInputs!): User
 }
+
 
 type Response {
   success: Boolean!
   message: String!
 }
-  addToCart(book_id: Int!): Cart!
-  bookDelete(book_id:ID!):Boolean!
-  clearCart:Boolean!
-}
-type Book {
-  _id: ID!
-  book_id: Int
-  book_name: String
-  book_author: String
-  book_genre: String
-  book_shortDescription: String
-  book_longDescription: String
-  book_image_url: String
-}
+
+

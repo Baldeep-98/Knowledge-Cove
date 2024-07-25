@@ -64,18 +64,18 @@
     color: #333;
   }
   
-  form {
+.checkout-page form {
     display: flex;
     flex-direction: column;
   }
   
-  label {
+  .checkout-page label {
     margin-bottom: 15px;
     font-weight: bold;
   }
   
-  input[type="text"],
-  input[type="email"] {
+  .checkout-page input[type="text"],
+  .checkout-page input[type="email"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -84,12 +84,12 @@
     margin-top: 5px;
   }
   
-  input[type="text"]:focus,
-  input[type="email"]:focus {
+  .checkout-page input[type="text"]:focus,
+  .checkout-page input[type="email"]:focus {
     border-color: #0056b3;
     outline: none;
   }
-  input[type="month"] {
+  .checkout-page input[type="month"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -98,12 +98,12 @@
     margin-top: 5px;
   }
   
-  input[type="month"]:focus {
+  .checkout-page input[type="month"]:focus {
     border-color: #0056b3;
     outline: none;
   }
   
-  button {
+  .checkout-page button {
     padding: 12px 20px;
     border: none;
     border-radius: 4px;
@@ -117,7 +117,7 @@
     align-self: center; 
   }
   
-  button:hover {
+  .checkout-page button:hover {
  
     background-color:var(--secondary-accent-color);
     transition: 0.4s ease-in-out;

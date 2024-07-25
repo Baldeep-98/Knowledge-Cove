@@ -9,6 +9,7 @@ const { getCartItems, remove ,clearCart} = require('./cart');
 const resolvers = {
     Query: {
         getUser: user.getUser,
+        getUserProfile: user.getUserProfile,
         BookList: book.list,
         getBook: book.getBook,
         getBookedRoomInfo: rTime.getBookedRoom,
@@ -21,7 +22,8 @@ const resolvers = {
         updateBook: book.updateBook,
         addToCart: book.addToCart,
         bookDelete: remove,
-        clearCart
+        clearCart,
+        userProfileUpdate: user.updateUserProfile
     },
     GraphQLDate,
 };
