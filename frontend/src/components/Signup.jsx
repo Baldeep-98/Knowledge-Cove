@@ -108,10 +108,12 @@ function Signup() {
                         <span>
                             <label>Phone:</label>
                             <input
-                                type="number"
+                                type="tel"
                                 onChange={handleChange}
                                 name="phone"
                                 value={user.phone}
+                                placeholder="999-999-9999" 
+                                pattern="^\d{3}-\d{3}-\d{4}$"
                                 required
                             />
                         </span>
@@ -150,6 +152,7 @@ function Signup() {
                                 onChange={handleChange}
                                 name="password"
                                 value={user.password}
+                                minlength="8"
                                 required
                             />
 
@@ -159,6 +162,7 @@ function Signup() {
                                 onChange={handleChange}
                                 name="cnfPassword"
                                 value={user.cnfPassword}
+                                minlength="8"
                                 required
                             />
 

@@ -20,7 +20,7 @@ const userValidate = (user) => {
     if (errors.length > 0) {
         throw new UserInputError('Invalid input(s): '+ errors.toString());
     }
-} 
+}
 
 function generateUniqueId() {
     const randomNum = Math.floor(Math.random() * 1000000);
