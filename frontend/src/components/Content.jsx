@@ -11,6 +11,7 @@ import BookDetail from './BookDetail';
 import AboutUs from './AboutUs.jsx'
 import Admin from './Admin'
 import Cart from './Cart.jsx' 
+import CheckOut from './CheckOut.jsx'
  
 const NotFound = () => <h1>Page Not Found</h1>;
  
@@ -29,6 +30,7 @@ function Content() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/checkout" element={<CheckOut/>}/>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

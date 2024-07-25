@@ -38,6 +38,11 @@ function NavOptions(props) {
             id: 7,
             option: "Admin",
             to: "/Admin"
+        },
+        {
+            id:8,
+            option:"CheckOut",
+            to:"/CheckOut"
         }
     ];
 
