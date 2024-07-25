@@ -2,7 +2,14 @@ import React from 'react'
 
 function Profile() {
   return (
-    <div>Profile</div>
+  <>
+    <h1 className='rooms-heading'> User Profile </h1>
+    <div className='' >
+    
+
+    </div>
+
+  </>
   )
 }
 

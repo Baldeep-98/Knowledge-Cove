@@ -12,6 +12,7 @@ import AboutUs from './AboutUs'
 import Admin from './Admin'
 import Cart from './Cart';
 import Checkout from './Checkout';
+import Profile from './Profile';
 
 const NotFound = () => <h1>Page Not Found</h1>;
 
@@ -29,6 +30,7 @@ function Content() {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

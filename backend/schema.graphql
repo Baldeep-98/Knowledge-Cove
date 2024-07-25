@@ -25,6 +25,17 @@ type Time{
     booked_by: String
 }
 
+type Book {
+    _id: ID!
+    book_id: Int
+    book_name: String
+    book_author: String
+    book_genre: String
+    book_shortDescription: String
+    book_longDescription: String
+    book_image_url:String
+}
+
 scalar GraphQLDate
 
 input UserInputs {
@@ -55,8 +66,21 @@ input BookedRoomInput{
     booked_by: String!
 }
 
+input userUpdateInputs{
+    user_id: String
+    name: String
+    phone: String
+    address: String
+    dob: GraphQLDate
+
+    email: String
+    username: String
+    membership_num:  String
+}
+
 type Query {
     getUser(userCred: UserCredInput!): UserAuthData!
+    getUserProfile(user_id: String!): User!
     getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
     BookList: [Book]
     getBook(book_id: Int!): Book
@@ -64,16 +88,8 @@ type Query {
 
 type Mutation {
     userAdd(user: UserInputs!): User!
+    userProfileUpdate(user_id: String!, updates: userUpdateInputs!): User
     timeAdd(timeSlot: TimeSlotInputs!): Time!
 }
-type Book {
-    _id: ID!
-    book_id: Int
-    book_name: String
-    book_author: String
-    book_genre: String
-    book_shortDescription: String
-    book_longDescription: String
-    book_image_url:String
-}
+
 

@@ -9,6 +9,7 @@ const fs = require('fs');
 const resolvers = {
     Query: {
         getUser: user.getUser,
+        getUserProfile: user.getUserProfile,
         BookList: book.list,
         getBook: book.getBook,
         getBookedRoomInfo: rTime.getBookedRoom,
@@ -16,6 +17,7 @@ const resolvers = {
     Mutation: {
         userAdd: user.userAdd,
         timeAdd: rTime.timeAdd,
+        userProfileUpdate: user.updateUserProfile
     },
     
     GraphQLDate,
