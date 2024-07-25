@@ -1,74 +1,90 @@
-type User {
-    _id: ID!
-    user_id: String!
-    name: String!
-    phone: String!
-    address: String!
-    dob: GraphQLDate!
-
-    email: String!
-    username: String!
-    membership_num:  String!
-    password: String!
-}
-
-type Time{
-    _id: ID!
-    room_num: String
-    booking_date_time: String
-    room_booked: Boolean
-    booked_by: String
-}
-
 scalar GraphQLDate
+scalar Upload
+
+type User {
+  _id: ID!
+  user_id: String!
+  name: String!
+  phone: String!
+  address: String!
+  dob: GraphQLDate!
+  email: String!
+  username: String!
+  membership_num: String!
+  password: String!
+}
+
+type Time {
+  _id: ID!
+  room_num: String
+  booking_date_time: String
+  room_booked: Boolean
+  booked_by: String
+}
 
 input UserInputs {
-    name: String!
-    phone: String!
-    address: String!
-    dob: GraphQLDate!
-
-    email: String!
-    password: String!
-    cnfPassword: String!
+  name: String!
+  phone: String!
+  address: String!
+  dob: GraphQLDate!
+  email: String!
+  password: String!
+  cnfPassword: String!
 }
 
 input TimeSlotInputs {
-    room_num: String
-    booking_date_time: String
-    room_booked: Boolean
-    booked_by: String
+  room_num: String
+  booking_date_time: String
+  room_booked: Boolean
+  booked_by: String
 }
 
-input UserCredInput{
-    username: String!
-    password: String!
+input UserCredInput {
+  username: String!
+  password: String!
 }
 
-input BookedRoomInput{
-    booking_date: String!
-    booked_by: String!
+input BookedRoomInput {
+  booking_date: String!
+  booked_by: String!
+}
+
+input BookInput {
+  book_id: Int!
+  book_name: String!
+  book_author: String!
+  book_genre: String!
+  book_shortDescription: String!
+  book_longDescription: String!
+  book_image_url: String
+}
+
+type Book {
+  _id: ID!
+  book_id: Int
+  book_name: String
+  book_author: String
+  book_genre: String
+  book_shortDescription: String
+  book_longDescription: String
+  book_image_url: String
 }
 
 type Query {
-    getUser(userCred: UserCredInput!): User
-    getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
-    BookList: [Book]
-    getBook(book_id: Int!): Book
+  getUser(userCred: UserCredInput!): User
+  getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
+  BookList: [Book]
+  getBook(book_id: Int!): Book
 }
 
 type Mutation {
-    userAdd(user: UserInputs!): User!
-    timeAdd(timeSlot: TimeSlotInputs!): Time!
-}
-type Book {
-    _id: ID!
-    book_id: Int
-    book_name: String
-    book_author: String
-    book_genre: String
-    book_shortDescription: String
-    book_longDescription: String
-    book_image_url:String
+  userAdd(user: UserInputs!): User!
+  timeAdd(timeSlot: TimeSlotInputs!): Time!
+  addBook(book: BookInput!): Response!
+  updateBook(book: BookInput!): Response!
 }
 
+type Response {
+  success: Boolean!
+  message: String!
+}

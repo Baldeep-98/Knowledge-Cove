@@ -1,0 +1,121 @@
+
+.edit-book-page {
+    width: 100%;
+    background-color: #f0f4f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .page-header {
+    width: 100%;
+    background-color: #def6ff;
+    padding-block: 20px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    padding-inline: 0;
+  }
+  
+  .page-header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    color: #333;
+  }
+  
+  .page-content {
+    width: 100%;
+    padding-block: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .edit-book-section {
+    width: 100%;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-book-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .edit-book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .form-group input[type="file"], 
+  .form-group input[type="text"], 
+  .form-group input[type="number"], 
+  .form-group input[type="date"], 
+  .form-group input[type="time"] {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .form-group select {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .submit-button {
+    background-color: var(--primary-accent-color);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    align-self: center;
+  }
+  
+  .submit-button:hover {
+    background-color: #3e8e41;
+  }
+  
+  @media (max-width: 768px) {
+    .page-header h1 {
+      font-size: 2em;
+    }
+  
+    .edit-book-section h2 {
+      font-size: 1.5em;
+    }
+  
+    .form-group label,
+    .form-group input[type="file"],
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="date"],
+    .form-group input[type="time"],
+    .form-group select,
+    .submit-button {
+      font-size: 1em;
+    }
+  }
+  

@@ -36,8 +36,8 @@ function NavOptions(props) {
         },
         {
             id: 7,
-            option: "Admin",
-            to: "/Admin"
+            option: "AddBook",
+            to: "/AddBook"
         }
     ];
 

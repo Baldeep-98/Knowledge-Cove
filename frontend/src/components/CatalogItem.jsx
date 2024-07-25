@@ -6,7 +6,12 @@ const CatalogItem = ({ book }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/detail/${book.book_id}`);//navigate to bookdetail page when click
+    navigate(`/detail/${book.book_id}`); 
+  };
+
+  const handleEditClick = (e) => {
+    e.stopPropagation(); 
+    navigate(`/edit/${book.book_id}`); 
   };
 
   return (
@@ -20,9 +25,10 @@ const CatalogItem = ({ book }) => {
         <p>{book.book_genre}</p>
         <p>{book.book_shortDescription}</p>
         <Link to={`/detail/${book.book_id}`}></Link>
-        <div class="container">
-        <button className="itembutton">Add to Cart</button>
-  </div>
+        <div className="container">
+          <button className="itembutton">Add to Cart</button>
+          <button className="edit-button" onClick={handleEditClick}>Edit</button>
+        </div>
       </div>
     </div>
   );

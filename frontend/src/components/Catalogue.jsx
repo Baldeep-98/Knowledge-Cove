@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
 import toast from "react-hot-toast";
 import CatalogItem from "./CatalogItem";
@@ -19,19 +19,31 @@ const GET_BOOK_LIST = gql`
 `;
 
 function CatalogPage() {
-  const { error, data } = useQuery(GET_BOOK_LIST); //fetching data
-  const [visibleBooks, setVisibleBooks] = useState(8); //set state to show book at initial load
-  const [selectedBookType, setselectedBookType] = useState("all"); //to show the all books
+  const { loading, error, data, refetch } = useQuery(GET_BOOK_LIST); 
+
+  useEffect(() => {
+    refetch(); 
+  }, [refetch]);
+
+  const [visibleBooks, setVisibleBooks] = useState(8); 
+  const [selectedBookType, setSelectedBookType] = useState("all"); 
+
+  if (loading) return <p>Loading...</p>;
   if (error) {
-    toast.error("Failed to fetch books"); // to display errors
+    toast.error("Failed to fetch books"); 
     console.error(error);
     return null;
   }
 
-  const books = data?.BookList || []; //return data from bookList array
+  const books = data?.BookList || []; 
   const filteredBooks =
-  selectedBookType === "all" ? books: books.filter((book) =>book.book_genre.toLowerCase() === selectedBookType.toLowerCase() );
-  const showMoreBooks = () => setVisibleBooks((prev) => prev + 8); // to show  more books when click on button
+    selectedBookType === "all"
+      ? books
+      : books.filter(
+          (book) =>
+            book.book_genre.toLowerCase() === selectedBookType.toLowerCase()
+        );
+  const showMoreBooks = () => setVisibleBooks((prev) => prev + 8); 
 
   return (
     <div className="catalog-page">
@@ -39,10 +51,10 @@ function CatalogPage() {
       <h2 className="catalogue-sheading">Embark on a Literary Journey</h2>
       <div className="filter-bar">
         <label htmlFor="genre-filter">Filter Books:</label>
-        <BookFilter onGenreChange={setselectedBookType} />
+        <BookFilter onGenreChange={setSelectedBookType} />
       </div>
       {filteredBooks.length === 0 ? (
-        <p className="no-books">No books available</p> //if no book of selected booktype then show message
+        <p className="no-books">No books available</p> 
       ) : (
         <div className="catalog-grid">
           {filteredBooks.slice(0, visibleBooks).map((book) => (
@@ -52,14 +64,17 @@ function CatalogPage() {
       )}
       {visibleBooks < filteredBooks.length && (
         <div className="button-container">
-        <button className="cataloguebutton" type="button" onClick={showMoreBooks}>
-          Explore More Books
-        </button>
-      </div>
-    )}
-      </div>
+          <button
+            className="cataloguebutton"
+            type="button"
+            onClick={showMoreBooks}
+          >
+            Explore More Books
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
- 
+
 export default CatalogPage;
- 
