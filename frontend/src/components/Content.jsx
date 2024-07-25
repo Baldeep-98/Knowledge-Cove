@@ -12,7 +12,7 @@ import Cart from './Cart';
 import Checkout from './Checkout';
 import AddBook from './AddBook';
 import EditBook from './EditBook';
-
+ 
 const NotFound = () => <h1>Page Not Found</h1>;
 
 function Content() {
@@ -27,12 +27,13 @@ function Content() {
       <Route path="/cart" element={<Cart/>}/>
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/detail/:id" element={<BookDetail />} />
-      <Route path="/rooms" element={<Rooms />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/addBook" element={<AddBook />} />
       <Route path="/edit/:id" element={<EditBook />} />
+
+      <Route path="/admin" element={<Admin />} />
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

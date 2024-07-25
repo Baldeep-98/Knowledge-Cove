@@ -4,6 +4,7 @@ const rTime = require('./roomTime')
 const book = require('./book');
 const { ApolloServer } = require('apollo-server');
 const fs = require('fs');
+const { getCartItems, remove ,clearCart} = require('./cart'); 
 
 const resolvers = {
     Query: {
@@ -11,16 +12,19 @@ const resolvers = {
         BookList: book.list,
         getBook: book.getBook,
         getBookedRoomInfo: rTime.getBookedRoom,
+        CartItems: getCartItems
     },
     Mutation: {
         userAdd: user.userAdd,
         timeAdd: rTime.timeAdd,
         addBook: book.addBook,
         updateBook: book.updateBook,
+        addToCart: book.addToCart,
+        bookDelete: remove,
+        clearCart
     },
-    
     GraphQLDate,
-}
+};
 
 const server = new ApolloServer({
     typeDefs: fs.readFileSync('./schema.graphql', 'utf-8'),
@@ -33,7 +37,7 @@ const server = new ApolloServer({
 });
 
 function installHandler(PORT) {
-    server.listen({port: PORT}).then(({ url }) => {
+    server.listen({ port: PORT }).then(({ url }) => {
         console.log(`Server ready at ${url}`);
     });
 };

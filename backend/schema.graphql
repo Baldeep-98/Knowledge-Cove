@@ -1,3 +1,35 @@
+type User {
+  _id: ID!
+  user_id: String!
+  name: String!
+  phone: String!
+  address: String!
+  dob: GraphQLDate!
+
+  email: String!
+  username: String!
+  membership_num: String!
+  password: String!
+}
+
+type Time {
+  _id: ID!
+  room_num: String
+  booking_date_time: String
+  room_booked: Boolean
+  booked_by: String
+}
+type Cart {
+  _id: ID!
+  book_id: Int
+  membership_num: Int
+}
+type CartItem {
+  _id: ID!
+  book_id: Int
+  membership_num: Int
+  bookDetails: Book
+}
 scalar GraphQLDate
 scalar Upload
 
@@ -32,6 +64,7 @@ input UserInputs {
   phone: String!
   address: String!
   dob: GraphQLDate!
+
   email: String!
   password: String!
   cnfPassword: String!
@@ -74,12 +107,12 @@ type Book {
   book_longDescription: String
   book_image_url: String
 }
-
 type Query {
   getUser(userCred: UserCredInput!): UserAuthData!
   getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
   BookList: [Book]
   getBook(book_id: Int!): Book
+  CartItems: [CartItem]
 }
 
 type Mutation {
@@ -92,4 +125,18 @@ type Mutation {
 type Response {
   success: Boolean!
   message: String!
+}
+  addToCart(book_id: Int!): Cart!
+  bookDelete(book_id:ID!):Boolean!
+  clearCart:Boolean!
+}
+type Book {
+  _id: ID!
+  book_id: Int
+  book_name: String
+  book_author: String
+  book_genre: String
+  book_shortDescription: String
+  book_longDescription: String
+  book_image_url: String
 }

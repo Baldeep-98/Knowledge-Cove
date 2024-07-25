@@ -31,8 +31,7 @@ function NavOptions(props) {
             id: 4,
             option: "Services",
             to: "/Services"
-        }
-        
+        },
         
     ];
 
