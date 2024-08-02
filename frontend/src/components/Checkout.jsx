@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useMutation, useApolloClient } from "@apollo/client";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
@@ -23,8 +23,15 @@ const GET_CART_BOOKS = gql`
   }
 `;
 
+const CHECKOUT = gql`
+  mutation Checkout($order: OrderInput!) {
+    checkout(order: $order)
+  }`;
+
 const CheckoutPage = () => {
   const { data, loading, error } = useQuery(GET_CART_BOOKS);
+  const [checkout] = useMutation(CHECKOUT);
+  const client = useApolloClient();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     billingName: "",
@@ -37,7 +44,7 @@ const CheckoutPage = () => {
     cardExpiry: "",
     cardCVV: "",
     firstName: "",
-    LastName: "",
+    lastName: "",
   });
 
   const isValid = useSelector((state) => state.auth.isValid);
@@ -59,7 +66,27 @@ const CheckoutPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleCheckout = async (order) => {
+    try {
+      const response = await client.mutate({
+        mutation: CHECKOUT,
+        variables: { order }
+      });
+      if (response.data.checkout) {
+        console.log('Checkout successful');
+        toast.success("Checkout successful");
+        // Navigate to success page or clear cart
+      } else {
+        console.log('Checkout failed');
+        toast.error("Checkout failed");
+      }
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      toast.error("Error during checkout");
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validation for credit card number
@@ -69,23 +96,35 @@ const CheckoutPage = () => {
     }
 
     // Validation for CVV length
-    if (formData.cardCVC.length !== 3) {
+    if (formData.cardCVV.length !== 3) {
       toast.error("CVV must be 3 digits long");
       return;
     }
 
-    console.log("Form data submitted:", formData);
-    toast.success("Order Placed successfully");
-    setTimeout(() => {
-      navigate("/catalogue");
-    }, 2000);
+    const order = {
+      billingName: formData.billingName,
+      billingEmail: formData.billingEmail,
+      billingAddress: formData.billingAddress,
+      shippingName: formData.shippingName,
+      shippingEmail: formData.shippingEmail,
+      shippingAddress: formData.shippingAddress,
+      cardNumber: formData.cardNumber,
+      cardExpiry: formData.cardExpiry,
+      cardCVV: formData.cardCVV,
+      items: CartItems.map(item => ({
+        book_id: item.book_id,
+        book_name: item.bookDetails.book_name,
+        book_author: item.bookDetails.book_author,
+        book_genre: item.bookDetails.book_genre
+      }))
+    };
+    await handleCheckout(order);
   };
 
   if (!isValid && !isWebTokenValid()) {
     navigate("/login");
+    return null; // Prevent rendering the component if the user is not logged in
   }
-
-
 
   return (
     <>
@@ -141,7 +180,7 @@ const CheckoutPage = () => {
                 name="billingAddress"
                 value={formData.billingAddress}
                 onChange={handleChange}
-                required   />
+                required />
             </label>
 
             <h2>Shipping Information</h2>
@@ -152,7 +191,7 @@ const CheckoutPage = () => {
                 name="shippingName"
                 value={formData.shippingName}
                 onChange={handleChange}
-                required  />
+                required />
             </label>
             <label>
               Email:
@@ -161,7 +200,7 @@ const CheckoutPage = () => {
                 name="shippingEmail"
                 value={formData.shippingEmail}
                 onChange={handleChange}
-                required/>
+                required />
             </label>
             <label>
               Address:
@@ -170,7 +209,7 @@ const CheckoutPage = () => {
                 name="shippingAddress"
                 value={formData.shippingAddress}
                 onChange={handleChange}
-                required/>
+                required />
             </label>
 
             <h2>Payment Information</h2>
@@ -181,14 +220,14 @@ const CheckoutPage = () => {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                required/>
+                required />
             </label>
             <label>
               Last Name:
               <input
                 type="text"
-                name="LastName"
-                value={formData.LastName}
+                name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
                 required />
             </label>
@@ -213,15 +252,15 @@ const CheckoutPage = () => {
                 required />
             </label>
             <label>
-              CVC:
+              CVV:
               <input
                 type="text"
                 name="cardCVV"
-                value={formData.cardCVC}
+                value={formData.cardCVV}
                 onChange={handleChange}
                 required
                 pattern="\d{3}"
-                title="CVV must be 3 digits long"/>
+                title="CVV must be 3 digits long" />
             </label>
 
             <button type="submit">Place Order</button>
