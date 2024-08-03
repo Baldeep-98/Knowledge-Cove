@@ -8,6 +8,7 @@ import { logout } from '../store';
 function NavOptions(props) {
 
     const isValid = useSelector((state) => state.auth.isValid);
+    const isAdmin = useSelector((state) => state.auth.isAdmin);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     var navOptions = null;
@@ -31,74 +32,70 @@ function NavOptions(props) {
             id: 4,
             option: "Services",
             to: "/Services"
-        },
-        {
-            id: 5,
-            option: "AddBook",
-            to: "/AddBook"
         }
     ];
 
     const loggedInNavOptions = [{
-        id: 1,
-        option: "Home",
-        to: "/Home"
-    },
-    {
-        id: 2,
-        option: "About",
-        to: "/AboutUs"
-    },
-    {
-        id: 3,
-        option: "Catalogues",
-        to: "/catalogue"
-    },
-    {
-        id: 4,
-        option: "Rooms",
-        to: "/Rooms"
-    },
-    {
-        id: 5,
-        option: "Services",
-        to: "/Services"
-    },
-    {
-        id: 6,
-        option: "Cart",
-        to: "/Cart"
-    }
-];
+            id: 1,
+            option: "Home",
+            to: "/Home"
+        },
+        {
+            id: 2,
+            option: "About",
+            to: "/AboutUs"
+        },
+        {
+            id: 3,
+            option: "Catalogues",
+            to: "/catalogue"
+        },
+        {
+            id: 4,
+            option: "Rooms",
+            to: "/Rooms"
+        },
+        {
+            id: 5,
+            option: "Services",
+            to: "/Services"
+        },
+        {
+            id: 6,
+            option: "Cart",
+            to: "/Cart"
+        }
+    ];
 
-    // const adminNavOptions = [{
-    //     id: 1,
-    //     option: "Home",
-    //     to: "/Home"
-    // },
-    // {
-    //     id: 2,
-    //     option: "About",
-    //     to: "/AboutUs"
-    // },
-    // {
-    //     id: 3,
-    //     option: "Catalogues",
-    //     to: "/catalogue"
-    // },
-    // {
-    //     id: 4,
-    //     option: "Add Books",
-    //     to: "/Admin"
-    // }
-    // ];
+    const adminNavOptions = [{
+            id: 1,
+            option: "Home",
+            to: "/Home"
+        },
+        {
+            id: 2,
+            option: "About",
+            to: "/AboutUs"
+        },
+        {
+            id: 3,
+            option: "Catalogues",
+            to: "/catalogue"
+        },
+        {
+            id: 4,
+            option: "Add Books",
+            to: "/AddBook"
+        }
+    ];
 
-    if(isValid && isWebTokenValid()){
+    if(isValid && isAdmin && isWebTokenValid())
+        navOptions = adminNavOptions;
+    else if(isValid && isWebTokenValid())
         navOptions = loggedInNavOptions;
-    }
-    else{
+    else
         navOptions = guestNavOptions;
-    }
+    
 
 
     return (
@@ -115,17 +112,21 @@ function NavOptions(props) {
             
 
             {props.isNavResp && (
-                (isValid && isWebTokenValid()) ?
+                ( (isAdmin === false) && isValid && isWebTokenValid()) ?
                 <>
-                <li
-                    key="9"
-                    className={props.menuItemstyle}
-                    >
-                    <Link onClick={() => {
-                        props.clickFun();
-                    } 
-                    } to="/profile" >My Profile</Link>
-                    </li>
+                
+                    { (isAdmin === false) &&
+                        <li
+                        key="9"
+                        className={props.menuItemstyle}
+                        >
+                        <Link onClick={() => {
+                            props.clickFun();
+                        } 
+                        } to="/profile" >My Profile</Link>
+                        </li>
+                    }
+
                     <li
                     key="8"
                     className={props.menuItemstyle}

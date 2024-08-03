@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, gql } from "@apollo/client";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { isWebTokenValid } from '../webTokenVerification';
 
@@ -26,6 +26,7 @@ const GET_CART_BOOKS = gql`
 const CheckoutPage = () => {
   const { data, loading, error } = useQuery(GET_CART_BOOKS);
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     billingName: "",
     billingEmail: "",
@@ -41,6 +42,7 @@ const CheckoutPage = () => {
   });
 
   const isValid = useSelector((state) => state.auth.isValid);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -82,10 +84,12 @@ const CheckoutPage = () => {
   };
 
   if (!isValid && !isWebTokenValid()) {
-    navigate("/login");
+    return <Navigate to="/login" />;
   }
-
-
+  
+  if (isValid && isAdmin) {
+    return <Navigate to="/home" />;
+  }
 
   return (
     <>

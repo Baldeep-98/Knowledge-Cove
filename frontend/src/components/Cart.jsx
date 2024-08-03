@@ -41,11 +41,14 @@ const CLEAR_CART = gql`
 const Cart = () => {
   const { data, refetch } = useQuery(GET_CART_BOOKS);
   const [CartItems, setCartItems] = useState([]);
+
   const navigate = useNavigate();
+  
   const [removeBook] = useMutation(REMOVE_BOOK);
   const [clearCart] = useMutation(CLEAR_CART);
 
   const isValid = useSelector((state) => state.auth.isValid);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   useEffect(() => {
     if (data) {
@@ -96,6 +99,10 @@ const Cart = () => {
   if (!isValid && !isWebTokenValid()) {
     navigate("/login");
   }
+
+  if (isValid && isAdmin) {
+    navigate("/home");
+  }  
 
   return (
     <div className="cart">

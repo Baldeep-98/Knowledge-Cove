@@ -1,12 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 
 const CatalogItem = ({ book }) => {
   const navigate = useNavigate();
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   const handleClick = () => {
-    navigate(`/detail/${book.book_id}`); 
+    if(!isAdmin)
+      navigate(`/detail/${book.book_id}`); 
   };
 
   const handleEditClick = (e) => {
@@ -24,10 +27,11 @@ const CatalogItem = ({ book }) => {
         <p>{book.book_author}</p>
         <p>{book.book_genre}</p>
         <p>{book.book_shortDescription}</p>
-        <Link to={`/detail/${book.book_id}`}></Link>
+        {/* <Link to={`/detail/${book.book_id}`}></Link> */}
         <div className="container">
-          <button className="itembutton">Add to Cart</button>
-          <button className="edit-button" onClick={handleEditClick}>Edit</button>
+          { isAdmin &&
+            <button className="edit-button" onClick={handleEditClick}>Edit</button>
+          }
         </div>
       </div>
     </div>

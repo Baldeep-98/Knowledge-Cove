@@ -46,13 +46,13 @@ const getUser = async (_,args) => {
     const db = getDB();
     const {userCred} = args
 
-    console.log(userCred.username)
+    console.log(userCred.username.toLowerCase())
 
     const user = await db.collection('users').findOne({
         $or: [
-            { username: userCred.username },
-            { email: userCred.username },
-            { membership_num: userCred.username }
+            { username: userCred.username.toLowerCase() },
+            { email: userCred.username.toLowerCase() },
+            { membership_num: userCred.username.toLowerCase() }
         ]
     });
 
@@ -109,10 +109,10 @@ const userAdd = async (_, args) => {
     }
 
     const userCrd = {
-        user_id: user.user_id,
-        email:user.email,
+        user_id: user.user_id.toLowerCase(),
+        email:user.email.toLowerCase(),
         password: await bcryptPass(user.password),
-        username:user.username,
+        username:user.username.toLowerCase(),
         membership_num:user.membership_num
     };
 

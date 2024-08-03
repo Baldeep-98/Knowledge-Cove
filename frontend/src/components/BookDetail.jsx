@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, gql, useMutation } from "@apollo/client";
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
+
 
 const GET_BOOK_DETAIL = gql`
   query GetBookDetail($book_id: Int!) {
@@ -32,6 +35,9 @@ const BookDetail = () => {
   const { id } = useParams();
   const bookId = parseInt(id);
   const navigate = useNavigate();
+  
+  const isValid = useSelector((state) => state.auth.isValid);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   const { loading, error, data } = useQuery(GET_BOOK_DETAIL, { 
     variables: { book_id: bookId },
@@ -49,18 +55,22 @@ const BookDetail = () => {
   }, [data]);
 
   const handleAddToCart = async () => {
-    try {
-      const { data } = await addToCart({ variables: { book_id: bookId } });
-      if (data.addToCart) {
-        toast.success("Book added to cart successfully");
-        navigate("/cart");  // Navigate to the cart page after adding the book
-      } else {
+    if(isValid && !isAdmin && isWebTokenValid) {
+      try {
+        const { data } = await addToCart({ variables: { book_id: bookId } });
+        if (data.addToCart) {
+          toast.success("Book added to cart successfully");
+          navigate("/cart");
+        } else {
+          toast.error("Error adding book to cart");
+        }
+      } catch (error) {
+        console.error("Error in addToCart mutation:", error);
         toast.error("Error adding book to cart");
       }
-    } catch (error) {
-      console.error("Error in addToCart mutation:", error);
-      toast.error("Error adding book to cart");
     }
+    else 
+      toast.error("Please login with you account to add book to cart");
   };
 
   if (loading) return <p>Loading...</p>;

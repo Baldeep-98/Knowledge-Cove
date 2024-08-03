@@ -36,7 +36,6 @@ function Signup() {
 
     const [addUser] = useMutation(ADD_USER, {
         onCompleted: (user) => {
-            toast.success("User Registered Successfully!");
             setUser({
                 name: "",
                 phone: "",

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import toast, { Toaster } from 'react-hot-toast';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 
 const ADD_BOOK = gql`
   mutation addBook($bookInput: BookInput!) {
@@ -21,6 +24,9 @@ function AddBook() {
     book_longDescription: '',
     book_image_url: '',  
   });
+
+  const isValid = useSelector((state) => state.auth.isValid);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   const [addBook] = useMutation(ADD_BOOK, {
     onCompleted: (data) => {
@@ -44,6 +50,15 @@ function AddBook() {
     }
   });
 
+
+  if (!isValid && !isWebTokenValid()) {
+    return <Navigate to="/login" />;
+  }
+
+  if (isValid && !isAdmin){
+    return <Navigate to="/home" />;
+  }
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setBook(prevBook => ({
@@ -62,6 +77,8 @@ function AddBook() {
       toast.error('Operation failed.');
     }
   };
+
+
 
   return (
     <div className="admin-dashboard">

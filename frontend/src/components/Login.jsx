@@ -37,7 +37,6 @@ function Login() {
 
     const [getUser] = useLazyQuery(GET_USER, {
         onCompleted: (data) => {
-            toast.success("User Login Successfully!");
             dispatch(login(data.getUser));
             navigate('/home');
         },
