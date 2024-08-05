@@ -121,10 +121,9 @@ input OrderInput {
   billingAddress: String!
   shippingName: String!
   shippingAddress: String!
-  cardNumber: String!
-  cardCVV: String!
+ 
   shippingEmail:String!
-  cardExpiry:String!
+
   items: [OrderItemInput!]!
 
 }

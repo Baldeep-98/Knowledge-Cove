@@ -18,7 +18,15 @@ const GET_BOOK_DETAIL = gql`
   }
 `;
 
-const ADD_TO_CART = gql` 
+const GET_CART_BOOKS = gql`
+  query GetCartBooks {
+    CartItems {
+      book_id
+    }
+  }
+`;
+
+const ADD_TO_CART = gql`
   mutation AddToCart($book_id: Int!) {
     addToCart(book_id: $book_id) {
       _id
@@ -37,6 +45,8 @@ const BookDetail = () => {
     variables: { book_id: bookId },
   });
 
+  const { data: cartData } = useQuery(GET_CART_BOOKS);
+
   const [book, setBook] = useState(null);
   const [addToCart] = useMutation(ADD_TO_CART);
 
@@ -49,11 +59,16 @@ const BookDetail = () => {
   }, [data]);
 
   const handleAddToCart = async () => {
+    if (cartData && cartData.CartItems.some(item => item.book_id === bookId)) {
+      toast.error("Book is already in the cart");
+      return;
+    }
+
     try {
       const { data } = await addToCart({ variables: { book_id: bookId } });
       if (data.addToCart) {
         toast.success("Book added to cart successfully");
-        navigate("/cart");  // Navigate to the cart page after adding the book
+        navigate("/cart");
       } else {
         toast.error("Error adding book to cart");
       }

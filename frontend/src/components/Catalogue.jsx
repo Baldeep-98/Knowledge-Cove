@@ -58,7 +58,7 @@ function CatalogPage() {
       ) : (
         <div className="catalog-grid">
           {filteredBooks.slice(0, visibleBooks).map((book) => (
-            <CatalogItem key={book.book_id} book={book} />
+            <CatalogItem key={book.book_id} book={book} refetchCart={refetch} />
           ))}
         </div>
       )}

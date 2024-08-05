@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, gql, useMutation, useApolloClient } from "@apollo/client";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -26,10 +26,27 @@ const GET_CART_BOOKS = gql`
 const CHECKOUT = gql`
   mutation Checkout($order: OrderInput!) {
     checkout(order: $order)
-  }`;
+  }
+`;
+
+const GET_USER_PROFILE = gql`
+  query GetUserProfile($userId: String!) {
+    getUserProfile(user_id: $userId) {
+      user_id
+      name
+      email
+      address
+    }
+  }
+`;
 
 const CheckoutPage = () => {
   const { data, loading, error } = useQuery(GET_CART_BOOKS);
+  const { data: userProfileData, loading: userProfileLoading, error: userProfileError } = useQuery(GET_USER_PROFILE, {
+    variables: {
+      userId: JSON.parse(localStorage.getItem("userInfo"))?.user_id
+    }
+  });
   const [checkout] = useMutation(CHECKOUT);
   const client = useApolloClient();
   const navigate = useNavigate();
@@ -40,14 +57,22 @@ const CheckoutPage = () => {
     shippingName: "",
     shippingEmail: "",
     shippingAddress: "",
-    cardNumber: "",
-    cardExpiry: "",
-    cardCVV: "",
-    firstName: "",
-    lastName: "",
+    selection: "",
+    location: ""
   });
 
   const isValid = useSelector((state) => state.auth.isValid);
+
+  useEffect(() => {
+    if (userProfileData) {
+      setFormData((prevData) => ({
+        ...prevData,
+        billingName: userProfileData.getUserProfile.name,
+        billingEmail: userProfileData.getUserProfile.email,
+        billingAddress: userProfileData.getUserProfile.address
+      }));
+    }
+  }, [userProfileData]);
 
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -75,7 +100,9 @@ const CheckoutPage = () => {
       if (response.data.checkout) {
         console.log('Checkout successful');
         toast.success("Checkout successful");
-        // Navigate to success page or clear cart
+        setTimeout(() => {
+          navigate("/Catalogue");
+        }, 1000);
       } else {
         console.log('Checkout failed');
         toast.error("Checkout failed");
@@ -89,18 +116,6 @@ const CheckoutPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation for credit card number
-    if (formData.cardNumber.length !== 12) {
-      toast.error("Credit card number must be 12 digits long");
-      return;
-    }
-
-    // Validation for CVV length
-    if (formData.cardCVV.length !== 3) {
-      toast.error("CVV must be 3 digits long");
-      return;
-    }
-
     const order = {
       billingName: formData.billingName,
       billingEmail: formData.billingEmail,
@@ -108,9 +123,6 @@ const CheckoutPage = () => {
       shippingName: formData.shippingName,
       shippingEmail: formData.shippingEmail,
       shippingAddress: formData.shippingAddress,
-      cardNumber: formData.cardNumber,
-      cardExpiry: formData.cardExpiry,
-      cardCVV: formData.cardCVV,
       items: CartItems.map(item => ({
         book_id: item.book_id,
         book_name: item.bookDetails.book_name,
@@ -184,84 +196,84 @@ const CheckoutPage = () => {
             </label>
 
             <h2>Shipping Information</h2>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="shippingName"
-                value={formData.shippingName}
-                onChange={handleChange}
-                required />
-            </label>
-            <label>
-              Email:
-              <input
-                type="email"
-                name="shippingEmail"
-                value={formData.shippingEmail}
-                onChange={handleChange}
-                required />
-            </label>
-            <label>
-              Address:
-              <input
-                type="text"
-                name="shippingAddress"
-                value={formData.shippingAddress}
-                onChange={handleChange}
-                required />
-            </label>
+            <div className="radio-group">
+              <label>
+                <input
+                  type="radio"
+                  id="location"
+                  name="selection"
+                  value="location"
+                  checked={formData.selection === 'location'}
+                  onChange={handleChange}
+                  required
+                />
+                Select Location
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  id="shippingAddress"
+                  name="selection"
+                  value="shippingAddress"
+                  checked={formData.selection === 'shippingAddress'}
+                  onChange={handleChange}
+                  required
+                />
+                Shipping Address
+              </label>
+            </div>
 
-            <h2>Payment Information</h2>
-            <label>
-              First Name:
-              <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                required />
-            </label>
-            <label>
-              Last Name:
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                required />
-            </label>
-            <label>
-              Card Number:
-              <input
-                type="text"
-                name="cardNumber"
-                value={formData.cardNumber}
-                onChange={handleChange}
-                required
-                pattern="\d{12}"
-                title="Credit card number must be 12 digits long" />
-            </label>
-            <label>
-              Expiry Date:
-              <input
-                type="month"
-                name="cardExpiry"
-                value={formData.cardExpiry}
-                onChange={handleChange}
-                required />
-            </label>
-            <label>
-              CVV:
-              <input
-                type="text"
-                name="cardCVV"
-                value={formData.cardCVV}
-                onChange={handleChange}
-                required
-                pattern="\d{3}"
-                title="CVV must be 3 digits long" />
-            </label>
+            {formData.selection === 'location' && (
+              <label>
+                Location:
+                <select
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="kitchener">Kitchener</option>
+                  <option value="Waterloo">Waterloo</option>
+                  <option value="Cambridge">Cambridge</option>
+                  <option value="Mississauga">Mississauga</option>
+                </select>
+              </label>
+            )}
+
+            {formData.selection === 'shippingAddress' && (
+              <div>
+                <label>
+                  Shipping Name:
+                  <input
+                    type="text"
+                    name="shippingName"
+                    value={formData.shippingName}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  Shipping Email:
+                  <input
+                    type="email"
+                    name="shippingEmail"
+                    value={formData.shippingEmail}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  Shipping Address:
+                  <input
+                    type="text"
+                    name="shippingAddress"
+                    value={formData.shippingAddress}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+              </div>
+            )}
 
             <button type="submit">Place Order</button>
           </form>
