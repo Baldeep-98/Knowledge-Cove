@@ -100,9 +100,7 @@ const CheckoutPage = () => {
       if (response.data.checkout) {
         console.log('Checkout successful');
         toast.success("Checkout successful");
-        setTimeout(() => {
-          navigate("/Catalogue");
-        }, 1000);
+        navigate("/confirmation", { state: { formData, cartItems: CartItems } });
       } else {
         console.log('Checkout failed');
         toast.error("Checkout failed");
