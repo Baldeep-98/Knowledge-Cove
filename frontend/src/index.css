@@ -22,8 +22,7 @@ body{
 @import url("./styles/navbarStyle.css");
 @import url("./styles/footerStyle.css");
 @import url("./styles/loginSignupStyle.css");
-
-
+@import url("./styles/libraryCardStyle.css");
 @import url('./styles/Catalogue.css');
 @import url('./styles/Services.css');
 @import url('./styles/roomsStyle.css');

@@ -13,6 +13,7 @@ import Checkout from './Checkout';
 import AddBook from './AddBook';
 import EditBook from './EditBook';
 import Profile from './Profile';
+import LibraryCard from './LibraryCard.jsx';
 
 const NotFound = () => <h1>Page Not Found</h1>;
 
@@ -32,8 +33,8 @@ function Content() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/addBook" element={<AddBook />} />
       <Route path="/edit/:id" element={<EditBook />} />
-
       <Route path="/profile" element={<Profile />} />
+      <Route path="/profile/librarycard" element={<LibraryCard />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

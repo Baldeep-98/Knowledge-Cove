@@ -2,9 +2,10 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import toast, { Toaster }  from "react-hot-toast"
 import { useQuery, useMutation, gql } from "@apollo/client";
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isWebTokenValid } from '../webTokenVerification';
+import LibraryCard from './LibraryCard';
 
 
 const GET_USER_PROFILE = gql`
@@ -45,6 +46,8 @@ function Profile() {
     username: "",
     membership_num: ""
   });
+
+  const navigate = useNavigate();
 
   const isValid = useSelector((state) => state.auth.isValid);
 
@@ -205,11 +208,18 @@ function Profile() {
                 </button>
               </span>
               <span>
-              {isEdit && (
+              {isEdit ? (
                   <button type='submit'>
                     Update
                   </button>
-                )}
+                )
+                :
+                (
+                  <button type='button' onClick={() => navigate("/profile/librarycard")}>
+                    Generate Card
+                  </button>
+                )
+                }
               </span>
           </div>
         </form>
