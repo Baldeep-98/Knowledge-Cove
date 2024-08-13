@@ -129,3 +129,32 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
+@media (max-width: 768px) {
+  .checkout-page {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .product-details-section,
+  .checkout-form-section {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .product-detail {
+    flex-direction: column;
+  }
+
+  .product-detail img {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .radio-group {
+    flex-direction: column;
+  }
+
+  .radio-group label {
+    margin-right: 0;
+  }
+}

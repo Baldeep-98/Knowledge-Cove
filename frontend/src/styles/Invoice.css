@@ -90,3 +90,23 @@
   left: 40%; 
   transform: translate(-50%, -50%);
 }
+@media (max-width: 768px) {
+  .invoice-header, .invoice-info {
+    flex-direction: column;
+  }
+  
+  .billing-info, .shipping-info {
+    margin-right: 0;
+    min-width: 100%;
+  }
+
+  .print-button {
+    width: 100%;
+    max-width: none;
+    left: 20%;
+    transform: translate(-50%, 0);
+    top: auto;
+    position: static;
+    margin-top: 20px;
+  }
+}
