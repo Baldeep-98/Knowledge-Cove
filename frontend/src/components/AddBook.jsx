@@ -123,8 +123,8 @@ function AddBook() {
               <input type="text" id="book_longDescription" name="book_longDescription" value={book.book_longDescription} onChange={handleChange} required />
             </div>
             <div className="form-group">
-            <label htmlFor="book_image_url">Book Image URL:</label>
-            <input type="text" id="book_image_url" name="book_image_url" value={book.book_image_url}  onChange={handleFileChange} required />
+              <label htmlFor="book_image_url">Book Image:</label>
+              <input type="file" id="book_image_url" name="book_image_url" accept="image/*" onChange={handleFileChange} required />
             </div>
             <button type="submit" className="submit-button">Add Book</button>
           </form>
