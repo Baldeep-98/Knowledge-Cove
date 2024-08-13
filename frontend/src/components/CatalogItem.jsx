@@ -1,17 +1,42 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useMutation, gql } from '@apollo/client';
+import toast from 'react-hot-toast';
 
-const CatalogItem = ({ book }) => {
+const DELETE_BOOK = gql`
+  mutation DeleteBook($book_id: Int!) {
+    bookDelete(book_id: $book_id)
+  }
+`;
+
+const CatalogItem = ({ book, onDelete }) => {
   const navigate = useNavigate();
+  const [deleteBook] = useMutation(DELETE_BOOK);
 
   const handleClick = () => {
-    navigate(`/detail/${book.book_id}`); 
+    navigate(`/detail/${book.book_id}`);
   };
 
   const handleEditClick = (e) => {
-    e.stopPropagation(); 
-    navigate(`/edit/${book.book_id}`); 
+    e.stopPropagation();
+    navigate(`/edit/${book.book_id}`);
+  };
+
+  const handleDeleteClick = async (e) => {
+    e.stopPropagation();
+    try {
+      const response = await deleteBook({ variables: { book_id: book.book_id } });
+      console.log(response); 
+      if (response.data.bookDelete) {
+        toast.success('Book deleted successfully');
+        onDelete(book.book_id);
+      } else {
+        toast.error('Failed to delete book');
+      }
+    } catch (error) {
+      console.error('Error deleting book:', error);
+      toast.error('Error deleting book');
+    }
   };
 
   return (
@@ -24,10 +49,10 @@ const CatalogItem = ({ book }) => {
         <p>{book.book_author}</p>
         <p>{book.book_genre}</p>
         <p>{book.book_shortDescription}</p>
-        <Link to={`/detail/${book.book_id}`}></Link>
         <div className="container">
           <button className="itembutton">Add to Cart</button>
           <button className="edit-button" onClick={handleEditClick}>Edit</button>
+          <button className="delete-button" onClick={handleDeleteClick}>Delete</button>
         </div>
       </div>
     </div>

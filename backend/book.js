@@ -9,9 +9,6 @@ const list = async () => {
     throw error;
   }
 };
-
-
-
 const getBook = async (parent, { book_id }) => {
   const db = getDB();
   try {
@@ -55,20 +52,49 @@ const updateBook = async (parent, { book }) => {
   }
 };
 
+const deleteBook = async (parent, { book_id }) => {
+  const db = getDB();
+  console.log(`Starting deletion process for book_id: ${book_id} (type: ${typeof book_id})`);
+  try {
+    
+    const book = await db.collection('books').findOne({ book_id: parseInt(book_id, 10) });
+    console.log(`Found book: ${JSON.stringify(book)}`);
+
+    if (!book) {
+      console.error('No book found to delete with that ID.');
+      return false;
+    }
+    const result = await db.collection('books').deleteOne({ book_id: parseInt(book_id, 10) });
+    console.log(`Delete result:`, result);
+
+    if (result.deletedCount === 0) {
+      console.error('No book was deleted.');
+      return false;
+    }
+
+    console.log('Book deleted successfully.');
+    return true;
+  } catch (error) {
+    console.error('Error during deletion:', error);
+    return false;
+  }
+};
+
 
 
 const addToCart = async (parent, { book_id }) => {
   const db = getDB();
   const membership_num = 123; 
   const cartItem = { book_id, membership_num }; 
-  const result = await db.collection("cart").insertOne(cartItem); // inserting a new cart item into 'cart' table
+  const result = await db.collection("cart").insertOne(cartItem); 
 
   if (!result.insertedId) {
     throw new Error("Failed to add to cart");
   }
 
-  const savedItems = await db.collection("cart").findOne({ _id: result.insertedId }); // to get cart items
+  const savedItems = await db.collection("cart").findOne({ _id: result.insertedId }); 
 
   return savedItems;
-}
-module.exports = { list, getBook, addBook, updateBook,addToCart };
+};
+
+module.exports = { list, getBook, addBook, updateBook, deleteBook, addToCart };

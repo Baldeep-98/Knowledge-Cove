@@ -22,7 +22,7 @@ const resolvers = {
         addBook: book.addBook,
         updateBook: book.updateBook,
         addToCart: book.addToCart,
-        bookDelete: remove,
+        bookDelete: book.deleteBook,
         clearCart,
         userProfileUpdate: user.updateUserProfile,
         checkout

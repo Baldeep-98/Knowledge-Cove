@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import toast, { Toaster } from 'react-hot-toast';
 
-
 const GET_BOOK_DETAIL = gql`
   query GetBookDetail($book_id: Int!) {
     getBook(book_id: $book_id) {
@@ -71,12 +70,12 @@ function EditBook() {
     onError: () => {
       toast.error('Failed to update book!');
     },
-    refetchQueries: [{ query: GET_BOOK_LIST }], 
+    refetchQueries: [{ query: GET_BOOK_LIST }],
   });
 
   useEffect(() => {
     if (data && data.getBook) {
-      const { __typename, ...bookDetails } = data.getBook; 
+      const { __typename, ...bookDetails } = data.getBook;
       setBook(bookDetails);
     }
   }, [data]);
@@ -87,6 +86,22 @@ function EditBook() {
       ...prevBook,
       [name]: value
     }));
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setBook(prevBook => ({
+        ...prevBook,
+        book_image_url: reader.result
+      }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleUpdateBookClick = async (event) => {
@@ -143,8 +158,8 @@ function EditBook() {
               <input type="text" id="book_longDescription" name="book_longDescription" value={book.book_longDescription} onChange={handleChange} required />
             </div>
             <div className="form-group">
-              <label htmlFor="book_image_url">Book Image URL:</label>
-              <input type="text" id="book_image_url" name="book_image_url" value={book.book_image_url} onChange={handleChange} required />
+              <label htmlFor="book_image_url">Book Image:</label>
+              <input type="file" id="book_image_url" name="book_image_url" accept="image/*" onChange={handleFileChange} required />
             </div>
             <button type="submit" className="submit-button">Update Book</button>
           </form>

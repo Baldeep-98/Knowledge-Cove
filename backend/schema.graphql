@@ -107,6 +107,7 @@ input userUpdateInputs {
   email: String
   username: String
   membership_num: String
+
 }
 input OrderItemInput {
   book_id: Int!
@@ -128,6 +129,7 @@ input OrderInput {
 
 }
 
+
 type Query {
   getUser(userCred: UserCredInput!): UserAuthData!
   getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
@@ -144,7 +146,11 @@ type Mutation {
   updateBook(book: BookInput!): Response!
 
   addToCart(book_id: Int!): Cart!
+
   bookDelete(book_id: ID!): Boolean!
+
+  bookDelete(book_id: Int!): Boolean!
+
   clearCart: Boolean!
 
   userProfileUpdate(user_id: String!, updates: userUpdateInputs!): User
