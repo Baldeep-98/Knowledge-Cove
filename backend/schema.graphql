@@ -33,7 +33,6 @@ type CartItem {
 scalar GraphQLDate
 scalar Upload
 
-
 type UserAuthData {
   user: User
   webToken: String!
@@ -48,14 +47,14 @@ type Time {
 }
 
 type Book {
-    _id: ID!
-    book_id: Int
-    book_name: String
-    book_author: String
-    book_genre: String
-    book_shortDescription: String
-    book_longDescription: String
-    book_image_url:String
+  _id: ID!
+  book_id: Int
+  book_name: String
+  book_author: String
+  book_genre: String
+  book_shortDescription: String
+  book_longDescription: String
+  book_image_url: String
 }
 
 scalar GraphQLDate
@@ -98,18 +97,17 @@ input BookInput {
   book_image_url: String
 }
 
-input userUpdateInputs{
-    user_id: String
-    name: String
-    phone: String
-    address: String
-    dob: GraphQLDate
+input userUpdateInputs {
+  user_id: String
+  name: String
+  phone: String
+  address: String
+  dob: GraphQLDate
 
-    email: String
-    username: String
-    membership_num:  String
+  email: String
+  username: String
+  membership_num: String
 }
-
 
 type Query {
   getUser(userCred: UserCredInput!): UserAuthData!
@@ -118,7 +116,6 @@ type Query {
   getBook(book_id: Int!): Book
   CartItems: [CartItem]
   getUserProfile(user_id: String!): User!
-
 }
 
 type Mutation {
@@ -128,16 +125,13 @@ type Mutation {
   updateBook(book: BookInput!): Response!
 
   addToCart(book_id: Int!): Cart!
-  bookDelete(book_id:ID!):Boolean!
-  clearCart:Boolean!
+  bookDelete(book_id: Int!): Boolean!
+  clearCart: Boolean!
 
   userProfileUpdate(user_id: String!, updates: userUpdateInputs!): User
 }
-
 
 type Response {
   success: Boolean!
   message: String!
 }
-
-

@@ -13,7 +13,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 
 .about-head .image img {
@@ -55,6 +54,7 @@ header {
     background-color: #efefef;
     text-align: center;
 }
+
 .section h2 {
     font-size: 2em;
     color: #333;
@@ -69,6 +69,7 @@ header {
     margin: 0 auto;
     text-align: justify;
 }
+
 .image img {
     width: 50%;
     height: 60%;
@@ -95,32 +96,34 @@ header {
 .aboutUs-form-section span input {
     width: 94.5%;
 }
+.contact-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #def6ff;
+    padding: 40px 0;
+}
 
 .contact-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    padding-block: 70px;
+    max-width: 600px;
     background-color: var(--primary-accentbg-color);
+    padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     border-radius: 15px;
 }
 
 .contact-form h2 {
-    font-size: 2.5rem;
+    text-align: center;
     color: var(--primary-accent-color);
     font-weight: 600;
-    margin-block: 15px;
-    text-decoration: underline var(--secondary-accent-color);
+    margin-bottom: 20px;
 }
 
 .contact-form form {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
     width: 100%;
 }
 
@@ -129,71 +132,139 @@ header {
     margin-bottom: 10px;
     margin-top: 20px;
     display: block;
-    width: 100%;
-    word-wrap: break-word;
 }
 
 .contact-form form input,
 .contact-form form textarea {
-    width: 98%;
-    margin-inline: auto;
-    border: none;
-    padding: 6px;
+    width: 100%;
+    padding: 10px;
     margin-bottom: 15px;
-    display: block;
-    margin-top: 3px;
-    outline: none;
     font-size: 1.1em;
-    font-family: inherit;
-    resize: none;
-    background-color: var(--primary-background-color);
     border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-family: inherit;
+    background-color: var(--primary-background-color);
 }
 
 .contact-form form button {
     width: 100%;
-    padding: 8px;
-    margin-top: 15px;
-    border: 0;
+    padding: 10px;
     background-color: var(--primary-accent-color);
     color: white;
     cursor: pointer;
     font-size: 1.0rem;
     border-radius: 5px;
-    font-family: inherit;
+    border: none;
+    margin-bottom: 20px; 
 }
 
 .contact-form form button:hover {
     background-color: var(--secondary-accent-color);
     color: var(--primary-accent-color);
-    font-weight: 500;
     transition-duration: 200ms;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 }
 
-.contact-form p {
-    margin-bottom: 20px;
-}
-
 .subscribe {
-    margin-top: 100px;
+    width: 100%;
+    text-align: center; 
+    margin-top: 20px; 
 }
 
 .subscribe-button {
-    display: block;
-    width: 200px;
-    height: 50px;
     background-color: rgb(179, 21, 21);
     color: white;
-    text-align: center;
-    line-height: 50px;
-    margin: 20px auto;
-    border-radius: 25px;
+    padding: 10px 20px;
+    border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     border: none;
+    font-size: 1.0rem;
+    width: 100%; 
 }
 
 .subscribe-button:hover {
     background-color: rgb(226, 60, 60);
+}
+
+
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .about-head {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .about-head .image img {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .about-head .text h1 {
+        font-size: 2em;
+    }
+
+    .about-head .text p {
+        font-size: 1.1em;
+    }
+
+    .section h2 {
+        font-size: 1.8em;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-head .image img {
+        width: 100%;
+    }
+
+    .about-head .text h1 {
+        font-size: 1.8em;
+    }
+
+    .about-head .text p {
+        font-size: 1em;
+    }
+
+    .section h2 {
+        font-size: 1.5em;
+    }
+
+    .section p {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-head {
+        padding: 10px;
+    }
+
+    .about-head .image {
+        margin-bottom: 20px;
+    }
+
+    .about-head .text {
+        align-items: center;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .about-head .text h1 {
+        font-size: 1.5em;
+    }
+
+    .about-head .text p {
+        font-size: 0.9em;
+    }
+
+    .section h2 {
+        font-size: 1.3em;
+    }
+
+    .section p {
+        font-size: 1em;
+    }
 }
