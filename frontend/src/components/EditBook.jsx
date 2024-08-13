@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import toast, { Toaster } from 'react-hot-toast';
 
-
 const GET_BOOK_DETAIL = gql`
   query GetBookDetail($book_id: Int!) {
     getBook(book_id: $book_id) {
@@ -85,7 +84,7 @@ function EditBook() {
     const { name, value } = event.target;
     setBook(prevBook => ({
       ...prevBook,
-      [name]: value
+      [name]: value,
     }));
   };
 
