@@ -62,12 +62,14 @@ function CatalogPage() {
         <p className="no-books">No books available</p>
       ) : (
         <div className="catalog-grid">
+
           {filteredBooks.slice(0, visibleBooks).map((book, index) => (
             <CatalogItem
               key={`${book.book_id}-${index}`} 
               book={book}
               onDelete={handleDelete}
             />
+
           ))}
         </div>
       )}

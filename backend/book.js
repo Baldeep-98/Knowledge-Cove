@@ -9,7 +9,6 @@ const list = async () => {
     throw error;
   }
 };
-
 const getBook = async (parent, { book_id }) => {
   const db = getDB();
   try {

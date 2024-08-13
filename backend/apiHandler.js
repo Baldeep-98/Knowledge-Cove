@@ -2,6 +2,7 @@ const GraphQLDate = require('./graphqlDate')
 const user = require('./users')
 const rTime = require('./roomTime')
 const book = require('./book');
+const {checkout}=require('./checkout')
 const { ApolloServer } = require('apollo-server');
 const fs = require('fs');
 const { getCartItems, remove ,clearCart} = require('./cart'); 
@@ -23,7 +24,8 @@ const resolvers = {
         addToCart: book.addToCart,
         bookDelete: book.deleteBook,
         clearCart,
-        userProfileUpdate: user.updateUserProfile
+        userProfileUpdate: user.updateUserProfile,
+        checkout
     },
     GraphQLDate,
 };

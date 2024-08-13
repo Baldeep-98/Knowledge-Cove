@@ -6,7 +6,9 @@ function AboutUs() {
     <div>
       <div className="about-head">
         <div className="text">
+
           <p>Welcome to Knowledge-Cove, your gateway to a world of knowledge, inspiration, and community engagement. Our mission is to foster a love for reading and lifelong learning by providing access to a diverse collection of books, digital resources, and multimedia. We offer a range of services, including research assistance, technology access, and enriching programs and events for all ages. Committed to promoting literacy, supporting education, and encouraging inclusion, Knowledge-Cove serves as a cornerstone of our community. Join us today to explore, discover, and connect with the wealth of resources and opportunities we offer.</p>
+
         </div>
         <div className="image">
           <img src={AboutUsImage} alt="About Us banner" />

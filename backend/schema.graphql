@@ -107,7 +107,28 @@ input userUpdateInputs {
   email: String
   username: String
   membership_num: String
+
 }
+input OrderItemInput {
+  book_id: Int!
+  book_name: String!
+  book_author: String!
+  book_genre: String!
+}
+
+input OrderInput {
+  billingName: String!
+  billingEmail: String!
+  billingAddress: String!
+  shippingName: String!
+  shippingAddress: String!
+ 
+  shippingEmail:String!
+
+  items: [OrderItemInput!]!
+
+}
+
 
 type Query {
   getUser(userCred: UserCredInput!): UserAuthData!
@@ -125,10 +146,16 @@ type Mutation {
   updateBook(book: BookInput!): Response!
 
   addToCart(book_id: Int!): Cart!
+
+  bookDelete(book_id: ID!): Boolean!
+
   bookDelete(book_id: Int!): Boolean!
+
   clearCart: Boolean!
 
   userProfileUpdate(user_id: String!, updates: userUpdateInputs!): User
+checkout(order:OrderInput!):Boolean
+
 }
 
 type Response {
