@@ -27,7 +27,6 @@ const CatalogItem = ({ book }) => {
         <p>{book.book_author}</p>
         <p>{book.book_genre}</p>
         <p>{book.book_shortDescription}</p>
-        {/* <Link to={`/detail/${book.book_id}`}></Link> */}
         <div className="container">
           { isAdmin &&
             <button className="edit-button" onClick={handleEditClick}>Edit</button>

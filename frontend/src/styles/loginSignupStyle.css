@@ -118,7 +118,7 @@
     padding-block: 30px;
 }
 
-.signup-form-section1 {
+.signup-form-section1, .signup-form-section2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -130,6 +130,18 @@
 
 .signup-form-section1 span input{
     width: 94.5%;
+}
+
+.signup-form-section2{
+    gap: 28px;
+}
+
+.signup-form-section2 span{
+    width: 46%;
+}
+
+.signup-form-section2 span input{
+    width: 96.5%;
 }
 
 @media (max-width: 768px) {
@@ -172,6 +184,17 @@
         align-items: center;
     }
     
+    .signup-form-section2 span{
+        width: 99.5%;
+    }
+
+    .signup-form-section2 {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0;
+    }
+    
     .signup-form-section1 span{
         width: 99.5%;
     }
@@ -179,9 +202,5 @@
     .signup-form-section1 span input{
         width: 100%;
     }
-
-
-
-     /* Login style */
     
 }

@@ -86,3 +86,52 @@
     border-radius: 5px;
     font-family: inherit;
 }
+
+.card-print-btn button:hover {
+    background-color:var(--secondary-accent-color);
+    color: var(--primary-accent-color);
+    font-weight: 500;
+    transition-duration: 200ms;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+}
+
+@media (max-width: 768px) {
+
+    .library-card-container{
+        width: 90%;
+        margin-block:20px;
+    }
+
+    .library-card-container h2{
+        margin-inline: 20px;
+    }
+
+    .library-card{
+        width: 80%;
+        height: 140px;
+    } 
+    
+    .library-card-sub1{
+        height: 70px;
+        gap: 50px;
+    } 
+
+    .library-card-sub1 label{
+        font-size: 1.4rem;
+    }
+
+    .library-card-sub1 img{
+        width: 80px;
+        margin-right: 0;
+    }
+
+    .library-card-sub2{
+        font-weight: 500;
+        margin-top: 20px;
+        font-size: 1.1rem;
+    }
+
+    .card-print-btn button{
+        width: 60%
+    }
+}

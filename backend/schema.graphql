@@ -10,6 +10,7 @@ type User {
   username: String!
   membership_num: String!
   password: String!
+  member_plan: String!
 }
 
 type Time {
@@ -22,12 +23,12 @@ type Time {
 type Cart {
   _id: ID!
   book_id: Int
-  membership_num: Int
+  membership_num: String
 }
 type CartItem {
   _id: ID!
   book_id: Int
-  membership_num: Int
+  membership_num: String
   bookDetails: Book
 }
 scalar GraphQLDate
@@ -56,6 +57,18 @@ type Book {
     book_shortDescription: String
     book_longDescription: String
     book_image_url:String
+}
+
+type UserMemberPlan {
+  _id: ID!
+  membership_num: String!
+  purch_email: String!
+  card_num: String!
+  card_expire: String!
+  card_cvv: String!
+  purch_city: String!
+  purch_postal: String!
+  member_plan: String!
 }
 
 scalar GraphQLDate
@@ -107,7 +120,18 @@ input userUpdateInputs{
 
     email: String
     username: String
-    membership_num:  String
+    membership_num: String
+}
+
+input userMemberPlanInputs{
+  purch_email: String!
+  card_num: String!
+  card_expire: String!
+  card_cvv: String!
+  purch_city: String!
+  purch_postal: String!
+  member_plan: String!
+  membership_num: String!
 }
 
 
@@ -132,6 +156,7 @@ type Mutation {
   clearCart:Boolean!
 
   userProfileUpdate(user_id: String!, updates: userUpdateInputs!): User
+  UpdateUserMembershipPlan(planInfo: userMemberPlanInputs!): UserMemberPlan!
 }
 
 

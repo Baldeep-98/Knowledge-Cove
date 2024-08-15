@@ -174,6 +174,7 @@ function Profile() {
                       name="name"
                       value={user ? user.name: "No Data Found"}
                       disabled={isEdit ? "" : "disabled"}
+                      required
                     />
                 </span>
                 <span>
@@ -184,13 +185,17 @@ function Profile() {
                       name="phone"
                       value={user ? user.phone: "No Data Found"}
                       disabled={isEdit ? "" : "disabled"}
+                      pattern="^\d{10}$"
+                      maxlength="10"
+                      title="Please enter a valid phone number."
+                      required
                     />
                 </span>
                 
             </div>
 
             <label>Address:</label>
-            <textarea name='address' onChange={handleChange} value={user ?user.address:"No Data Found"} disabled={isEdit ? "" : "disabled"} ></textarea>
+            <textarea name='address' onChange={handleChange} value={user ?user.address:"No Data Found"} disabled={isEdit ? "" : "disabled"} required ></textarea>
 
             <label>Date of Birth:</label>
             <input

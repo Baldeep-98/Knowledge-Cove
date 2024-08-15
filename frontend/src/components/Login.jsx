@@ -18,6 +18,7 @@ const GET_USER = gql`
                 username
                 email
                 membership_num
+                member_plan
             }
             webToken
         }

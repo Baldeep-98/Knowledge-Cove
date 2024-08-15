@@ -23,7 +23,8 @@ const resolvers = {
         addToCart: book.addToCart,
         bookDelete: remove,
         clearCart,
-        userProfileUpdate: user.updateUserProfile
+        userProfileUpdate: user.updateUserProfile,
+        UpdateUserMembershipPlan: user.UpdateUserMembershipPlan
     },
     GraphQLDate,
 };

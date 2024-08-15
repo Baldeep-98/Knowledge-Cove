@@ -21,7 +21,7 @@
     margin-bottom: 40px;
     width: 80%;
     padding-block: 25px;
-    background-color: white;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     border-radius: 10px;
 }
@@ -57,7 +57,7 @@
     font-size: 1.1em;
     font-family: inherit;
     resize: none;
-    background-color: var(--primary-background-color);
+    background-color: white;
     border-radius: 5px;
 }
 

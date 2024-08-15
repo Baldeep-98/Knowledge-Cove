@@ -1,8 +1,16 @@
-import React from "react";
+import React, {useRef} from "react";
 import ServiceBanner from '../assets/Images/Account.gif';
 import SubscribeBanner from '../assets/Images/Subscriber-pana.png';
+import ServiceOptionCard from "./ServiceOptionCard";
 
 function ServicesPage() {
+
+  const targetRef = useRef(null);
+
+  const handleScroll = () => {
+    targetRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="membershipcontainer">
       <div className="content-row">
@@ -17,7 +25,7 @@ function ServicesPage() {
             your skills. Whether you're a student, a professional, or simply a
             lifelong learner, our membership offers something for everyone.
           </p>
-          <button id="service">Get a plan</button>
+          <button id="service" onClick={handleScroll}> Get a plan</button>
         </div>
         <div className="contentimg">
           <img src={ServiceBanner} alt="Services banner" />
@@ -50,55 +58,24 @@ function ServicesPage() {
       </div>
 
       <h3 className="membership-options-heading">Membership Option</h3>
-      <div className="options">
+      <div className="options" ref={targetRef}>
         <div className="optioncard">
-          <h3>Premium Annually</h3>
+          <h3>Basic Plan</h3>
           <p>
-            Get the best value with our annual plan. Enjoy all the premium
+            Get the best value with our basic plan. Enjoy all the premium
             features at a discounted rate. Ideal for dedicated learners.
           </p>
           <ul>
-            <li>Access to all premium articles and resources</li>
-            <li>Free entry to all webinars and workshops</li>
-            <li>Personalized learning recommendations</li>
+            <li>Book Borrowing: 1 books per month</li>
+            <li>No Private Room Reservation</li>
+            <li>Support: Low priority Email support</li>
             <li>Networking opportunities</li>
-            <li>Exclusive discounts on courses</li>
           </ul>
-          <p>Price: $99/year</p>
-          <button>Subscribe</button>
+          <p>Free Service</p>
         </div>
-        <div className="optioncard">
-          <h3>Premium Monthly</h3>
-          <p>
-            Flexibility at its best. Get all the benefits of our premium
-            membership with a convenient monthly payment plan.
-          </p>
-          <ul>
-            <li>Access to all premium articles and resources</li>
-            <li>Free entry to all webinars and workshops</li>
-            <li>Personalized learning recommendations</li>
-            <li>Networking opportunities</li>
-            <li>Exclusive discounts on courses</li>
-          </ul>
-          <p>Price: $10/month</p>
-          <button>Subscribe</button>
-        </div>
-        <div className="optioncard">
-          <h3>Family Bundle</h3>
-          <p>
-            Share the knowledge. Our family bundle offers premium access for up
-            to 4 family members at an unbeatable price.
-          </p>
-          <ul>
-            <li>Access to all premium articles and resources for 4 members</li>
-            <li>Free entry to all webinars and workshops</li>
-            <li>Personalized learning recommendations for each member</li>
-            <li>Networking opportunities</li>
-            <li>Exclusive discounts on courses</li>
-          </ul>
-          <p>Price: $199/year</p>
-          <button>Subscribe</button>
-        </div>
+        
+        <ServiceOptionCard />
+
       </div>
     </div>
   );
