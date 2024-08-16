@@ -9,8 +9,6 @@ const list = async () => {
     throw error;
   }
 };
-
-
 const getBook = async (parent, { book_id }) => {
   const db = getDB();
   try {
@@ -91,8 +89,10 @@ const addToCart = async (parent, { cart_item }) => {
     throw new Error("Failed to add to cart");
   }
 
-  const savedItems = await db.collection("cart").findOne({ _id: result.insertedId }); // to get cart items
+  const savedItems = await db.collection("cart").findOne({ _id: result.insertedId }); 
 
   return savedItems;
+
 }
 module.exports = { list, getBook, addBook, updateBook, deleteBook, addToCart };
+
