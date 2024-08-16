@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet, Link } from 'react-router-dom';
 import AboutUsImage from '../assets/Images/AboutUs.png';
 
 function AboutUs() {
@@ -25,33 +26,34 @@ function AboutUs() {
             <div className="aboutUs-form-section">
               <span>
                 <label>Full Name:</label>
-                <input type="text" />
+                <input type="text" required/>
               </span>
               <span>
                 <label>Phone:</label>
-                <input type="number" />
+                <input type="number" required/>
               </span>
             </div>
 
             <label>Address:</label>
-            <textarea></textarea>
+            <textarea required></textarea>
 
             <div className="aboutUs-form-section">
               <span>
                 <label>Date of Birth:</label>
-                <input type="date" />
+                <input type="date" required/>
               </span>
 
               <span>
                 <label>Email:</label>
-                <input type="email" />
+                <input type="email" required/>
               </span>
             </div>
 
-            <button type="submit">Register</button>
+            <button type="submit">Send</button>
           </form>
           <div className="subscribe">
-            <button className="subscribe-button">Want to join us? Subscribe now</button>
+            <Outlet/>
+            <Link to="/Services"><button className="subscribe-button">Want to join us? Subscribe now</button></Link>
           </div>
         </div>
       </div>

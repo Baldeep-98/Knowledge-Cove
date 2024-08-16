@@ -12,12 +12,15 @@ const Confirmation = () => {
     };
 
     return (
-        <div className="popup">
-            <img src={doneImage} alt="Order Completed" />
-            <h2>Thank You!</h2>
-            <p>Your order is placed successfully.</p>
-            <button type="button" onClick={handlePrintInvoice}>Print Invoice</button>
-        </div>
+        <>
+            <h2 className="confirm-heading">Order Confirmation</h2>
+            <div className="popup">
+                <img src={doneImage} alt="Order Completed" />
+                <h2>Thank You!</h2>
+                <p>Your order is placed successfully.</p>
+                <button type="button" onClick={handlePrintInvoice}>Print Invoice</button>
+            </div>
+        </>
     );
 }
 

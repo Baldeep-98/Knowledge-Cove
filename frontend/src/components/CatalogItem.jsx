@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
+import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
 const DELETE_BOOK = gql`
@@ -11,15 +12,18 @@ const DELETE_BOOK = gql`
 
 const CatalogItem = ({ book, onDelete }) => {
   const navigate = useNavigate();
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
+
   const [deleteBook] = useMutation(DELETE_BOOK);
 
   const handleClick = () => {
-    navigate(`/detail/${book.book_id}`);
+    if(!isAdmin)
+      navigate(`/detail/${book.book_id}`); 
   };
 
   const handleEditClick = (e) => {
-    e.stopPropagation();
-    navigate(`/edit/${book.book_id}`);
+    e.stopPropagation(); 
+    navigate(`/edit/${book.book_id}`); 
   };
 
   const handleDeleteClick = async (e) => {
@@ -50,9 +54,11 @@ const CatalogItem = ({ book, onDelete }) => {
         <p>{book.book_genre}</p>
         <p>{book.book_shortDescription}</p>
         <div className="container">
-          <button className="itembutton">Add to Cart</button>
-          <button className="edit-button" onClick={handleEditClick}>Edit</button>
-          <button className="delete-button" onClick={handleDeleteClick}>Delete</button>
+          { isAdmin && <>
+              <button className="edit-button" onClick={handleEditClick}>Edit</button>
+              <button className="delete-button" onClick={handleDeleteClick}>Delete</button>
+            </>
+          }
         </div>
       </div>
     </div>

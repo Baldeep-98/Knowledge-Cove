@@ -46,13 +46,13 @@ const getUser = async (_,args) => {
     const db = getDB();
     const {userCred} = args
 
-    console.log(userCred.username)
+    console.log(userCred.username.toLowerCase())
 
     const user = await db.collection('users').findOne({
         $or: [
-            { username: userCred.username },
-            { email: userCred.username },
-            { membership_num: userCred.username }
+            { username: userCred.username.toLowerCase() },
+            { email: userCred.username.toLowerCase() },
+            { membership_num: userCred.username.toLowerCase() }
         ]
     });
 
@@ -95,10 +95,12 @@ const userAdd = async (_, args) => {
     user.membership_num = generateMembershipNumber();
     user.username = user.email.split('@')[0];
 
+    formatPhone = user.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+
     const userInfo = {
         user_id: user.user_id,
         name:user.name,
-        phone:user.phone,
+        phone:formatPhone,
         address:user.address,
         dob:user.dob
     };
@@ -109,11 +111,12 @@ const userAdd = async (_, args) => {
     }
 
     const userCrd = {
-        user_id: user.user_id,
-        email:user.email,
+        user_id: user.user_id.toLowerCase(),
+        email:user.email.toLowerCase(),
         password: await bcryptPass(user.password),
-        username:user.username,
-        membership_num:user.membership_num
+        username:user.username.toLowerCase(),
+        membership_num:user.membership_num,
+        member_plan:'basic'
     };
 
     const result1 = await db.collection('usersInfo').insertOne(userInfo);
@@ -157,6 +160,10 @@ const updateUserProfile = async (_,args) => {
     const {user_id, updates} = args
 
     if (updates.name || updates.phone || updates.address) {
+        
+        if(updates.phone)
+            updates.phone = updates.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+        
         const user = await db.collection('usersInfo').findOne({ user_id });
         Object.assign(user, updates);
     }
@@ -166,5 +173,25 @@ const updateUserProfile = async (_,args) => {
     return savedInfo;
 };
 
+const UpdateUserMembershipPlan = async (_,args) => {
 
-module.exports = { getUser, userAdd, getUserProfile, updateUserProfile };
+    const db = getDB();
+    const { planInfo } = args;
+
+    const result = await db.collection('usersMemberPlanInfo').insertOne(planInfo);
+    const savedUserPlanInfo = await db.collection('usersMemberPlanInfo').findOne({_id: result.insertedId});
+    const mnum = planInfo.membership_num;
+
+    await db.collection('users').updateOne(
+        { membership_num: mnum },                
+        { $set: { member_plan: planInfo.member_plan} }
+    );
+    const savedInfo = await db.collection('users').findOne({ mnum });
+    console.log(savedInfo)
+
+
+    return savedUserPlanInfo;
+}
+
+
+module.exports = { getUser, userAdd, getUserProfile, updateUserProfile, UpdateUserMembershipPlan };

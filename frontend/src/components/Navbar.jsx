@@ -6,6 +6,7 @@ import NavOptions from './NavOptions';
 import { Outlet, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 import { logout } from '../store';
 
 const Navbar = () => {
@@ -14,6 +15,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isValid = useSelector((state) => state.auth.isValid);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   const handleClick = () => {
     setIsNav(!isNav)
@@ -34,15 +36,22 @@ const Navbar = () => {
 
         <div className='login-subscribe'>
 
-        { isValid ? (
+        { isValid && isWebTokenValid() ? (
           <>
             <label onClick={() => {
               dispatch(logout());
               navigate('/login');
               }}>
             <Link>Logout</Link></label>
-            <Outlet/>&nbsp;|&nbsp;
-            <label><Link to="/profile"> My Profile</Link></label>
+            <Outlet/>
+            
+            { (isAdmin === false) &&
+              <>
+                &nbsp;|&nbsp;
+                <label><Link to="/profile"> My Profile</Link></label>
+              </>
+            }
+
           </>
         ) : (
           <>

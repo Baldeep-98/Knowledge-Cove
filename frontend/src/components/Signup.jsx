@@ -36,7 +36,6 @@ function Signup() {
 
     const [addUser] = useMutation(ADD_USER, {
         onCompleted: (user) => {
-            toast.success("User Registered Successfully!");
             setUser({
                 name: "",
                 phone: "",
@@ -112,8 +111,9 @@ function Signup() {
                                 onChange={handleChange}
                                 name="phone"
                                 value={user.phone}
-                                placeholder="999-999-9999" 
-                                pattern="^\d{3}-\d{3}-\d{4}$"
+                                pattern="^\d{10}$"
+                                maxlength="10"
+                                title="Please enter a valid phone number."
                                 required
                             />
                         </span>
@@ -122,7 +122,7 @@ function Signup() {
                     <label>Address:</label>
                     <textarea name='address' onChange={handleChange} value={user.address} required></textarea>
                     
-                    <div className='signup-form-section1'>
+                    <div className='signup-form-section2'>
                         <span>
                             <label>Date of Birth:</label>
                             <input

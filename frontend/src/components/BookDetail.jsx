@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, gql, useMutation } from "@apollo/client";
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
+
 
 const GET_BOOK_DETAIL = gql`
   query GetBookDetail($book_id: Int!) {
@@ -19,16 +22,16 @@ const GET_BOOK_DETAIL = gql`
 `;
 
 const GET_CART_BOOKS = gql`
-  query GetCartBooks {
-    CartItems {
+  query GetCartBooks($membership_num: String!) {
+    CartItems(membership_num: $membership_num) {
       book_id
     }
   }
 `;
 
-const ADD_TO_CART = gql`
-  mutation AddToCart($book_id: Int!) {
-    addToCart(book_id: $book_id) {
+const ADD_TO_CART = gql` 
+  mutation AddToCart($cart_item: userCartInfo!) {
+    addToCart(cart_item: $cart_item) {
       _id
       book_id
       membership_num
@@ -40,12 +43,19 @@ const BookDetail = () => {
   const { id } = useParams();
   const bookId = parseInt(id);
   const navigate = useNavigate();
+  
+  const isValid = useSelector((state) => state.auth.isValid);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
+
+  const membershipNum = JSON.parse(localStorage.getItem("userInfo")).membership_num
 
   const { loading, error, data } = useQuery(GET_BOOK_DETAIL, { 
     variables: { book_id: bookId },
   });
 
-  const { data: cartData } = useQuery(GET_CART_BOOKS);
+  const { data: cartData } = useQuery(GET_CART_BOOKS, { 
+    variables: { membership_num: membershipNum },
+  });
 
   const [book, setBook] = useState(null);
   const [addToCart] = useMutation(ADD_TO_CART);
@@ -59,23 +69,33 @@ const BookDetail = () => {
   }, [data]);
 
   const handleAddToCart = async () => {
-    if (cartData && cartData.CartItems.some(item => item.book_id === bookId)) {
-      toast.error("Book is already in the cart");
-      return;
-    }
+    if(isValid && !isAdmin && isWebTokenValid) {
 
-    try {
-      const { data } = await addToCart({ variables: { book_id: bookId } });
-      if (data.addToCart) {
-        toast.success("Book added to cart successfully");
-        navigate("/cart");
-      } else {
+      if (cartData && cartData.CartItems.some(item => item.book_id === bookId)) {
+        toast.error("Book is already in the cart");
+        return;
+      }
+      const cartItem = {
+        book_id: bookId,
+        membership_num: membershipNum
+      }
+      
+
+      try {
+        const { data } = await addToCart({ variables: {cart_item: cartItem}});
+        if (data.addToCart) {
+          toast.success("Book added to cart successfully");
+          navigate("/cart");
+        } else {
+          toast.error("Error adding book to cart");
+        }
+      } catch (error) {
+        console.error("Error in addToCart mutation:", error);
         toast.error("Error adding book to cart");
       }
-    } catch (error) {
-      console.error("Error in addToCart mutation:", error);
-      toast.error("Error adding book to cart");
     }
+    else 
+      toast.error("Please login with you account to add book to cart");
   };
 
   if (loading) return <p>Loading...</p>;

@@ -2,6 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     isValid: localStorage.getItem('userInfo')? true : false,
+    isAdmin: JSON.parse(localStorage.getItem('userInfo'))?.username.toLowerCase() === "admin"? true : false,
     userInfo: JSON.parse(localStorage.getItem('userInfo')) || null,
     webToken: JSON.parse(localStorage.getItem('webToken')) || null,
 };
@@ -13,6 +14,7 @@ const userAuthSlice = createSlice({
         login: (state, action) => {
             state.isValid = true;
             state.userInfo = action.payload.user;
+            state.isAdmin = action.payload.user.username === "admin" ? true : false
             state.webToken = action.payload.webToken;
             //console.log("Payload --- "+action.payload)
             localStorage.setItem('userInfo', JSON.stringify(action.payload.user));
@@ -20,10 +22,12 @@ const userAuthSlice = createSlice({
         },
         signup: (state, action) => {
             state.isValid = false;
+            state.isAdmin = false;
             state.userInfo = action.payload.user;
         },
         logout: (state) => {
             state.isValid = false;
+            state.isAdmin = false;
             state.userInfo = null;
             state.webToken = null;
             localStorage.removeItem('userInfo');

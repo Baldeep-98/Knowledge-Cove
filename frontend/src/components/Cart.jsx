@@ -7,12 +7,14 @@ import { useSelector } from 'react-redux';
 import { isWebTokenValid } from '../webTokenVerification';
 
 const GET_CART_BOOKS = gql`
-  query GetCartBooks {
-    CartItems {
+  query GetCartBooks ($membership_num: String!) {
+    CartItems(membership_num: $membership_num) {
       _id
       book_id
+      membership_num
       bookDetails {
         _id
+        book_id
         book_name
         book_author
         book_genre
@@ -23,117 +25,95 @@ const GET_CART_BOOKS = gql`
   }
 `;
 
-const ADD_BOOK_TO_CART = gql`
-  mutation AddBookToCart($book_id: ID!) {
-    addBookToCart(book_id: $book_id) {
-      _id
-      book_id
-      bookDetails {
-        _id
-        book_name
-        book_author
-        book_genre
-        book_shortDescription
-        book_image_url
-      }
-    }
-  }
-`;
 
 const REMOVE_BOOK = gql`
-  mutation RemoveBook($book_id: ID!) {
-    bookDelete(book_id: $book_id)
+  mutation RemoveBook($cart_item: userCartInfo!) {
+    cartBookDelete(cart_item: $cart_item)
   }
 `;
 
 const CLEAR_CART = gql`
-  mutation ClearCart {
-    clearCart
+  mutation ClearCart($membership_num: String!) {
+    clearCart(membership_num: $membership_num)
   }
 `;
 
 const Cart = () => {
-  const { data, refetch } = useQuery(GET_CART_BOOKS);
-  const [CartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
-  const [removeBook] = useMutation(REMOVE_BOOK);
-  const [clearCart] = useMutation(CLEAR_CART);
-  const [addBookToCart] = useMutation(ADD_BOOK_TO_CART);
-
+  const [CartItems, setCartItems] = useState([]);
   const isValid = useSelector((state) => state.auth.isValid);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
-  useEffect(() => {
-    if (data) {
+  const membershipNum = JSON.parse(localStorage.getItem("userInfo")).membership_num
+
+  const { data, refetch, loading } = useQuery(GET_CART_BOOKS, {
+    variables: { membership_num: membershipNum },
+    onCompleted: (data) => {
       setCartItems(data.CartItems);
+    },
+    onError: (error) => {
+      console.log("Cart info fetch failed!", error);
     }
-  }, [data]);
+  });
 
-  const handleAddBookToCart = async (book_id) => {
-    if (CartItems.some(item => item.book_id === book_id)) {
-      toast.error("Book is already in the cart");
-      return;
-    }
-
-    try {
-      const { data } = await addBookToCart({
-        variables: { book_id: String(book_id) },
-      });
-
-      if (data.addBookToCart) {
-        setCartItems(prevItems => [...prevItems, data.addBookToCart]);
-        toast.success("Book added to cart successfully");
-        await refetch();
-      } else {
-        toast.error("Error adding book to the cart");
-      }
-    } catch (error) {
-      console.error("Error in addBookToCart mutation:", error);
-      toast.error("Error adding book to the cart");
-    }
-  };
-
-  const handleRemoveButton = async (book_id) => {
-    try {
-      const { data } = await removeBook({
-        variables: { book_id: String(book_id) },
-      });
-      if (data.bookDelete) {
-        setCartItems((prevItems) =>
-          prevItems.filter((item) => item.book_id !== book_id)
-        );
-        toast.success("Book removed successfully");
-        await refetch();
-      } else {
-        toast.error("Error removing the book");
-      }
-    } catch (error) {
+  const [removeBook] = useMutation(REMOVE_BOOK, {
+    onCompleted: async () => {
+      toast.success("Book removed successfully");
+      await refetch();
+    },
+    onError: (error) => {
       console.error("Error in removeBook mutation:", error);
       toast.error("Error removing the book");
     }
-  };
+  });
 
-  const handleClearCart = async () => {
-    try {
-      const { data } = await clearCart();
-      if (data.clearCart) {
-        setCartItems([]);
-        toast.success("Cart cleared successfully");
-        await refetch();
-      } else {
-        toast.error("Failed to clear the cart");
-      }
-    } catch (error) {
+  const [clearCart] = useMutation(CLEAR_CART, {
+    onCompleted: async () => {
+      toast.success("Cart cleared successfully");
+      await refetch();
+    },
+    onError: (error) => {
       console.error("Error in clearCart mutation:", error);
       toast.error("Error clearing the cart");
     }
+  });
+
+  useEffect(() => {
+    refetch();
+    if (data) {
+      setCartItems(data.CartItems);
+    }
+  }, [data,refetch]);
+
+  const handleRemoveButton = async (bookId) => {
+
+    const removeItem = {
+      book_id: bookId,
+      membership_num: membershipNum
+    }
+
+    await removeBook( { variables: {cart_item: removeItem}});
+  };
+
+  const handleClearCart = async () => {
+    await clearCart({variables: { membership_num: membershipNum }});
   };
 
   const handleCheckoutClick = () => {
     navigate("/checkout");
   };
 
+  // Redirect conditions
   if (!isValid && !isWebTokenValid()) {
     navigate("/login");
+  }
+
+  if (isValid && isAdmin) {
+    navigate("/home");
+  }
+
+  if (loading) {
+    return <div>Loading...</div>; // Add a loading state
   }
 
   return (
@@ -150,22 +130,22 @@ const Cart = () => {
               <div className="cart-image-container">
                 <img
                   className="cart-detail-image"
-                  src={item.bookDetails.book_image_url}
-                  alt={item.bookDetails.book_name}
+                  src={item.bookDetails ? item.bookDetails.book_image_url : ""}
+                  alt={item.bookDetails ? item.bookDetails.book_name : ""}
                 />
               </div>
               <div className="cart-info">
-                <h2>{item.bookDetails.book_name}</h2>
+                <h2>{item.bookDetails ? item.bookDetails.book_name : ""}</h2>
                 <p className="cartdesc">
-                  Book Author: {item.bookDetails.book_author}
+                  Book Author: {item.bookDetails ? item.bookDetails.book_author : ""}
                 </p>
                 <p className="cartdesc">
-                  Book Genre: {item.bookDetails.book_genre}
+                  Book Genre: {item.bookDetails ? item.bookDetails.book_genre : ""}
                 </p>
-                <Link to={`/checkout/${item.bookDetails.book_id}`}></Link>
+                <Link to={`/checkout/${item.bookDetails ? item.bookDetails.book_id : ""}`}></Link>
                 <button
                   className="removecheckout"
-                  onClick={() => handleRemoveButton(item.book_id)}
+                  onClick={() => handleRemoveButton(item.bookDetails ? item.bookDetails.book_id : "")}
                 >
                   Remove
                 </button>

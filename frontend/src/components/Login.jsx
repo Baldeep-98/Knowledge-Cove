@@ -18,6 +18,7 @@ const GET_USER = gql`
                 username
                 email
                 membership_num
+                member_plan
             }
             webToken
         }
@@ -37,7 +38,6 @@ function Login() {
 
     const [getUser] = useLazyQuery(GET_USER, {
         onCompleted: (data) => {
-            toast.success("User Login Successfully!");
             dispatch(login(data.getUser));
             navigate('/home');
         },

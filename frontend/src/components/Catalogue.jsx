@@ -19,23 +19,23 @@ const GET_BOOK_LIST = gql`
 `;
 
 function CatalogPage() {
-  const { loading, error, data, refetch } = useQuery(GET_BOOK_LIST);
+  const { loading, error, data, refetch } = useQuery(GET_BOOK_LIST); 
 
   useEffect(() => {
-    refetch();
+    refetch(); 
   }, [refetch]);
 
-  const [visibleBooks, setVisibleBooks] = useState(8);
-  const [selectedBookType, setSelectedBookType] = useState("all");
+  const [visibleBooks, setVisibleBooks] = useState(8); 
+  const [selectedBookType, setSelectedBookType] = useState("all"); 
 
   if (loading) return <p>Loading...</p>;
   if (error) {
-    toast.error("Failed to fetch books");
+    toast.error("Failed to fetch books"); 
     console.error(error);
     return null;
   }
 
-  const books = data?.BookList || [];
+  const books = data?.BookList || []; 
   const filteredBooks =
     selectedBookType === "all"
       ? books
@@ -48,7 +48,7 @@ function CatalogPage() {
     refetch(); 
   };
 
-  const showMoreBooks = () => setVisibleBooks((prev) => prev + 8);
+  const showMoreBooks = () => setVisibleBooks((prev) => prev + 8); 
 
   return (
     <div className="catalog-page">
@@ -59,17 +59,13 @@ function CatalogPage() {
         <BookFilter onGenreChange={setSelectedBookType} />
       </div>
       {filteredBooks.length === 0 ? (
-        <p className="no-books">No books available</p>
+        <p className="no-books">No books available</p> 
       ) : (
         <div className="catalog-grid">
-
           {filteredBooks.slice(0, visibleBooks).map((book, index) => (
-            <CatalogItem
-              key={`${book.book_id}-${index}`} 
+            <CatalogItem key={`${book.book_id}-${index}`} 
               book={book}
-              onDelete={handleDelete}
-            />
-
+              onDelete={handleDelete} />
           ))}
         </div>
       )}

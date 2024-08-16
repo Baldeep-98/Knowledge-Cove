@@ -6,9 +6,7 @@ const Table = ({ cartItems }) => {
   const dueDate = new Date(today);
   dueDate.setDate(today.getDate() + 14);
 
-  const formatDate = (date) => {
-    return date.toLocaleDateString(undefined);
-  };
+
 
   const rowStyle = {
     border: "1px solid #000",

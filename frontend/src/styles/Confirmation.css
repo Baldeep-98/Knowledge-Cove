@@ -1,10 +1,21 @@
+.confirm-heading {
+    font-size: 2.5rem;
+    color: var(--primary-accent-color);
+    font-weight: 600;
+    text-decoration: underline var(--secondary-accent-color);
+    margin-inline: 80px;
+    padding-top:20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .popup {
     background: white; 
     padding: 20px; 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
     border-radius: 10px; 
     text-align: center; 
-    margin: 20px auto; 
+    margin: 50px auto; 
     max-width: 600px; 
 }
 .popup img{

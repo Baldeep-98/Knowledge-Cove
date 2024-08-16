@@ -25,6 +25,7 @@ function Rooms(props) {
     const [bookedRoomInfo, setBookedRoomInfo] = useState([]);
 
     const isValid = useSelector((state) => state.auth.isValid);
+    const isAdmin = useSelector((state) => state.auth.isAdmin);
 
     const weekDays = [1, 2, 3, 4, 5, 6, 7];
     const date = new Date();
@@ -50,6 +51,10 @@ function Rooms(props) {
 
     if (!isValid && !isWebTokenValid()) {
         return <Navigate to="/login" />;
+    }
+
+    if (isValid && isAdmin) {
+        return <Navigate to="/home" />;
     }
 
     const weekDates = weekDays.map(d => {

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useQuery, gql, useMutation, useApolloClient } from "@apollo/client";
+import React, { useState, useEffect } from "react";
+import { useQuery, gql, useApolloClient } from "@apollo/client";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { isWebTokenValid } from '../webTokenVerification';
 
 const GET_CART_BOOKS = gql`
-  query GetCartBooks {
-    CartItems {
+    query GetCartBooks ($membership_num: String!) {
+    CartItems(membership_num: $membership_num) {
       _id
       book_id
       bookDetails {
@@ -40,16 +40,21 @@ const GET_USER_PROFILE = gql`
   }
 `;
 
-const CheckoutPage = () => {
-  const { data, loading, error } = useQuery(GET_CART_BOOKS);
-  const { data: userProfileData, loading: userProfileLoading, error: userProfileError } = useQuery(GET_USER_PROFILE, {
+const CheckoutPage = () => {  
+
+  const membershipNum = JSON.parse(localStorage.getItem("userInfo")).membership_num
+
+  const { data, loading, error } = useQuery(GET_CART_BOOKS,{
+    variables: { membership_num: membershipNum }});
+  const navigate = useNavigate();
+
+  const { data: userProfileData } = useQuery(GET_USER_PROFILE, {
     variables: {
       userId: JSON.parse(localStorage.getItem("userInfo"))?.user_id
     }
   });
-  const [checkout] = useMutation(CHECKOUT);
   const client = useApolloClient();
-  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     billingName: "",
     billingEmail: "",
@@ -61,7 +66,9 @@ const CheckoutPage = () => {
     location: ""
   });
 
+
   const isValid = useSelector((state) => state.auth.isValid);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   useEffect(() => {
     if (userProfileData) {
@@ -111,6 +118,7 @@ const CheckoutPage = () => {
     }
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -121,6 +129,7 @@ const CheckoutPage = () => {
       shippingName: formData.shippingName,
       shippingEmail: formData.shippingEmail,
       shippingAddress: formData.shippingAddress,
+      membership_num: membershipNum,
       items: CartItems.map(item => ({
         book_id: item.book_id,
         book_name: item.bookDetails.book_name,
@@ -131,9 +140,13 @@ const CheckoutPage = () => {
     await handleCheckout(order);
   };
 
+
   if (!isValid && !isWebTokenValid()) {
-    navigate("/login");
-    return null; // Prevent rendering the component if the user is not logged in
+    return <Navigate to="/login" />;
+  }
+  
+  if (isValid && isAdmin) {
+    return <Navigate to="/home" />;
   }
 
   return (

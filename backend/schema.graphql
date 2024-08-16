@@ -10,6 +10,7 @@ type User {
   username: String!
   membership_num: String!
   password: String!
+  member_plan: String!
 }
 
 type Time {
@@ -19,19 +20,23 @@ type Time {
   room_booked: Boolean
   booked_by: String
 }
+
 type Cart {
   _id: ID!
   book_id: Int
-  membership_num: Int
+  membership_num: String
 }
+
 type CartItem {
   _id: ID!
   book_id: Int
-  membership_num: Int
+  membership_num: String
   bookDetails: Book
 }
+
 scalar GraphQLDate
 scalar Upload
+
 
 type UserAuthData {
   user: User
@@ -47,14 +52,26 @@ type Time {
 }
 
 type Book {
+    _id: ID!
+    book_id: Int
+    book_name: String
+    book_author: String
+    book_genre: String
+    book_shortDescription: String
+    book_longDescription: String
+    book_image_url:String
+}
+
+type UserMemberPlan {
   _id: ID!
-  book_id: Int
-  book_name: String
-  book_author: String
-  book_genre: String
-  book_shortDescription: String
-  book_longDescription: String
-  book_image_url: String
+  membership_num: String!
+  purch_email: String!
+  card_num: String!
+  card_expire: String!
+  card_cvv: String!
+  purch_city: String!
+  purch_postal: String!
+  member_plan: String!
 }
 
 scalar GraphQLDate
@@ -97,18 +114,18 @@ input BookInput {
   book_image_url: String
 }
 
-input userUpdateInputs {
-  user_id: String
-  name: String
-  phone: String
-  address: String
-  dob: GraphQLDate
+input userUpdateInputs{
+    user_id: String
+    name: String
+    phone: String
+    address: String
+    dob: GraphQLDate
 
-  email: String
-  username: String
-  membership_num: String
-
+    email: String
+    username: String
+    membership_num: String
 }
+
 input OrderItemInput {
   book_id: Int!
   book_name: String!
@@ -122,11 +139,25 @@ input OrderInput {
   billingAddress: String!
   shippingName: String!
   shippingAddress: String!
- 
   shippingEmail:String!
-
+  membership_num:String!
   items: [OrderItemInput!]!
+}
 
+input userMemberPlanInputs{
+  purch_email: String!
+  card_num: String!
+  card_expire: String!
+  card_cvv: String!
+  purch_city: String!
+  purch_postal: String!
+  member_plan: String!
+  membership_num: String!
+}
+
+input userCartInfo{
+  book_id: Int!
+  membership_num: String!
 }
 
 
@@ -135,8 +166,9 @@ type Query {
   getBookedRoomInfo(bookedRoom: BookedRoomInput!): [Time]
   BookList: [Book]
   getBook(book_id: Int!): Book
-  CartItems: [CartItem]
+  CartItems(membership_num: String!): [CartItem]
   getUserProfile(user_id: String!): User!
+
 }
 
 type Mutation {
@@ -145,20 +177,20 @@ type Mutation {
   addBook(book: BookInput!): Response!
   updateBook(book: BookInput!): Response!
 
-  addToCart(book_id: Int!): Cart!
-
-  bookDelete(book_id: ID!): Boolean!
-
+  addToCart(cart_item: userCartInfo!): Cart!
   bookDelete(book_id: Int!): Boolean!
-
-  clearCart: Boolean!
+  cartBookDelete(cart_item: userCartInfo!): Boolean!
+  clearCart(membership_num: String!):Boolean!
+  checkout(order:OrderInput!):Boolean
 
   userProfileUpdate(user_id: String!, updates: userUpdateInputs!): User
-checkout(order:OrderInput!):Boolean
-
+  UpdateUserMembershipPlan(planInfo: userMemberPlanInputs!): UserMemberPlan!
 }
+
 
 type Response {
   success: Boolean!
   message: String!
 }
+
+

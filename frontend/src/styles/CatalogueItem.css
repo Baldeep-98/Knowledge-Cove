@@ -1,3 +1,4 @@
+/*catalogueItem page design start*/
 .catalog-page {
   padding: 0;
   max-width: 100%;
@@ -58,7 +59,7 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
- 
+
 }
 
 .catalog-item {
@@ -75,6 +76,8 @@
   position: relative;
   margin-bottom: 30px;
 }
+
+
 
 .catalog-item:hover {
   transform: scale(1.05);
@@ -187,7 +190,7 @@
 .delete-button:hover {
   background-color: #c82333;
 }
- 
+
 .no-books {
   text-align: center;
   font-size: 1.2em;

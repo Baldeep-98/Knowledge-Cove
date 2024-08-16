@@ -81,12 +81,9 @@ const deleteBook = async (parent, { book_id }) => {
 };
 
 
-
-const addToCart = async (parent, { book_id }) => {
-  const db = getDB();
-  const membership_num = 123; 
-  const cartItem = { book_id, membership_num }; 
-  const result = await db.collection("cart").insertOne(cartItem); 
+const addToCart = async (parent, { cart_item }) => {
+  const db = getDB(); 
+  const result = await db.collection("cart").insertOne(cart_item); // inserting a new cart item into 'cart' table
 
   if (!result.insertedId) {
     throw new Error("Failed to add to cart");
@@ -95,6 +92,7 @@ const addToCart = async (parent, { book_id }) => {
   const savedItems = await db.collection("cart").findOne({ _id: result.insertedId }); 
 
   return savedItems;
-};
 
+}
 module.exports = { list, getBook, addBook, updateBook, deleteBook, addToCart };
+

@@ -1,8 +1,8 @@
 .invoice-page {
   font-family: Arial, sans-serif;
-  padding: 20px;
+  padding: 40px;
   max-width: 800px;
-  margin: auto;
+  margin-inline: auto;
   border: 1px solid #ddd;
   border-radius: 8px;
   height: 500px;

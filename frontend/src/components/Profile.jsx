@@ -2,9 +2,10 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import toast, { Toaster }  from "react-hot-toast"
 import { useQuery, useMutation, gql } from "@apollo/client";
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isWebTokenValid } from '../webTokenVerification';
+
 
 
 const GET_USER_PROFILE = gql`
@@ -45,6 +46,8 @@ function Profile() {
     username: "",
     membership_num: ""
   });
+
+  const navigate = useNavigate();
 
   const isValid = useSelector((state) => state.auth.isValid);
 
@@ -171,6 +174,7 @@ function Profile() {
                       name="name"
                       value={user ? user.name: "No Data Found"}
                       disabled={isEdit ? "" : "disabled"}
+                      required
                     />
                 </span>
                 <span>
@@ -181,13 +185,17 @@ function Profile() {
                       name="phone"
                       value={user ? user.phone: "No Data Found"}
                       disabled={isEdit ? "" : "disabled"}
+                      pattern="^\d{10}$"
+                      maxlength="10"
+                      title="Please enter a valid phone number."
+                      required
                     />
                 </span>
                 
             </div>
 
             <label>Address:</label>
-            <textarea name='address' onChange={handleChange} value={user ?user.address:"No Data Found"} disabled={isEdit ? "" : "disabled"} ></textarea>
+            <textarea name='address' onChange={handleChange} value={user ?user.address:"No Data Found"} disabled={isEdit ? "" : "disabled"} required ></textarea>
 
             <label>Date of Birth:</label>
             <input
@@ -205,11 +213,18 @@ function Profile() {
                 </button>
               </span>
               <span>
-              {isEdit && (
+              {isEdit ? (
                   <button type='submit'>
                     Update
                   </button>
-                )}
+                )
+                :
+                (
+                  <button type='button' onClick={() => navigate("/profile/librarycard")}>
+                    Generate Card
+                  </button>
+                )
+                }
               </span>
           </div>
         </form>

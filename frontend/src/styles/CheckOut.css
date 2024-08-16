@@ -67,26 +67,26 @@ body {
   margin-bottom: 20px;
 }
 
-form {
+.checkout-form-section form {
   background-color: #f1f1f1;
   padding: 20px;
   border-radius: 8px;
 }
 
-form h2 {
+.checkout-form-section form h2 {
   font-size: 20px;
   margin-bottom: 15px;
 }
 
-label {
+.checkout-form-section label {
   display: block;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
-input[type="text"],
-input[type="email"],
-select {
+.checkout-form-section input[type="text"],
+.checkout-form-section input[type="email"],
+.checkout-form-section select {
   width: 95%;
   padding: 10px;
   margin-top: 5px;
@@ -113,7 +113,7 @@ select {
   margin-right: 5px;
 }
 
-button[type="submit"] {
+.checkout-form-section button[type="submit"] {
   display: block;
   width: 100%;
   padding: 15px;
@@ -126,9 +126,10 @@ button[type="submit"] {
   transition: background-color 0.3s;
 }
 
-button[type="submit"]:hover {
+.checkout-form-section button[type="submit"]:hover {
   background-color: #0056b3;
 }
+
 @media (max-width: 768px) {
   .checkout-page {
     flex-direction: column;

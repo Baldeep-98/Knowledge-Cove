@@ -15,6 +15,9 @@ import EditBook from './EditBook';
 import Profile from './Profile';
 import Invoice from './Invoice.jsx';
 import Confirmation from './Confirmation.jsx';
+import LibraryCard from './LibraryCard.jsx';
+import PlanPayment from './PlanPayment.jsx';
+
 const NotFound = () => <h1>Page Not Found</h1>;
 
 function Content() {
@@ -33,9 +36,12 @@ function Content() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/addBook" element={<AddBook />} />
       <Route path="/edit/:id" element={<EditBook />} />
-<Route path="/confirmation" element={<Confirmation/>}/>
       <Route path="/profile" element={<Profile />} />
-<Route path="/invoice"element={<Invoice/>}/>
+      <Route path="/confirmation" element={<Confirmation/>}/>
+      <Route path="/invoice"element={<Invoice/>}/>
+      <Route path="/plan-payment" element={<PlanPayment />} />
+      <Route path="/profile/librarycard" element={<LibraryCard />} />
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

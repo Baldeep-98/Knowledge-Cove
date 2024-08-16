@@ -3,8 +3,8 @@ const { getDB } = require('./db.js');
 
 const checkout = async (parent, { order }, context, info) => {
     const db = getDB();
-    const { billingName, billingEmail, billingAddress, shippingName, shippingAddress, cardNumber, cardCVV, items } = order;
-    const membership_num = 123;
+
+    const { billingName, billingEmail, billingAddress, shippingName, shippingAddress, cardNumber, cardCVV, membership_num, items } = order;
 
     try {
         const bookIssued = items.map(item => ({
