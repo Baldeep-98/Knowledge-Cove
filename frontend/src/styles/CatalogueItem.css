@@ -59,7 +59,7 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
- 
+
 }
 
 .catalog-item {
@@ -171,7 +171,26 @@
 .edit-button:hover {
   background-color: #e0a800;
 }
- 
+
+.delete-button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  height: 50px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
 .no-books {
   text-align: center;
   font-size: 1.2em;

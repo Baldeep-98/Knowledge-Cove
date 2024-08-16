@@ -2,9 +2,10 @@ const GraphQLDate = require('./graphqlDate')
 const user = require('./users')
 const rTime = require('./roomTime')
 const book = require('./book');
+const {checkout} = require('./checkout')
 const { ApolloServer } = require('apollo-server');
 const fs = require('fs');
-const { getCartItems, remove ,clearCart} = require('./cart'); 
+const { getCartItems ,remove, clearCart} = require('./cart'); 
 
 const resolvers = {
     Query: {
@@ -21,10 +22,12 @@ const resolvers = {
         addBook: book.addBook,
         updateBook: book.updateBook,
         addToCart: book.addToCart,
-        bookDelete: remove,
+        bookDelete: book.deleteBook,
+        cartBookDelete: remove,
         clearCart,
         userProfileUpdate: user.updateUserProfile,
-        UpdateUserMembershipPlan: user.UpdateUserMembershipPlan
+        UpdateUserMembershipPlan: user.UpdateUserMembershipPlan,
+        checkout
     },
     GraphQLDate,
 };

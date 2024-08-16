@@ -1,5 +1,7 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isWebTokenValid } from '../webTokenVerification';
 import LibraryHome from '../assets/Images/home.jpg';
 import HomeBanner from '../assets/Images/Library-home.png';
 import SlideImage1 from '../assets/Images/slide1.jpg';
@@ -16,6 +18,9 @@ import SlideImage10 from '../assets/Images/slide10.jpg';
 
 
 function Home() {
+
+  const isValid = useSelector((state) => state.auth.isValid);
+
   return (
     <div>
       <div className="hero">
@@ -23,8 +28,18 @@ function Home() {
           <img src={LibraryHome} alt="Library banner" />
           <div className="hero-text">
             <h1>Welcome to Knowledge Cove</h1>
-            <Link to="/Signup"></Link>
-            <button type="button">Sign In</button>
+            {(!isValid && !isWebTokenValid()) 
+            ? 
+            <>
+            <Outlet/>
+              <Link to="/login">
+              <button type="button">Sign In</button></Link>
+            </>
+            : <>
+                <br/>
+                <h2>Welcome {JSON.parse(localStorage.getItem("userInfo")).username}</h2>
+            </>
+            }
           </div>
         </div>
       </div>

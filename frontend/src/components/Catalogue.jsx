@@ -43,6 +43,11 @@ function CatalogPage() {
           (book) =>
             book.book_genre.toLowerCase() === selectedBookType.toLowerCase()
         );
+
+  const handleDelete = (deletedBookId) => {
+    refetch(); 
+  };
+
   const showMoreBooks = () => setVisibleBooks((prev) => prev + 8); 
 
   return (
@@ -57,8 +62,10 @@ function CatalogPage() {
         <p className="no-books">No books available</p> 
       ) : (
         <div className="catalog-grid">
-          {filteredBooks.slice(0, visibleBooks).map((book) => (
-            <CatalogItem key={book.book_id} book={book} />
+          {filteredBooks.slice(0, visibleBooks).map((book, index) => (
+            <CatalogItem key={`${book.book_id}-${index}`} 
+              book={book}
+              onDelete={handleDelete} />
           ))}
         </div>
       )}

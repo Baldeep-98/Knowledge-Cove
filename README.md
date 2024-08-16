@@ -24,7 +24,7 @@ Welcome to Knowledge Cove, a modern library management system designed to enhanc
 - **MongoDB:** A schema-less database model using documents and collections to store data. Known for high performance and flexibility.
 
 ## Project Pages and Functionality
-We have designed the following six pages to ensure the website is user-friendly for both administrators and users:
+We have designed the following screens components to ensure the website is user-friendly for both administrators and users:
 
 1. **Login/Signup Page:**
    - **Administrator:** Can add, edit, and remove books, manage users, and track book checkouts.
@@ -48,11 +48,19 @@ We have designed the following six pages to ensure the website is user-friendly 
 7. **Subscription Page:**
    - Users can purchase memberships and additional services.
 
-8. **Admin Page:**
-   - Admins can manage all book records and user information through this dashboard and also can perform CRUD operations on the books.
+8. **Add Book Page:**
+   - Admins add book can manage all book records through this dashboard and perform CRUD operations on the books.
+
+## Admin Credentials
+To access the admin dashboard, use the following credentials:
+
+- **Username:** `admin`
+- **Password:** `admin12345`
+
+These credentials provide full access to the admin dashboard, allowing you to manage books, users, and other resources.
 
 ## Installation
-To start Knowledge Cove project, follow these steps:
+To start the Knowledge Cove project, follow these steps:
 
 1. Clone the Repository:
     ```sh
@@ -83,3 +91,8 @@ To start Knowledge Cove project, follow these steps:
         cd backend
         npm start
         ```
+
+4. Access the application:
+   - The frontend will typically run on `http://localhost:3000`.
+   - The backend will typically run on `http://localhost:3500`.
+

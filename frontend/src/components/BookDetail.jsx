@@ -21,9 +21,17 @@ const GET_BOOK_DETAIL = gql`
   }
 `;
 
+const GET_CART_BOOKS = gql`
+  query GetCartBooks($membership_num: String!) {
+    CartItems(membership_num: $membership_num) {
+      book_id
+    }
+  }
+`;
+
 const ADD_TO_CART = gql` 
-  mutation AddToCart($book_id: Int!) {
-    addToCart(book_id: $book_id) {
+  mutation AddToCart($cart_item: userCartInfo!) {
+    addToCart(cart_item: $cart_item) {
       _id
       book_id
       membership_num
@@ -39,8 +47,14 @@ const BookDetail = () => {
   const isValid = useSelector((state) => state.auth.isValid);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
 
+  const membershipNum = JSON.parse(localStorage.getItem("userInfo")).membership_num
+
   const { loading, error, data } = useQuery(GET_BOOK_DETAIL, { 
     variables: { book_id: bookId },
+  });
+
+  const { data: cartData } = useQuery(GET_CART_BOOKS, { 
+    variables: { membership_num: membershipNum },
   });
 
   const [book, setBook] = useState(null);
@@ -56,8 +70,19 @@ const BookDetail = () => {
 
   const handleAddToCart = async () => {
     if(isValid && !isAdmin && isWebTokenValid) {
+
+      if (cartData && cartData.CartItems.some(item => item.book_id === bookId)) {
+        toast.error("Book is already in the cart");
+        return;
+      }
+      const cartItem = {
+        book_id: bookId,
+        membership_num: membershipNum
+      }
+      
+
       try {
-        const { data } = await addToCart({ variables: { book_id: bookId } });
+        const { data } = await addToCart({ variables: {cart_item: cartItem}});
         if (data.addToCart) {
           toast.success("Book added to cart successfully");
           navigate("/cart");

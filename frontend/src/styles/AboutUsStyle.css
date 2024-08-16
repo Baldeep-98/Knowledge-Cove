@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60vh;
+    flex-wrap: wrap;
     padding: 20px;
     background-color: #def6ff;
 }
@@ -101,8 +101,10 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    padding-block: 70px;
+    width: 60%;
+    padding: 70px;
+    margin-block: 30px;
+    margin-inline: auto;
     background-color: var(--primary-accentbg-color);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     border-radius: 15px;
@@ -121,13 +123,14 @@ header {
     flex-direction: column;
     align-items: flex-start;
     padding: 20px;
-    width: 100%;
+    width: 70%;
+    margin-bottom: 40px;
 }
 
 .contact-form form label {
     font-size: 1.2em;
     margin-bottom: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
     display: block;
     width: 100%;
     word-wrap: break-word;
@@ -175,25 +178,72 @@ header {
     margin-bottom: 20px;
 }
 
-.subscribe {
-    margin-top: 100px;
-}
 
 .subscribe-button {
+    font-family: 'Raleway', sans-serif;;
     display: block;
-    width: 200px;
+    font-size: 1rem;
+    width: 300px;
     height: 50px;
     background-color: rgb(179, 21, 21);
     color: white;
     text-align: center;
     line-height: 50px;
-    margin: 20px auto;
+    margin: 0px auto;
     border-radius: 25px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     border: none;
+    text-decoration: none;
 }
 
 .subscribe-button:hover {
     background-color: rgb(226, 60, 60);
 }
+
+.subscribe a{
+    text-decoration: none;
+}
+
+
+@media (max-width: 768px) {
+    .about-head{
+        flex-direction: column;
+    }
+    
+    .image img {
+        width: 100%;
+    }
+
+    .about-head .text h1 {
+        font-size: 1.8em;
+    }
+
+    .about-head .text p {
+        font-size: 1.3em;
+        width: 100%;
+    }
+
+    .section h2 {
+        font-size: 1.5em;
+    }
+
+    .section p {
+        font-size: 1.3em;
+    }
+
+    .contact-form h2{
+        text-align: center;
+    }
+
+    .contact-form {
+        padding: 20px;
+        width: 80%;
+    }
+    .subscribe-button {
+        height:60px;
+        padding: 7px;
+    }
+}
+
+

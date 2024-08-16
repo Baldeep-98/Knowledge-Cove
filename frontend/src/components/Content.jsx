@@ -13,6 +13,8 @@ import Checkout from './Checkout';
 import AddBook from './AddBook';
 import EditBook from './EditBook';
 import Profile from './Profile';
+import Invoice from './Invoice.jsx';
+import Confirmation from './Confirmation.jsx';
 import LibraryCard from './LibraryCard.jsx';
 import PlanPayment from './PlanPayment.jsx';
 
@@ -35,6 +37,8 @@ function Content() {
       <Route path="/addBook" element={<AddBook />} />
       <Route path="/edit/:id" element={<EditBook />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/confirmation" element={<Confirmation/>}/>
+      <Route path="/invoice"element={<Invoice/>}/>
       <Route path="/plan-payment" element={<PlanPayment />} />
       <Route path="/profile/librarycard" element={<LibraryCard />} />
 
